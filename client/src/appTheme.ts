@@ -1,6 +1,6 @@
 "use client";
 import { Roboto } from "next/font/google";
-import { createTheme } from "@mui/material/styles";
+import { createTheme, ThemeOptions } from "@mui/material/styles";
 
 const roboto = Roboto({
   weight: ["300", "400", "500", "700"],
@@ -8,7 +8,7 @@ const roboto = Roboto({
   display: "swap",
 });
 
-const theme = createTheme({
+const themeOptions: ThemeOptions = {
   typography: {
     fontFamily: roboto.style.fontFamily,
   },
@@ -18,6 +18,8 @@ const theme = createTheme({
       //   paper: "blue",
     },
   },
-});
+};
+
+const theme = createTheme(themeOptions);
 
 export default theme;

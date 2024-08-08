@@ -1,9 +1,11 @@
 import React from "react";
-import { Style } from "@mui/icons-material";
 import { Box } from "@mui/material";
+import { Navbar } from "@/components/Navbar/Navbar";
 
-type Props = {};
-
-export const Landing = (props: Props) => {
-  return <Box>Landing Page</Box>;
+export const LandingPage = () => {
+  return (
+    <Box>
+      <Navbar />
+    </Box>
+  );
 };

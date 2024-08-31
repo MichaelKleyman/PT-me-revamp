@@ -4,7 +4,7 @@ import Link from "next/link";
 export const StyledStack = styled(Stack)(({ theme }) => ({
   position: "fixed",
   top: 0,
-  background: theme.palette.background.paper,
+  background: theme.palette.background.default,
   borderRadius: theme.shape.borderRadius * 4,
   margin: theme.spacing(4),
   padding: theme.spacing(2),
@@ -24,4 +24,6 @@ export const StyledButtons = styled(Link)(({ theme }) => ({
     color: "#3d5afe",
     transform: "scale(1.1)",
   },
+  width: theme.spacing(15),
+  textAlign: "center",
 }));

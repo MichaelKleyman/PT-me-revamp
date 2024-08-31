@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "fix-check": "next lint --fix ./src && --ignore-pattern './.next' && tsc --noEmit -p ./tsconfig.json"
   },
   "dependencies": {
     "@emotion/cache": "^11.13.1",

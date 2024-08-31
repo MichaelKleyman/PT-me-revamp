@@ -9,19 +9,62 @@ export const Navbar = () => {
       flexDirection="row"
       alignItems="center"
       justifyContent="space-between"
+      width="100%"
     >
       <Box>LOGO</Box>
       <Box display="flex" gap={6}>
-        <Typography sx={{ cursor: "pointer" }}>About</Typography>
-        <Typography sx={{ cursor: "pointer" }}>Services</Typography>
+        <Typography
+          sx={(theme) => ({
+            cursor: "pointer",
+            "&:hover": { color: theme.palette.background.paper },
+          })}
+        >
+          About
+        </Typography>
+        <Typography
+          sx={(theme) => ({
+            cursor: "pointer",
+            "&:hover": { color: theme.palette.background.paper },
+          })}
+        >
+          Services
+        </Typography>
+        <Typography
+          sx={(theme) => ({
+            cursor: "pointer",
+            "&:hover": { color: theme.palette.background.paper },
+          })}
+        >
+          Lorem Upsum
+        </Typography>
+        <Typography
+          sx={(theme) => ({
+            cursor: "pointer",
+            "&:hover": { color: theme.palette.background.paper },
+          })}
+        >
+          Lorem Ipsum
+        </Typography>
+        <Typography
+          sx={(theme) => ({
+            cursor: "pointer",
+            "&:hover": { color: theme.palette.background.paper },
+          })}
+        >
+          Lorem Ipsum
+        </Typography>
       </Box>
       <Box display="flex" gap={3}>
-        <StyledButtons href="/login" style={{ color: "blue" }}>
+        <StyledButtons href="/login" sx={{ color: "blue", fontWeight: "bold" }}>
           Login
         </StyledButtons>
         <StyledButtons
           href="/signup"
-          style={{ color: "white", background: "blue" }}
+          sx={(theme) => ({
+            color: "white",
+            background: theme.palette.background.paper,
+            fontWeight: "bold",
+          })}
         >
           Get Started
         </StyledButtons>

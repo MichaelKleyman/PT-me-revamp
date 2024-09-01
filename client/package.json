@@ -10,6 +10,7 @@
     "fix-check": "next lint --fix ./src && --ignore-pattern './.next' && tsc --noEmit -p ./tsconfig.json"
   },
   "dependencies": {
+    "@auth0/nextjs-auth0": "^3.5.0",
     "@emotion/cache": "^11.13.1",
     "@emotion/react": "^11.13.0",
     "@emotion/styled": "^11.13.0",

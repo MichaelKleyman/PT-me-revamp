@@ -55,7 +55,10 @@ export const Navbar = () => {
         </Typography>
       </Box>
       <Box display="flex" gap={3}>
-        <StyledButtons href="/login" sx={{ color: "blue", fontWeight: "bold" }}>
+        <StyledButtons
+          href="/api/auth/login"
+          sx={{ color: "blue", fontWeight: "bold" }}
+        >
           Login
         </StyledButtons>
         <StyledButtons

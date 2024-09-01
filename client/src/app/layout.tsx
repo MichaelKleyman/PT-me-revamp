@@ -16,12 +16,12 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <AppRouterCacheProvider>
-          <ThemeProvider theme={theme}>
+        <ThemeProvider theme={theme}>
+          <AppRouterCacheProvider>
             <CssBaseline />
             <Wrapper>{children}</Wrapper>
-          </ThemeProvider>
-        </AppRouterCacheProvider>
+          </AppRouterCacheProvider>
+        </ThemeProvider>
       </body>
     </html>
   );

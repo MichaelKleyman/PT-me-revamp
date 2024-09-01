@@ -16,6 +16,9 @@ const themeOptions: ThemeOptions = {
       default: "#FFF4F4",
       paper: "#3D5AFE",
     },
+    primary: {
+      main: "#ADD8E6",
+    },
   },
 };
 

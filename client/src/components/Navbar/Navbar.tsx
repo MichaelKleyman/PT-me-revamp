@@ -62,7 +62,7 @@ export const Navbar = () => {
           Login
         </StyledButtons>
         <StyledButtons
-          href="/signup"
+          href="/api/auth/signup"
           sx={(theme) => ({
             color: "white",
             background: theme.palette.background.paper,

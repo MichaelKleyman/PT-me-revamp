@@ -1,7 +1,7 @@
-import { Stack, styled, Typography } from "@mui/material";
-import { Link } from "@tanstack/react-router";
+import { Stack, Typography } from "@mui/material";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import { MenuRef, MenuRefs } from "../../lib/utils/types/types";
+import { StyledContainer, StyledLink, StyledNavItem } from "./styles";
 
 const menuItems = ["Services", "About Us", "Blog", "Pricing"] as const;
 type MenuItem = (typeof menuItems)[number];
@@ -40,52 +40,18 @@ export const TopBar = ({
       </Stack>
       <StyledContainer>
         {menuItems.map((item) => (
-          <StyledLink
+          <StyledNavItem
             key={`menu-${item}`}
             onClick={() => handleMenuClick(item)}
           >
             {item}
-          </StyledLink>
+          </StyledNavItem>
         ))}
       </StyledContainer>
-      <Stack
-        flexDirection='row'
-        py={2}
-        px={5}
-        borderRadius={7}
-        gap={2}
-        alignItems='center'
-        sx={{
-          background: "white",
-          transition: "all 0.3s ease-in-out",
-          cursor: "pointer",
-          "&:hover": {
-            transform: "scale(1.1)",
-          },
-        }}
-      >
+      <StyledLink to='/auth'>
         <Typography>Get started</Typography>
         <ArrowForwardIcon />
-      </Stack>
+      </StyledLink>
     </Stack>
   );
 };
-
-const StyledLink = styled(Link)({
-  textDecoration: "none",
-  color: "black",
-  fontSize: "16px",
-  transition: "all 0.3s ease-in-out",
-  cursor: "pointer",
-  "&:hover": {
-    transform: "scale(1.1)",
-  },
-});
-
-const StyledContainer = styled(Stack)(({ theme }) => ({
-  flexDirection: "row",
-  padding: theme.spacing(2, 10),
-  gap: theme.spacing(2),
-  background: "white",
-  borderRadius: theme.spacing(4),
-}));

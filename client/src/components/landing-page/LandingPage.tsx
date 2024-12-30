@@ -1,5 +1,5 @@
 import { Stack } from "@mui/material";
-import { TopBar } from "../TopBar/TopBar";
+import { TopBar } from "../top-bar/TopBar";
 import { LandingPageSectionOne } from "./LandingPageSectionOne";
 import { LandingPageSectionTwo } from "./LandingPageSectionTwo";
 import { LandingPageSectionMiddle } from "./LandingPageSectionMiddle";

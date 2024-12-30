@@ -4,8 +4,8 @@ import { Pool } from "pg";
 export const auth = betterAuth({
   database: new Pool({
     database: "postgres",
-    host: "ptme-postgres.cfa60we4agvr.us-east-2.rds.amazonaws.com",
-    port: 5432,
+    host: "localhost",
+    port: 5431,
   }),
   emailAndPassword: {
     enabled: true,

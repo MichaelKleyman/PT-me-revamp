@@ -1,28 +1,39 @@
-"use client";
-import { Box } from "@mui/material";
-import { Footer } from "@/components/footer/Footer";
-import { HomePage } from "@/components/homePage/HomePage";
-import { Dashboard } from "@/components/dashboard/Dashboard";
-import { useRevampStore } from "@/store";
-import { useUser } from "@auth0/nextjs-auth0/client";
-import { setAppState } from "@/store/slices/app";
-import { useEffect } from "react";
+import { Stack } from "@mui/material";
+import { TopBar } from "../TopBar/TopBar";
+import { LandingPageSectionOne } from "./LandingPageSectionOne";
+import { LandingPageSectionTwo } from "./LandingPageSectionTwo";
+import { LandingPageSectionMiddle } from "./LandingPageSectionMiddle";
+import { useRef } from "react";
+import { MenuRef, MenuRefs } from "../../utils/types/types";
+import { LandingPageFooter } from "./LandingPageFooter";
 
 export const LandingPage = () => {
-  const { user, error, isLoading } = useUser();
+  const servicesRef = useRef<HTMLDivElement | null>(null);
 
-  const updateAppSlice = useRevampStore(setAppState);
+  const menuRefs: MenuRefs = {
+    Services: servicesRef,
+  };
 
-  useEffect(() => {
-    updateAppSlice({ userLoggedIn: !!user });
-  }, []);
+  const handleClick = (ref: MenuRef) => {
+    ref.current?.scrollIntoView({ behavior: "smooth" });
+  };
 
-  if (isLoading) return <div>Loading...</div>;
-  if (error) return <div>{error.message}</div>;
   return (
-    <Box>
-      {user ? <Dashboard /> : <HomePage />}
-      <Footer />
-    </Box>
+    <Stack sx={{ background: "transparent" }}>
+      <TopBar menuRefs={menuRefs} handleClick={handleClick} />
+      <Stack alignItems='center'>
+        {/* First section */}
+        <Stack>
+          <LandingPageSectionOne />
+        </Stack>
+        {/* Middle section */}
+        <LandingPageSectionMiddle />
+        {/* Second section */}
+        <Stack ref={servicesRef}>
+          <LandingPageSectionTwo />
+        </Stack>
+        <LandingPageFooter />
+      </Stack>
+    </Stack>
   );
 };

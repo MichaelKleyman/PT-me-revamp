@@ -1,23 +1,20 @@
-"use client";
-import { Lato } from "next/font/google";
 import { createTheme, ThemeOptions } from "@mui/material/styles";
 
-const lato = Lato({
-  weight: ["400", "700"],
-  subsets: ["latin"],
-  display: "swap",
-});
 const themeOptions: ThemeOptions = {
   typography: {
-    fontFamily: lato.style.fontFamily,
+    fontFamily: "Montserrat",
   },
   palette: {
+    mode: "dark",
     background: {
       default: "#FFF4F4",
       paper: "#3D5AFE",
     },
+    text: {
+      primary: "#000000",
+    },
     primary: {
-      main: "#ADD8E6",
+      main: "#FFFF00",
     },
   },
 };

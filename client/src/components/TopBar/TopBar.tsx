@@ -1,7 +1,7 @@
 import { Stack, styled, Typography } from "@mui/material";
 import { Link } from "@tanstack/react-router";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
-import { MenuRef, MenuRefs } from "../../utils/types/types";
+import { MenuRef, MenuRefs } from "../../lib/utils/types/types";
 
 const menuItems = ["Services", "About Us", "Blog", "Pricing"] as const;
 type MenuItem = (typeof menuItems)[number];

@@ -4,7 +4,7 @@ import { LandingPageSectionOne } from "./LandingPageSectionOne";
 import { LandingPageSectionTwo } from "./LandingPageSectionTwo";
 import { LandingPageSectionMiddle } from "./LandingPageSectionMiddle";
 import { useRef } from "react";
-import { MenuRef, MenuRefs } from "../../utils/types/types";
+import { MenuRef, MenuRefs } from "../../lib/utils/types/types";
 import { LandingPageFooter } from "./LandingPageFooter";
 
 export const LandingPage = () => {

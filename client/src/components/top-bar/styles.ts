@@ -13,7 +13,7 @@ export const StyledNavItem = styled(Stack)({
 });
 
 export const StyledLink = styled(Link)(({ theme }) => ({
-  color: "black",
+  color: theme.palette.text.primary,
   textDecoration: "none",
   display: "flex",
   alignItems: "center",
@@ -23,8 +23,10 @@ export const StyledLink = styled(Link)(({ theme }) => ({
   transition: "all 0.3s ease-in-out",
   cursor: "pointer",
   borderRadius: theme.shape.borderRadius * 7,
+  boxShadow: "0px 6px 15px rgba(0, 0, 0, 0.2)",
   "&:hover": {
     transform: "scale(1.1)",
+    boxShadow: "0px 8px 20px rgba(0, 0, 0, 0.3)",
   },
 }));
 
@@ -34,4 +36,5 @@ export const StyledContainer = styled(Stack)(({ theme }) => ({
   gap: theme.spacing(2),
   background: "white",
   borderRadius: theme.spacing(4),
+  boxShadow: "0px 8px 20px rgba(0, 0, 0, 0.3)",
 }));

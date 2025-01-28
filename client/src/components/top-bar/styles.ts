@@ -4,7 +4,7 @@ import { Link } from "@tanstack/react-router";
 
 export const StyledNavItem = styled(Stack)({
   color: "black",
-  fontSize: "16px",
+  fontSize: "15px",
   transition: "all 0.3s ease-in-out",
   cursor: "pointer",
   "&:hover": {
@@ -17,7 +17,7 @@ export const StyledLink = styled(Link)(({ theme }) => ({
   textDecoration: "none",
   display: "flex",
   alignItems: "center",
-  padding: theme.spacing(2, 5),
+  padding: theme.spacing(1.5, 5),
   gap: theme.spacing(2),
   background: "white",
   transition: "all 0.3s ease-in-out",

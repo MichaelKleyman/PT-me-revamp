@@ -49,7 +49,7 @@ export const TopBar = ({
         ))}
       </StyledContainer>
       <StyledLink to='/auth'>
-        <Typography>Get started</Typography>
+        <Typography fontSize='15px'>Get started</Typography>
         <ArrowForwardIcon />
       </StyledLink>
     </Stack>

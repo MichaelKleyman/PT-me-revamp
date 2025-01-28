@@ -58,9 +58,11 @@ export const AuthLogin = () => {
       },
       {
         onRequest: (ctx) => {
+          console.log(ctx);
           //show loading
         },
         onSuccess: (ctx) => {
+          console.log(ctx);
           //redirect to the dashboard
         },
         onError: (ctx) => {

@@ -1,67 +1,58 @@
-import { Stack, styled, useTheme } from "@mui/material";
+import { Stack, styled } from "@mui/material";
 import Typography from "@mui/material/Typography";
 import patientIcon from "../../assets/patient.png";
 import doctorIcon from "../../assets/doctor.png";
 
 export const AuthRegister = () => {
-  const theme = useTheme();
+  const renderPatientConsumer = (
+    <StyledProfileOption>
+      <Stack>
+        <img
+          alt='patient-icon'
+          src={patientIcon}
+          style={{ height: "45px", width: "45px", marginTop: "8px" }}
+        />
+      </Stack>
+      <Stack>
+        <Typography variant='h6' fontWeight='bold' textAlign='start'>
+          Patient / Consumer
+        </Typography>
+        <Typography textAlign='start'>Register as a patient...</Typography>
+      </Stack>
+    </StyledProfileOption>
+  );
+
+  const renderProviderOption = (
+    <StyledProfileOption>
+      <Stack>
+        <img
+          alt='patient-icon'
+          src={doctorIcon}
+          style={{ height: "45px", width: "45px", marginTop: "8px" }}
+        />
+      </Stack>
+      <Stack>
+        <Typography variant='h6' fontWeight='bold' textAlign='start'>
+          Licensed Physical Therapist / PT Practice
+        </Typography>
+        <Typography textAlign='start'>
+          Register as a physical therapist...
+        </Typography>
+      </Stack>
+    </StyledProfileOption>
+  );
 
   return (
     <>
-      <Typography
-        variant='h4'
-        fontWeight='bold'
-        sx={{
-          background: theme.palette.text.secondary,
-          WebkitBackgroundClip: "text",
-          color: "transparent",
-        }}
-      >
+      <Typography variant='h4' fontWeight='bold'>
         Register
       </Typography>
-      <Typography
-        variant='h6'
-        sx={{
-          background: theme.palette.text.secondary,
-          WebkitBackgroundClip: "text",
-          color: "transparent",
-        }}
-      >
+      <Typography variant='h6'>
         Choose the profile that best describes you
       </Typography>
       <Stack gap={2} mt={2}>
-        <StyledProfileOption>
-          <Stack>
-            <img
-              alt='patient-icon'
-              src={patientIcon}
-              style={{ height: "45px", width: "45px", marginTop: "8px" }}
-            />
-          </Stack>
-          <Stack>
-            <Typography variant='h6' fontWeight='bold' textAlign='start'>
-              Patient / Consumer
-            </Typography>
-            <Typography textAlign='start'>Register as a patient...</Typography>
-          </Stack>
-        </StyledProfileOption>
-        <StyledProfileOption>
-          <Stack>
-            <img
-              alt='patient-icon'
-              src={doctorIcon}
-              style={{ height: "45px", width: "45px", marginTop: "8px" }}
-            />
-          </Stack>
-          <Stack>
-            <Typography variant='h6' fontWeight='bold' textAlign='start'>
-              Licensed Physical Therapist / PT Practice
-            </Typography>
-            <Typography textAlign='start'>
-              Register as a physical therapist...
-            </Typography>
-          </Stack>
-        </StyledProfileOption>
+        {renderPatientConsumer}
+        {renderProviderOption}
       </Stack>
     </>
   );

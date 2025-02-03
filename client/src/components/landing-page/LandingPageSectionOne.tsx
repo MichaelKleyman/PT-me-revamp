@@ -4,6 +4,7 @@ import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import LandingImage from "../../assets/doctor-patient.jpg";
 import { styled, useTheme } from "@mui/material";
 import { Link } from "@tanstack/react-router";
+import { FloatingPaths } from "../../lib/components/animations/AnimationsFloatingPaths";
 
 export const LandingPageSectionOne = () => {
   const theme = useTheme();
@@ -13,18 +14,24 @@ export const LandingPageSectionOne = () => {
       alignItems='center'
       sx={{
         minHeight: "100vh",
-        background: "linear-gradient(135deg, #161616, #CACACA)",
+        background:
+          "linear-gradient(135deg, #002419 0%, #004731 25%, #005C3F 50%, #00734E 75%, #00855D 100%)",
+        position: "relative",
+        overflow: "hidden",
       }}
     >
+      <div>
+        <FloatingPaths position={1} />
+        <FloatingPaths position={-1} />
+      </div>
       <Stack flexDirection='row' alignItems='center' mt={30} width='55%'>
         <Stack>
           <Typography fontSize='40px' lineHeight='1.2' color='white'>
             Build custom PT plans,{" "}
             <span
               style={{
-                background: theme.palette.text.secondary,
                 WebkitBackgroundClip: "text",
-                color: "transparent",
+                color: theme.palette.primary.light,
               }}
             >
               streamline
@@ -32,9 +39,8 @@ export const LandingPageSectionOne = () => {
             paperwork, and access onsite tools{" "}
             <span
               style={{
-                background: theme.palette.text.secondary,
                 WebkitBackgroundClip: "text",
-                color: "transparent",
+                color: theme.palette.primary.light,
               }}
             >
               instantly

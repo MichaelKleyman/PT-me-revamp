@@ -1,42 +1,22 @@
-import { Button, Typography } from "@mui/material";
+import { Typography } from "@mui/material";
 import Stack from "@mui/material/Stack";
-import { Link, useNavigate, useSearch } from "@tanstack/react-router";
+import { Link, useSearch } from "@tanstack/react-router";
 import { AuthRegister } from "./AuthRegister";
 import { AuthLogin } from "./AuthLogin";
 import { Route } from "../../routes/(auth)/auth";
 
 export const AuthForm = () => {
-  const { authType } = useSearch({ from: Route.id });
-
-  console.log({ authType });
+  const { authType, userType } = useSearch({ from: Route.id });
 
   const isLoggingIn = authType === "login";
 
-  // const handleLoginClick = () => {
-  //   console.log("Navigating to login");
-  //   navigate({
-  //     to: "/auth",
-  //     search: {
-  //       loggingIn: true,
-  //     },
-  //     replace: true,
-  //   });
-  // };
-
-  // const handleRegisterClick = () => {
-  //   navigate({
-  //     search: (prev) => ({
-  //       ...prev,
-  //       loggingIn: undefined,
-  //       register: true,
-  //     }),
-  //     replace: true,
-  //   });
-  // };
-
   return (
     <Stack textAlign='center' width='95%'>
-      {!isLoggingIn ? <AuthRegister /> : <AuthLogin />}
+      {!isLoggingIn ? (
+        <AuthRegister userType={userType} authType={authType} />
+      ) : (
+        <AuthLogin userType={userType} authType={authType} />
+      )}
       {!isLoggingIn ? (
         <Stack
           mt={3}
@@ -52,13 +32,6 @@ export const AuthForm = () => {
           >
             Login here
           </Link>
-          {/* <Button
-            onClick={() =>
-              navigate({ search: (prev) => ({ ...prev, loggingIn: true }) })
-            }
-          >
-            Login here
-          </Button> */}
         </Stack>
       ) : (
         <Stack

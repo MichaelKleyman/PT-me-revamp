@@ -2,8 +2,16 @@ import { Stack, styled } from "@mui/material";
 import Typography from "@mui/material/Typography";
 import patientIcon from "../../assets/patient.png";
 import doctorIcon from "../../assets/doctor.png";
+import { Link } from "@tanstack/react-router";
+import { TUserType } from "../../lib/types/auth";
+import { Auth } from "../../lib/components/auth/Auth";
 
-export const AuthRegister = () => {
+export const AuthRegister = (props: TUserType) => {
+  const { userType, authType } = props;
+
+  const isRegistering = authType === "register";
+  const isPatient = userType === "patient";
+
   const renderPatientConsumer = (
     <StyledProfileOption>
       <Stack>
@@ -13,12 +21,16 @@ export const AuthRegister = () => {
           style={{ height: "45px", width: "45px", marginTop: "8px" }}
         />
       </Stack>
-      <Stack>
+      <Link
+        style={{ textDecoration: "none" }}
+        to='/auth'
+        search={{ authType: "register", userType: "patient" }}
+      >
         <Typography variant='h6' fontWeight='bold' textAlign='start'>
           Patient / Consumer
         </Typography>
         <Typography textAlign='start'>Register as a patient...</Typography>
-      </Stack>
+      </Link>
     </StyledProfileOption>
   );
 
@@ -31,16 +43,22 @@ export const AuthRegister = () => {
           style={{ height: "45px", width: "45px", marginTop: "8px" }}
         />
       </Stack>
-      <Stack>
+      <Link
+        style={{ textDecoration: "none" }}
+        to='/auth'
+        search={{ authType: "register", userType: "practitioner" }}
+      >
         <Typography variant='h6' fontWeight='bold' textAlign='start'>
           Licensed Physical Therapist / PT Practice
         </Typography>
         <Typography textAlign='start'>
           Register as a physical therapist...
         </Typography>
-      </Stack>
+      </Link>
     </StyledProfileOption>
   );
+
+  const renderRegisterForm = <Auth isRegistering={isRegistering} />;
 
   return (
     <>
@@ -50,10 +68,14 @@ export const AuthRegister = () => {
       <Typography variant='h6'>
         Choose the profile that best describes you
       </Typography>
-      <Stack gap={2} mt={2}>
-        {renderPatientConsumer}
-        {renderProviderOption}
-      </Stack>
+      {!userType ? (
+        <Stack gap={2} mt={2}>
+          {renderPatientConsumer}
+          {renderProviderOption}
+        </Stack>
+      ) : (
+        renderRegisterForm
+      )}
     </>
   );
 };

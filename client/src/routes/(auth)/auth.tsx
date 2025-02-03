@@ -1,10 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { z } from "zod";
 import { Auth } from "../../components/auth/Auth";
-
-const authUrlSchema = z.object({
-  authType: z.enum(["login", "register"]).optional(),
-});
+import { authUrlSchema } from "../../lib/types/auth";
 
 export const Route = createFileRoute("/(auth)/auth")({
   validateSearch: authUrlSchema,

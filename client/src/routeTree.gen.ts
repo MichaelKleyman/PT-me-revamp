@@ -12,12 +12,19 @@
 
 import { Route as rootRoute } from './routes/__root'
 import { Route as IndexImport } from './routes/index'
+import { Route as authAuthImport } from './routes/(auth)/auth'
 
 // Create/Update Routes
 
 const IndexRoute = IndexImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const authAuthRoute = authAuthImport.update({
+  id: '/(auth)/auth',
+  path: '/auth',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -32,6 +39,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexImport
       parentRoute: typeof rootRoute
     }
+    '/(auth)/auth': {
+      id: '/(auth)/auth'
+      path: '/auth'
+      fullPath: '/auth'
+      preLoaderRoute: typeof authAuthImport
+      parentRoute: typeof rootRoute
+    }
   }
 }
 
@@ -39,32 +53,37 @@ declare module '@tanstack/react-router' {
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/auth': typeof authAuthRoute
 }
 
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/auth': typeof authAuthRoute
 }
 
 export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexRoute
+  '/(auth)/auth': typeof authAuthRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths: '/' | '/auth'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to: '/' | '/auth'
+  id: '__root__' | '/' | '/(auth)/auth'
   fileRoutesById: FileRoutesById
 }
 
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  authAuthRoute: typeof authAuthRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  authAuthRoute: authAuthRoute,
 }
 
 export const routeTree = rootRoute
@@ -77,11 +96,15 @@ export const routeTree = rootRoute
     "__root__": {
       "filePath": "__root.tsx",
       "children": [
-        "/"
+        "/",
+        "/(auth)/auth"
       ]
     },
     "/": {
       "filePath": "index.tsx"
+    },
+    "/(auth)/auth": {
+      "filePath": "(auth)/auth.tsx"
     }
   }
 }

@@ -2,22 +2,23 @@
   "name": "server",
   "module": "index.ts",
   "scripts": {
-    "dev": "bun server.ts"
+    "dev": "bun run --hot src/index.ts"
   },
   "devDependencies": {
     "@types/bun": "latest",
-    "@types/express": "^5.0.0",
-    "@types/pg": "^8.11.10",
-    "sequelize-cli": "^6.6.2"
+    "@types/pg": "^8.11.11",
+    "drizzle-kit": "^0.30.4",
+    "tsx": "^4.19.2"
   },
   "peerDependencies": {
     "typescript": "^5.0.0"
   },
   "dependencies": {
     "better-auth": "^1.1.7",
-    "express": "^4.21.2",
+    "dotenv": "^16.4.7",
+    "drizzle-orm": "^0.39.1",
     "pg": "^8.13.1",
     "pg-hstore": "^2.3.4",
-    "sequelize": "^6.37.5"
+    "hono": "^4.6.20"
   }
 }

@@ -15,11 +15,12 @@
     "typescript": "^5.0.0"
   },
   "dependencies": {
+    "@hono/node-server": "^1.13.8",
     "better-auth": "^1.1.7",
     "dotenv": "^16.4.7",
     "drizzle-orm": "^0.39.1",
+    "hono": "^4.6.20",
     "pg": "^8.13.1",
-    "pg-hstore": "^2.3.4",
-    "hono": "^4.6.20"
+    "pg-hstore": "^2.3.4"
   }
 }

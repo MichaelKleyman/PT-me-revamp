@@ -20,6 +20,7 @@ export const Auth = (props: TAuthProps) => {
 
   const {
     handleLogin,
+    handleRegister,
     handleClickShowPassword,
     handleMouseDownPassword,
     handleMouseUpPassword,
@@ -28,10 +29,10 @@ export const Auth = (props: TAuthProps) => {
     formState,
   } = useHandleAuth({ isLoggingIn, isRegistering });
 
-  const renderLoginButton = (
+  const renderSubmitButton = (
     <Button
       color='inherit'
-      onClick={handleLogin}
+      onClick={isLoggingIn ? handleLogin : handleRegister}
       sx={{
         marginTop: 4,
         background: "#0957DE",
@@ -49,7 +50,7 @@ export const Auth = (props: TAuthProps) => {
     </Button>
   );
 
-  const renderLoginForm = (
+  const renderAuthForm = (
     <>
       <Controller
         name='email'
@@ -68,6 +69,27 @@ export const Auth = (props: TAuthProps) => {
           />
         )}
       />
+      {isRegistering ? (
+        <Controller
+          name='practiceName'
+          control={control}
+          render={({ field }) => (
+            <TextField
+              {...field}
+              variant='outlined'
+              placeholder='Enter your practice name'
+              label='Practice Name'
+              fullWidth
+              error={!!formState.errors.practiceName}
+              helperText={
+                formState.errors.practiceName
+                  ? formState.errors.practiceName.message
+                  : ""
+              }
+            />
+          )}
+        />
+      ) : null}
       <Controller
         name='password'
         control={control}
@@ -111,8 +133,8 @@ export const Auth = (props: TAuthProps) => {
 
   return (
     <Stack mt={2} gap={2}>
-      {renderLoginForm}
-      {renderLoginButton}
+      {renderAuthForm}
+      {renderSubmitButton}
     </Stack>
   );
 };

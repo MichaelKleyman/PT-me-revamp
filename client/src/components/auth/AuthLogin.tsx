@@ -1,10 +1,4 @@
-import {
-  Button,
-  IconButton,
-  InputAdornment,
-  TextField,
-  useTheme,
-} from "@mui/material";
+import { useTheme } from "@mui/material";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 import { TUserType } from "../../lib/types/auth";

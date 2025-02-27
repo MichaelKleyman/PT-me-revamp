@@ -1,8 +1,9 @@
 import { z } from "zod";
 
-export type TLoginForm = {
+export type TAuthForm = {
   email: string;
   password: string;
+  practiceName?: string;
 };
 
 export const authUrlSchema = z.object({

@@ -3,8 +3,6 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { TAuthForm } from "../../types/auth";
-import { authClient } from "../../auth/auth-client";
-import { useNavigate } from "@tanstack/react-router";
 
 const defaultValues: TAuthForm = {
   email: "",
@@ -19,8 +17,6 @@ type TProps = {
 export const useHandleAuth = (props: TProps) => {
   const { isLoggingIn, isRegistering } = props;
   const [showPassword, setShowPassword] = useState(false);
-
-  const navigate = useNavigate();
 
   const resolver = zodResolver(loginSchema);
 
@@ -49,55 +45,14 @@ export const useHandleAuth = (props: TProps) => {
     if (!isLoggingIn) return;
 
     const { email, password } = getValues();
-    const { data, error } = await authClient.signIn.email(
-      {
-        email,
-        password,
-      },
-      {
-        onRequest: (ctx) => {
-          console.log(ctx);
-          //show loading
-        },
-        onSuccess: (ctx) => {
-          console.log(ctx);
-          navigate({ to: "/" });
-        },
-        onError: (ctx) => {
-          alert(ctx.error.message);
-        },
-      }
-    );
-    console.log({ data, error });
+    console.log({ email, password });
   };
 
   const handleRegister = async () => {
     if (!isRegistering) return;
 
     const { email, password, practiceName } = getValues();
-    const { data, error } = await authClient.signUp.email(
-      {
-        email,
-        password,
-        name: practiceName ?? "",
-        // callbackURL: "/dashboard", // a url to redirect to after the user verifies their email (optional)
-      },
-      {
-        onRequest: (ctx) => {
-          console.log(ctx);
-          //show loading
-        },
-        onSuccess: (ctx) => {
-          console.log(ctx);
-          navigate({ to: "/" });
-        },
-        onError: (ctx) => {
-          console.log("ERROR", ctx);
-          alert(ctx.error.message);
-        },
-      }
-    );
-    console.log({ data, error });
+    console.log({ email, password, practiceName });
   };
 
   return {

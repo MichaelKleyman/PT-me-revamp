@@ -6,12 +6,9 @@ import { LandingPageSectionMiddle } from "./LandingPageSectionMiddle";
 import { useRef } from "react";
 import { MenuRef, MenuRefs } from "../../lib/utils/types/types";
 import { LandingPageFooter } from "./LandingPageFooter";
-import { authClient } from "../../lib/auth/auth-client";
 
 export const LandingPage = () => {
-  const { data: session, error } = authClient.useSession();
-
-  console.log(">>>", { session, error });
+  // const { data: session, error } = authClient.useSession();
 
   const servicesRef = useRef<HTMLDivElement | null>(null);
 

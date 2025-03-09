@@ -6,9 +6,11 @@ import { TanStackRouterVite } from "@tanstack/router-plugin/vite";
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [TanStackRouterVite(), viteReact()],
+  assetsInclude: ["**/*.png", "**/*.jpg", "**/*.jpeg", "**/*.svg"],
   resolve: {
     alias: {
-      "@": path.resolve(import.meta.dirname, "./src"),
+      "@client": path.resolve(import.meta.dirname, "./src"),
+      "@server": path.resolve(import.meta.dirname, "../server/src"),
     },
   },
   server: {

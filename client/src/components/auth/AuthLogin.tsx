@@ -3,7 +3,6 @@ import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 import { TUserType } from "../../lib/types/auth";
 import { Auth } from "../../lib/components/auth/Auth";
-import { Link } from "@tanstack/react-router";
 
 export const AuthLogin = (props: TUserType) => {
   const { userType, authType } = props;
@@ -13,13 +12,14 @@ export const AuthLogin = (props: TUserType) => {
 
   const isLoggingIn = authType === "login";
 
-  const renderLoginForm = <Auth isLoggingIn={isLoggingIn} />;
+  const renderLoginForm = (
+    <Auth isLoggingIn={isLoggingIn} userType={userType} />
+  );
 
   return (
     <Stack>
       <Typography variant='h5'>Welcome to PT-ME</Typography>
       {renderLoginForm}
-      <Link to=''>Login</Link>
     </Stack>
   );
 };

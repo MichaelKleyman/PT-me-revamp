@@ -2,7 +2,6 @@ import { z } from "zod";
 
 export type TAuthForm = {
   email: string;
-  password: string;
   practiceName?: string;
 };
 

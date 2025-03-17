@@ -1,12 +1,12 @@
 import {
   createKindeServerClient,
   GrantType,
-  SessionManager,
   type UserType,
 } from "@kinde-oss/kinde-typescript-sdk";
 import { Context } from "hono";
 import { getCookie, setCookie, deleteCookie } from "hono/cookie";
 import { createMiddleware } from "hono/factory";
+import { SessionManager } from "./lib/types";
 
 // Client for authorization code flow
 export const kindeClient = createKindeServerClient(
@@ -20,12 +20,17 @@ export const kindeClient = createKindeServerClient(
   }
 );
 
-let store: Record<string, unknown> = {};
+interface SessionStore {
+  [key: string]: unknown;
+}
+
+let store: SessionStore = {};
 
 export const sessionManager = (c: Context): SessionManager => ({
-  async getSessionItem(key: string) {
+  async getSessionItem<T>(key: string): Promise<T | null> {
     const result = getCookie(c, key);
-    return result;
+    if (!result) return null;
+    return result as unknown as T;
   },
   async setSessionItem(key: string, value: unknown) {
     const cookieOptions = {
@@ -35,16 +40,20 @@ export const sessionManager = (c: Context): SessionManager => ({
     } as const;
     if (typeof value === "string") {
       setCookie(c, key, value, cookieOptions);
+      store[key] = value;
     } else {
       setCookie(c, key, JSON.stringify(value), cookieOptions);
+      store[key] = value;
     }
   },
   async removeSessionItem(key: string) {
     deleteCookie(c, key);
+    delete store[key];
   },
   async destroySession() {
     ["it_token", "access_token", "user", "refresh_token"].forEach((key) => {
       deleteCookie(c, key);
+      delete store[key];
     });
   },
 });

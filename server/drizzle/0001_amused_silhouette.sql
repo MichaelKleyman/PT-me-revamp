@@ -1,0 +1,1 @@
+ALTER TABLE "users_schema"."users" ADD COLUMN "created_at" timestamp DEFAULT now();

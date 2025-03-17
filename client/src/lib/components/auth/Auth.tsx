@@ -1,39 +1,32 @@
-import VisibilityOff from "@mui/icons-material/VisibilityOff";
-import Visibility from "@mui/icons-material/Visibility";
-import {
-  IconButton,
-  InputAdornment,
-  Stack,
-  TextField,
-  Button,
-} from "@mui/material";
+import { Stack, TextField, Button, Box } from "@mui/material";
 import { Controller } from "react-hook-form";
 import { useHandleAuth } from "../../hooks/auth/useHandleAuth";
+import { TUserType } from "@client/lib/types/auth";
 
 type TAuthProps = {
+  userType: TUserType["userType"];
   isRegistering?: boolean;
   isLoggingIn?: boolean;
 };
 
 export const Auth = (props: TAuthProps) => {
-  const { isRegistering = false, isLoggingIn = false } = props;
+  const { userType, isRegistering = false, isLoggingIn = false } = props;
 
-  const {
-    handleLogin,
-    handleClickShowPassword,
-    handleMouseDownPassword,
-    handleMouseUpPassword,
-    showPassword,
-    control,
-    formState,
-  } = useHandleAuth({ isLoggingIn, isRegistering });
+  const { handleLogin, handleRegister, control, formState, watch } =
+    useHandleAuth({
+      isLoggingIn,
+      isRegistering,
+    });
 
-  const renderLoginButton = (
-    <Button
-      color='inherit'
-      onClick={handleLogin}
+  const practiceName = watch("practiceName") ?? "";
+  const email = watch("email");
+
+  const renderSubmitButton = (
+    <Box
+      component='a'
+      href={`/api/register?email=${email}&practicename=${practiceName}&userType=${userType}`}
       sx={{
-        marginTop: 4,
+        marginTop: 1,
         background: "#0957DE",
         color: "white",
         fontWeight: "bold",
@@ -45,11 +38,16 @@ export const Auth = (props: TAuthProps) => {
         },
       }}
     >
-      {isRegistering ? "Register" : "Log In"}
-    </Button>
+      <Button
+        color='inherit'
+        onClick={isLoggingIn ? handleLogin : handleRegister}
+      >
+        {isRegistering ? "Register" : "Log In"}
+      </Button>
+    </Box>
   );
 
-  const renderLoginForm = (
+  const renderAuthForm = (
     <>
       <Controller
         name='email'
@@ -68,51 +66,34 @@ export const Auth = (props: TAuthProps) => {
           />
         )}
       />
-      <Controller
-        name='password'
-        control={control}
-        render={({ field }) => (
-          <TextField
-            {...field}
-            id='outlined-adornment-password'
-            placeholder='Enter your password'
-            type={showPassword ? "text" : "password"}
-            label='Password'
-            error={!!formState.errors.password}
-            helperText={
-              formState.errors.email ? formState.errors.email.message : ""
-            }
-            slotProps={{
-              input: {
-                endAdornment: (
-                  <InputAdornment position='end'>
-                    <IconButton
-                      aria-label={
-                        showPassword
-                          ? "hide the password"
-                          : "display the password"
-                      }
-                      onClick={handleClickShowPassword}
-                      onMouseDown={handleMouseDownPassword}
-                      onMouseUp={handleMouseUpPassword}
-                      edge='end'
-                    >
-                      {showPassword ? <VisibilityOff /> : <Visibility />}
-                    </IconButton>
-                  </InputAdornment>
-                ),
-              },
-            }}
-          />
-        )}
-      />
+      {isRegistering ? (
+        <Controller
+          name='practiceName'
+          control={control}
+          render={({ field }) => (
+            <TextField
+              {...field}
+              variant='outlined'
+              placeholder='Enter your practice name'
+              label='Practice Name'
+              fullWidth
+              error={!!formState.errors.practiceName}
+              helperText={
+                formState.errors.practiceName
+                  ? formState.errors.practiceName.message
+                  : ""
+              }
+            />
+          )}
+        />
+      ) : null}
     </>
   );
 
   return (
     <Stack mt={2} gap={2}>
-      {renderLoginForm}
-      {renderLoginButton}
+      {renderAuthForm}
+      {renderSubmitButton}
     </Stack>
   );
 };

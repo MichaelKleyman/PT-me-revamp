@@ -8,6 +8,8 @@ import { MenuRef, MenuRefs } from "../../lib/utils/types/types";
 import { LandingPageFooter } from "./LandingPageFooter";
 
 export const LandingPage = () => {
+  // const { data: session, error } = authClient.useSession();
+
   const servicesRef = useRef<HTMLDivElement | null>(null);
 
   const menuRefs: MenuRefs = {

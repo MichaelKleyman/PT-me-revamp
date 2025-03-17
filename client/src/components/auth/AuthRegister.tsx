@@ -2,9 +2,9 @@ import { Stack, styled } from "@mui/material";
 import Typography from "@mui/material/Typography";
 import patientIcon from "../../assets/patient.png";
 import doctorIcon from "../../assets/doctor.png";
-import { Link } from "@tanstack/react-router";
 import { TUserType } from "../../lib/types/auth";
 import { Auth } from "../../lib/components/auth/Auth";
+import { Link } from "@tanstack/react-router";
 
 export const AuthRegister = (props: TUserType) => {
   const { userType, authType } = props;
@@ -18,7 +18,11 @@ export const AuthRegister = (props: TUserType) => {
         <img
           alt='patient-icon'
           src={patientIcon}
-          style={{ height: "45px", width: "45px", marginTop: "8px" }}
+          style={{
+            height: "45px",
+            width: "45px",
+            marginTop: "8px",
+          }}
         />
       </Stack>
       <Link
@@ -58,15 +62,17 @@ export const AuthRegister = (props: TUserType) => {
     </StyledProfileOption>
   );
 
-  const renderRegisterForm = <Auth isRegistering={isRegistering} />;
+  const renderRegisterForm = <Auth isRegistering={isRegistering} userType={userType}/>;
 
   return (
     <>
       <Typography variant='h4' fontWeight='bold'>
-        Register
+        Register <span style={{ color: "#007FFF" }}>{userType}</span>
       </Typography>
       <Typography variant='h6'>
-        Choose the profile that best describes you
+        {!userType
+          ? "Choose the profile that best describes you"
+          : "Complete the first step of the registration process"}
       </Typography>
       {!userType ? (
         <Stack gap={2} mt={2}>

@@ -1,6 +1,6 @@
 # Revamp
 
 ## TODO
-- [ ] Make new set up for database as well as data model
-- [ ] Move from Sequelize to Drizzle
-- [ ] Create successful login and register functionality
+- [:check] Make new set up for database as well as data model
+- [:check] Move from Sequelize to Drizzle
+- [:check] Create successful login and register functionality

@@ -1,5 +1,5 @@
 import Grid from "@mui/material/Grid2";
-import authImage from "../../assets/dashboard.png";
+import authImage from "@client/assets/dashboard.png";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { Link } from "@tanstack/react-router";
 import { styled } from "@mui/material/styles";

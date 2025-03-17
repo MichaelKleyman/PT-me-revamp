@@ -4,6 +4,7 @@ import { Link, useSearch } from "@tanstack/react-router";
 import { AuthRegister } from "./AuthRegister";
 import { AuthLogin } from "./AuthLogin";
 import { Route } from "../../routes/(auth)/auth";
+import { AuthLinkWrapper } from "@client/lib/components/auth/AuthLinkWrapper";
 
 export const AuthForm = () => {
   const { authType, userType } = useSearch({ from: Route.id });
@@ -26,12 +27,13 @@ export const AuthForm = () => {
           gap={1}
         >
           <Typography>Already a registered user?</Typography>
-          <Link
+          <AuthLinkWrapper isLoggingIn>Login here</AuthLinkWrapper>
+          {/* <Link
             to='/auth'
             search={{ authType: isLoggingIn ? "register" : "login" }}
           >
             Login here
-          </Link>
+          </Link> */}
         </Stack>
       ) : (
         <Stack

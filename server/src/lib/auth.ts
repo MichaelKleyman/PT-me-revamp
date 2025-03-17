@@ -4,11 +4,19 @@ import { db } from "../db";
 
 export const auth = betterAuth({
   database: drizzleAdapter(db, {
-    provider: "pg", // or "mysql", "sqlite"
+    provider: "pg",
   }),
   emailAndPassword: {
     enabled: true,
   },
+  trustedOrigins: ["http://localhost:5173/"],
+  // advanced: {
+  //   defaultCookieAttributes: {
+  //     secure: true,
+  //     httpOnly: true,≈
+  //     sameSite: "none",
+  //   },
+  // },
   // socialProviders: {
   //   facebook: {
   //     clientId: process.env.FACEBOOK_CLIENT_ID,

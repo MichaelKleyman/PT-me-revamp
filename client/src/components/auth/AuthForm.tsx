@@ -27,13 +27,13 @@ export const AuthForm = () => {
           gap={1}
         >
           <Typography>Already a registered user?</Typography>
-          <AuthLinkWrapper isLoggingIn>Login here</AuthLinkWrapper>
-          {/* <Link
+          {/* <AuthLinkWrapper isLoggingIn>Login here</AuthLinkWrapper> */}
+          <Link
             to='/auth'
             search={{ authType: isLoggingIn ? "register" : "login" }}
           >
             Login here
-          </Link> */}
+          </Link>
         </Stack>
       ) : (
         <Stack

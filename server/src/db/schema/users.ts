@@ -8,6 +8,8 @@ export const usersTable = usersSchema.table(
     id: serial("id").primaryKey(),
     name: text("name").notNull(),
     email: text("email").notNull(),
+    address: text("address"), // Not needed for practitioner
+    licenseNumber: text("licenseNumber"), // Not needed for patient
     userType: text("user_type", {
       enum: ["Patient", "Provider"] as const,
     }).notNull(),

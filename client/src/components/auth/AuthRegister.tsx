@@ -5,9 +5,12 @@ import doctorIcon from "../../assets/doctor.png";
 import { TUserType } from "../../lib/types/auth";
 import { Auth } from "../../lib/components/auth/Auth";
 import { Link } from "@tanstack/react-router";
+import { useState } from "react";
 
 export const AuthRegister = (props: TUserType) => {
   const { userType, authType } = props;
+
+  const [registerStep, setRegisterStep] = useState(1);
 
   const isRegistering = authType === "register";
   const isPatient = userType === "patient";
@@ -62,7 +65,14 @@ export const AuthRegister = (props: TUserType) => {
     </StyledProfileOption>
   );
 
-  const renderRegisterForm = <Auth isRegistering={isRegistering} userType={userType}/>;
+  const renderRegisterForm = (
+    <Auth
+      isRegistering={isRegistering}
+      userType={userType}
+      registerStep={registerStep}
+      onChangeStep={(val: number) => setRegisterStep(val)}
+    />
+  );
 
   return (
     <>
@@ -72,7 +82,7 @@ export const AuthRegister = (props: TUserType) => {
       <Typography variant='h6'>
         {!userType
           ? "Choose the profile that best describes you"
-          : "Complete the first step of the registration process"}
+          : `Complete step ${registerStep} of the registration process`}
       </Typography>
       {!userType ? (
         <Stack gap={2} mt={2}>

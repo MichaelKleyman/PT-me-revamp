@@ -1,8 +1,16 @@
 import { z } from "zod";
 
-export type TAuthForm = {
+export type TAuthRegisterForm = {
   email: string;
-  practiceName?: string;
+  practiceName: string;
+  address: string;
+  practitionerName: string;
+  licenseNumber: string | null;
+};
+
+export type TAuthLoginForm = {
+  email: string;
+  practitionerName: string;
 };
 
 export const authUrlSchema = z.object({

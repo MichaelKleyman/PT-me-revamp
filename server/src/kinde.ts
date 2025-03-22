@@ -69,7 +69,7 @@ export const getUser = createMiddleware<Env>(async (c, next) => {
     const manager = sessionManager(c);
     const isAuthenticated = await kindeClient.isAuthenticated(manager);
 
-    console.log(">>>", isAuthenticated);
+    console.log(">>>", { isAuthenticated });
     if (!isAuthenticated) {
       return c.json({ error: "Unauthorized" }, 401);
     }

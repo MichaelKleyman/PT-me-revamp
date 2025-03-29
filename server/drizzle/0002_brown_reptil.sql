@@ -1,1 +1,0 @@
-ALTER TABLE "users_schema"."users" ADD COLUMN "address" text NOT NULL;

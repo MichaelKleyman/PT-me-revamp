@@ -66,7 +66,12 @@ export const Auth = (props: TAuthProps) => {
       // href={`/api/register?email=${email}&practicename=${practiceName}&userType=${userType}`}
       onClick={isLoggingIn ? handleLogin : handleRegister}
     >
+      {/* // <a
+    //   href={`/api/register/${email}`}
+    //   onClick={isLoggingIn ? handleLogin : handleRegister}
+    // > */}
       {isRegistering ? "Register" : "Log In"}
+      {/* // </a> */}
     </StyledAuthButton>
   );
 

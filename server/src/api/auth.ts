@@ -32,7 +32,7 @@ export const authRouter = new Hono()
         console.error("Database error during user creation:", dbError);
       }
 
-      return c.redirect("/dashboard");
+      return c.redirect("/");
     } catch (error) {
       console.log("YO");
       console.error("Callback error:", error);

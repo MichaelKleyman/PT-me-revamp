@@ -6,9 +6,10 @@ export const Route = createFileRoute("/_authenticated")({
     const queryClient = context.queryClient;
     try {
       const { user } = await queryClient.fetchQuery(userQueryOptions);
+      console.log(user);
       if (user) {
         throw redirect({
-          to: "/dashboard",
+          to: "/",
         });
       }
     } catch (error) {

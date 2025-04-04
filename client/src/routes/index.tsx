@@ -1,16 +1,24 @@
-import { createFileRoute, redirect } from "@tanstack/react-router";
-import { ViewLayout } from "../views/ViewLayout/ViewLayout";
+import { createFileRoute } from "@tanstack/react-router";
+import { ViewLandingPage } from "../views/ViewLandingPage";
 import { userQueryOptions } from "@client/lib/utils/query/query";
+import { ViewAppPage } from "@client/views/ViewAppPage";
+
+function RootRouteComponent() {
+  const data = Route.useLoaderData();
+
+  if (data && data.user) {
+    return <ViewAppPage />;
+  } else return <ViewLandingPage />;
+}
 
 export const Route = createFileRoute("/")({
-  beforeLoad: async ({ context }) => {
+  loader: async ({ context }) => {
     const queryClient = context.queryClient;
     const { user } = await queryClient.fetchQuery(userQueryOptions);
-    if (!user) return;
 
-    throw redirect({
-      to: "/dashboard",
-    });
+    if (user) {
+      return { user };
+    }
   },
-  component: ViewLayout,
+  component: RootRouteComponent,
 });

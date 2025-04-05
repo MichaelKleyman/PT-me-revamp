@@ -17,10 +17,10 @@
   "dependencies": {
     "@hono/node-server": "^1.13.8",
     "@kinde-oss/kinde-typescript-sdk": "^2.9.1",
-    "better-auth": "^1.1.7",
+    "@neondatabase/serverless": "^1.0.0",
     "dotenv": "^16.4.7",
     "drizzle-orm": "^0.39.1",
-    "hono": "^4.6.20",
+    "hono": "^4.7.5",
     "pg": "^8.13.1",
     "pg-hstore": "^2.3.4"
   }

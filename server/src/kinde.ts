@@ -7,6 +7,9 @@ import { Context } from "hono";
 import { getCookie, setCookie, deleteCookie } from "hono/cookie";
 import { createMiddleware } from "hono/factory";
 import { SessionManager } from "./lib/types";
+import { db } from "./db";
+import { UserInsert, usersTable } from "./db/schema/users";
+import { eq } from "drizzle-orm";
 
 // Client for authorization code flow
 export const kindeClient = createKindeServerClient(
@@ -60,7 +63,7 @@ export const sessionManager = (c: Context): SessionManager => ({
 
 type Env = {
   Variables: {
-    user: UserType;
+    user: UserType | UserInsert;
   };
 };
 
@@ -74,8 +77,13 @@ export const getUser = createMiddleware<Env>(async (c, next) => {
       return c.json({ error: "Unauthorized" }, 401);
     }
 
-    const user = await kindeClient.getUserProfile(manager);
-    c.set("user", user);
+    const userFromKinde = await kindeClient.getUserProfile(manager);
+    const userFromDb = await db
+      .select()
+      .from(usersTable)
+      .where(eq(usersTable.email, userFromKinde.email));
+
+    c.set("user", userFromDb[0]);
     await next();
   } catch (error) {
     console.error(error);

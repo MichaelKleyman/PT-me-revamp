@@ -1,6 +1,6 @@
 # Revamp
 
 ## TODO
-- [x] Make new set up for database as well as data model
-- [x] Move from Sequelize to Drizzle
-- [x] Create successful login and register functionality
+- [] Make the new routes/pages when logged in be authenticated routes
+- [] Choose which section to begin working on (Dashboard, Schedule, Patients)
+- [] Set up queries/mutations for whatever necessary operations are needed

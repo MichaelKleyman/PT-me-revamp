@@ -1,0 +1,1 @@
+ALTER TABLE "users_schema"."users" ALTER COLUMN "kinde_id" DROP NOT NULL;

@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { TAuthRegisterForm } from "../../types/auth";
 import { useEffect } from "react";
+import { registerUser } from "@client/lib/fetch/auth";
 
 type TProps = {
   isRegistering: boolean;
@@ -19,6 +20,7 @@ const defaultValues: TAuthRegisterForm = {
 
 export const useHandleAuthRegister = (props: TProps) => {
   const { isRegistering, handleError } = props;
+
   const resolver = zodResolver(registerSchema);
 
   const form = useForm<TAuthRegisterForm>({
@@ -33,12 +35,13 @@ export const useHandleAuthRegister = (props: TProps) => {
   }, [isRegistering]);
 
   const handleRegister = async () => {
-    const { email, practiceName } = form.getValues();
-    if (!form.formState.isValid) {
-      handleError(true);
-      return;
-    }
-    console.log({ email, practiceName });
+    const userData = form.getValues();
+    // if (!form.formState.isValid) {
+    //   handleError(true);
+    //   return;
+    // }
+
+    await registerUser(userData);
   };
 
   const validateStep = async (currentStep: number) => {
@@ -70,7 +73,7 @@ const registerSchema = z.object({
     .min(4)
     .max(15)
     .regex(
-      /^[a-zA-Z0-9\.\-]*$/,
+      /^[a-zA-Z0-9\\.\\-]*$/,
       "License must contain only letters, numbers, periods, or hyphens"
     )
     .refine(

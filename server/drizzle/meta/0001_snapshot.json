@@ -1,6 +1,6 @@
 {
-  "id": "174b799d-b1b8-4805-85e8-ec675e3a30c3",
-  "prevId": "176f9484-ca50-42a8-924e-633541d93984",
+  "id": "de91e69e-f28a-4b69-b789-806df943a767",
+  "prevId": "aff8e4a6-6e98-4381-96b4-f6aa3c4e4027",
   "version": "7",
   "dialect": "postgresql",
   "tables": {
@@ -14,6 +14,12 @@
           "primaryKey": true,
           "notNull": true
         },
+        "kinde_id": {
+          "name": "kinde_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
         "name": {
           "name": "name",
           "type": "text",
@@ -25,6 +31,18 @@
           "type": "text",
           "primaryKey": false,
           "notNull": true
+        },
+        "address": {
+          "name": "address",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "licenseNumber": {
+          "name": "licenseNumber",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
         },
         "user_type": {
           "name": "user_type",
@@ -59,6 +77,81 @@
       },
       "foreignKeys": {},
       "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "users_kinde_id_unique": {
+          "name": "users_kinde_id_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "kinde_id"
+          ]
+        }
+      },
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "practices_schema.practices": {
+      "name": "practices",
+      "schema": "practices_schema",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "practiceName": {
+          "name": "practiceName",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "email": {
+          "name": "email",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "address": {
+          "name": "address",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "admin_ids": {
+          "name": "admin_ids",
+          "type": "integer[]",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'{}'"
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "now()"
+        }
+      },
+      "indexes": {
+        "id_idx": {
+          "name": "id_idx",
+          "columns": [
+            {
+              "expression": "id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
       "uniqueConstraints": {},
       "policies": {},
       "checkConstraints": {},
@@ -67,7 +160,8 @@
   },
   "enums": {},
   "schemas": {
-    "users_schema": "users_schema"
+    "users_schema": "users_schema",
+    "practices_schema": "practices_schema"
   },
   "sequences": {},
   "roles": {},

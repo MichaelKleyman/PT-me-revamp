@@ -28,10 +28,11 @@ export const useHandleAuthLogin = (
 
   const handleLogin = async () => {
     const { email, practitionerName } = form.getValues();
-    if (!form.formState.isValid) {
-      handleError(true);
-      return;
-    }
+    // if (!form.formState.isValid) {
+    //   handleError(true);
+    //   return;
+    // }
+    window.location.href = `/api/login/${email}`;
   };
 
   return {

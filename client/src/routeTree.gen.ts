@@ -13,8 +13,9 @@
 import { Route as rootRoute } from './routes/__root'
 import { Route as AuthenticatedImport } from './routes/_authenticated'
 import { Route as IndexImport } from './routes/index'
-import { Route as AuthenticatedDashboardImport } from './routes/_authenticated/dashboard'
 import { Route as authAuthImport } from './routes/(auth)/auth'
+import { Route as AuthenticatedPracticeIndexImport } from './routes/_authenticated/practice/index'
+import { Route as AuthenticatedPatientIndexImport } from './routes/_authenticated/patient/index'
 
 // Create/Update Routes
 
@@ -29,16 +30,24 @@ const IndexRoute = IndexImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
-const AuthenticatedDashboardRoute = AuthenticatedDashboardImport.update({
-  id: '/dashboard',
-  path: '/dashboard',
-  getParentRoute: () => AuthenticatedRoute,
-} as any)
-
 const authAuthRoute = authAuthImport.update({
   id: '/(auth)/auth',
   path: '/auth',
   getParentRoute: () => rootRoute,
+} as any)
+
+const AuthenticatedPracticeIndexRoute = AuthenticatedPracticeIndexImport.update(
+  {
+    id: '/practice/',
+    path: '/practice/',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any,
+)
+
+const AuthenticatedPatientIndexRoute = AuthenticatedPatientIndexImport.update({
+  id: '/patient/',
+  path: '/patient/',
+  getParentRoute: () => AuthenticatedRoute,
 } as any)
 
 // Populate the FileRoutesByPath interface
@@ -66,11 +75,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof authAuthImport
       parentRoute: typeof rootRoute
     }
-    '/_authenticated/dashboard': {
-      id: '/_authenticated/dashboard'
-      path: '/dashboard'
-      fullPath: '/dashboard'
-      preLoaderRoute: typeof AuthenticatedDashboardImport
+    '/_authenticated/patient/': {
+      id: '/_authenticated/patient/'
+      path: '/patient'
+      fullPath: '/patient'
+      preLoaderRoute: typeof AuthenticatedPatientIndexImport
+      parentRoute: typeof AuthenticatedImport
+    }
+    '/_authenticated/practice/': {
+      id: '/_authenticated/practice/'
+      path: '/practice'
+      fullPath: '/practice'
+      preLoaderRoute: typeof AuthenticatedPracticeIndexImport
       parentRoute: typeof AuthenticatedImport
     }
   }
@@ -79,11 +95,13 @@ declare module '@tanstack/react-router' {
 // Create and export the route tree
 
 interface AuthenticatedRouteChildren {
-  AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRoute
+  AuthenticatedPatientIndexRoute: typeof AuthenticatedPatientIndexRoute
+  AuthenticatedPracticeIndexRoute: typeof AuthenticatedPracticeIndexRoute
 }
 
 const AuthenticatedRouteChildren: AuthenticatedRouteChildren = {
-  AuthenticatedDashboardRoute: AuthenticatedDashboardRoute,
+  AuthenticatedPatientIndexRoute: AuthenticatedPatientIndexRoute,
+  AuthenticatedPracticeIndexRoute: AuthenticatedPracticeIndexRoute,
 }
 
 const AuthenticatedRouteWithChildren = AuthenticatedRoute._addFileChildren(
@@ -94,14 +112,16 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '': typeof AuthenticatedRouteWithChildren
   '/auth': typeof authAuthRoute
-  '/dashboard': typeof AuthenticatedDashboardRoute
+  '/patient': typeof AuthenticatedPatientIndexRoute
+  '/practice': typeof AuthenticatedPracticeIndexRoute
 }
 
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '': typeof AuthenticatedRouteWithChildren
   '/auth': typeof authAuthRoute
-  '/dashboard': typeof AuthenticatedDashboardRoute
+  '/patient': typeof AuthenticatedPatientIndexRoute
+  '/practice': typeof AuthenticatedPracticeIndexRoute
 }
 
 export interface FileRoutesById {
@@ -109,20 +129,22 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/_authenticated': typeof AuthenticatedRouteWithChildren
   '/(auth)/auth': typeof authAuthRoute
-  '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
+  '/_authenticated/patient/': typeof AuthenticatedPatientIndexRoute
+  '/_authenticated/practice/': typeof AuthenticatedPracticeIndexRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '' | '/auth' | '/dashboard'
+  fullPaths: '/' | '' | '/auth' | '/patient' | '/practice'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '' | '/auth' | '/dashboard'
+  to: '/' | '' | '/auth' | '/patient' | '/practice'
   id:
     | '__root__'
     | '/'
     | '/_authenticated'
     | '/(auth)/auth'
-    | '/_authenticated/dashboard'
+    | '/_authenticated/patient/'
+    | '/_authenticated/practice/'
   fileRoutesById: FileRoutesById
 }
 
@@ -159,14 +181,19 @@ export const routeTree = rootRoute
     "/_authenticated": {
       "filePath": "_authenticated.tsx",
       "children": [
-        "/_authenticated/dashboard"
+        "/_authenticated/patient/",
+        "/_authenticated/practice/"
       ]
     },
     "/(auth)/auth": {
       "filePath": "(auth)/auth.tsx"
     },
-    "/_authenticated/dashboard": {
-      "filePath": "_authenticated/dashboard.tsx",
+    "/_authenticated/patient/": {
+      "filePath": "_authenticated/patient/index.tsx",
+      "parent": "/_authenticated"
+    },
+    "/_authenticated/practice/": {
+      "filePath": "_authenticated/practice/index.tsx",
       "parent": "/_authenticated"
     }
   }

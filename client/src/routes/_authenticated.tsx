@@ -7,14 +7,18 @@ export const Route = createFileRoute("/_authenticated")({
     try {
       const { user } = await queryClient.fetchQuery(userQueryOptions);
       console.log(user);
-      if (user) {
+      if (!user) {
+        console.log("No user found, redirecting to home");
         throw redirect({
           to: "/",
         });
       }
     } catch (error) {
-      console.error(error);
-      return { user: null };
+      console.error("Authentication error:", error);
+      throw redirect({
+        to: "/",
+      });
+      // return { user: null };
     }
   },
 });

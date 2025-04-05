@@ -1,20 +1,46 @@
-import { LayoutTopBar } from "./LayoutTopBar";
+import { Box } from "@mui/material";
+import { lazy } from "react";
+
+const drawerWidth = 200;
+
+const LayoutLeftPanel = lazy(() => import("./LayoutLeftPanel"));
+const LayoutTopBar = lazy(() => import("./LayoutTopBar"));
 
 export const LayoutPage = () => {
   return (
-    <>
-      <LayoutTopBar />
-    </>
-    // <div>
-    //   {/* <Sidebar /> */}
-    //   <div className='w-full flex flex-1 flex-col'>
-    //     <header className='h-16 border-b border-gray-200 dark:border-[#1F1F23]'>
-    //       {/* <TopNav /> */}
-    //     </header>
-    //     <main className='flex-1 overflow-auto p-6 bg-white dark:bg-[#0F0F12]'>
-    //       {children}
-    //     </main>
-    //   </div>
-    // </div>
+    <Box
+      sx={{
+        display: "flex",
+        minHeight: "100vh",
+      }}
+    >
+      {/* Left Panel */}
+      <LayoutLeftPanel />
+
+      {/* Main content area with TopBar and children */}
+      <Box
+        sx={{
+          flexGrow: 1,
+          display: "flex",
+          flexDirection: "column",
+          width: { xs: "100%", md: `calc(100% - ${drawerWidth}px)` },
+        }}
+      >
+        {/* Top Bar */}
+        <LayoutTopBar />
+
+        {/* Main content */}
+        <Box
+          component='main'
+          sx={{
+            flexGrow: 1,
+            p: 3,
+            overflow: "auto",
+          }}
+        >
+          {/* {children} */}
+        </Box>
+      </Box>
+    </Box>
   );
 };

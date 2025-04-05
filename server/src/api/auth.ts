@@ -5,8 +5,11 @@ import { createUser } from "../lib/utils";
 let authType: "isRegistering" | "isLoggingIn" | null = null;
 
 export const authRouter = new Hono()
-  .get("/login", async (c) => {
-    const loginUrl = await kindeClient.login(sessionManager(c));
+  .get("/login/:email", async (c) => {
+    const email = c.req.param("email");
+    const loginUrl = await kindeClient.login(sessionManager(c), {
+      authUrlParams: { login_hint: email },
+    });
     authType = "isLoggingIn";
     return c.redirect(loginUrl.toString());
   })
@@ -25,14 +28,16 @@ export const authRouter = new Hono()
       const session = sessionManager(c);
       await kindeClient.handleRedirectToApp(session, url);
 
+      let userType;
       try {
-        await createUser(session);
+        userType = await createUser(session);
         console.log("User creation complete");
       } catch (dbError) {
         console.error("Database error during user creation:", dbError);
       }
 
-      return c.redirect("/");
+      console.log(`redirect to ${userType}`);
+      return c.redirect(`/${userType}`);
     } catch (error) {
       console.log("YO");
       console.error("Callback error:", error);

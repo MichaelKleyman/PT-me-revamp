@@ -13,6 +13,7 @@ export const usersTable = usersSchema.table(
   "users",
   {
     id: serial("id").primaryKey(),
+    kindeId: text("kinde_id").unique(), // Unique identifier for Kinde user
     name: text("name").notNull(),
     email: text("email").notNull(),
     address: text("address"), // Not needed for practitioner

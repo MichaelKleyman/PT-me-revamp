@@ -118,7 +118,11 @@ const LayoutLeftPanel = () => {
       <Box flexGrow={1} overflow='auto' p={2}>
         <NavSection title='Overview'>
           {overviewPanelOptions.map((item, idx) => (
-            <NavItem key={`item-${idx}`} href={item.href} icon={item.icon}>
+            <NavItem
+              key={`item-${idx}`}
+              href={`/practice/${item.label.toLowerCase()}`}
+              icon={item.icon}
+            >
               {item.label}
             </NavItem>
           ))}

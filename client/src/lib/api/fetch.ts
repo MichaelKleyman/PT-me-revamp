@@ -14,6 +14,8 @@ export const getCurrentUser = async () => {
   return data;
 };
 
+// Mutations
+
 export const registerUser = async (userData: TAuthRegisterForm) => {
   // Store all the data in session
   await api.auth.registrationData.$post({
@@ -23,4 +25,6 @@ export const registerUser = async (userData: TAuthRegisterForm) => {
   window.location.href = `/api/register/${userData.email}`;
 };
 
-// Mutations
+export const loginUser = (email: string) => {
+  window.location.href = `/api/login/${email}`;
+};

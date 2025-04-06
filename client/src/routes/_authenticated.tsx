@@ -1,4 +1,4 @@
-import { userQueryOptions } from "../lib/utils/query/query";
+import { userQueryOptions } from "../lib/api/query";
 import { createFileRoute, redirect } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/_authenticated")({

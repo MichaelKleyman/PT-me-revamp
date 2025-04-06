@@ -37,7 +37,7 @@ export const authRouter = new Hono()
       }
 
       console.log(`redirect to ${userType}`);
-      return c.redirect(`/${userType}`);
+      return c.redirect(`/${userType}/dashboard`);
     } catch (error) {
       console.log("YO");
       console.error("Callback error:", error);

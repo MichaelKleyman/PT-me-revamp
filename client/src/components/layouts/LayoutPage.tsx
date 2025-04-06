@@ -6,7 +6,7 @@ const drawerWidth = 200;
 const LayoutLeftPanel = lazy(() => import("./LayoutLeftPanel"));
 const LayoutTopBar = lazy(() => import("./LayoutTopBar"));
 
-export const LayoutPage = () => {
+export const LayoutPage = ({ children }: { children: React.ReactNode }) => {
   return (
     <Box
       sx={{
@@ -38,7 +38,7 @@ export const LayoutPage = () => {
             overflow: "auto",
           }}
         >
-          {/* {children} */}
+          {children}
         </Box>
       </Box>
     </Box>

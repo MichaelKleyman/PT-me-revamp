@@ -7,6 +7,7 @@ export default defineConfig({
     "./src/db/schema/patients.ts",
     "./src/db/schema/practitioners.ts",
     "./src/db/schema/practices.ts",
+    "./src/db/schema/exercises.ts",
   ],
   dialect: "postgresql",
   dbCredentials: {
@@ -17,5 +18,6 @@ export default defineConfig({
     "patientsSchema",
     "practitionersSchema",
     "practicesSchema",
+    "exercisesSchema",
   ],
 }) satisfies Config;

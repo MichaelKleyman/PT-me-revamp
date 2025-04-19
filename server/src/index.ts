@@ -3,6 +3,8 @@ import { logger } from "hono/logger";
 import { authRouter } from "./api/auth";
 import { serve } from "bun";
 import { practiceRouter } from "./api/practice";
+import { patientsRouter } from "./api/patients";
+import { exercisesRouter } from "./api/exercises";
 
 const app = new Hono();
 
@@ -16,7 +18,9 @@ app.get("/", async (c) => {
 const apiRoutes = app
   .basePath("/api")
   .route("/", authRouter)
-  .route("/practice", practiceRouter);
+  .route("/practice", practiceRouter)
+  .route("/patients", patientsRouter)
+  .route("/exercises", exercisesRouter);
 
 // Add catch-all route at the end
 app.all("*", (c) => {

@@ -28,7 +28,7 @@ export const authRouter = new Hono()
       const session = sessionManager(c);
       await kindeClient.handleRedirectToApp(session, url);
 
-      let userType;
+      let userType: "patient" | "practice" | undefined = undefined;
       try {
         userType = await createUser(session);
         console.log("User creation complete");
@@ -52,7 +52,7 @@ export const authRouter = new Hono()
     const user = c.var.user;
     return c.json({ user });
   })
-  .post("/auth/registrationData", async (c) => {
+  .post("/registrationData", async (c) => {
     try {
       const userData = await c.req.json();
       const session = sessionManager(c);

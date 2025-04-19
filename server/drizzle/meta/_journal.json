@@ -22,6 +22,20 @@
       "when": 1743787217396,
       "tag": "0002_confused_spitfire",
       "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1743969492571,
+      "tag": "0003_sad_moon_knight",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1743969678082,
+      "tag": "0004_peaceful_silhouette",
+      "breakpoints": true
     }
   ]
 }

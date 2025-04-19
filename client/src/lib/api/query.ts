@@ -1,5 +1,5 @@
 import { QueryClient, queryOptions, useQuery } from "@tanstack/react-query";
-import { getCurrentUser } from "./fetch";
+import { getCurrentUser, getPractice } from "./fetch";
 
 export const queryClient = new QueryClient({
   defaultOptions: {
@@ -15,16 +15,21 @@ export const userQueryOptions = queryOptions({
   staleTime: Infinity,
 });
 
+export const getPracticeQueryOptions = (practiceId: string) =>
+  queryOptions({
+    queryKey: ["practice"],
+    queryFn: () => getPractice(practiceId),
+    enabled: !!practiceId,
+  });
+
 // QUERIES //
 
 export const useGetUser = () => {
   return useQuery(userQueryOptions);
 };
 
-export const useGetPractice = () => {
-  return useQuery({
-    queryKey: ["practice"],
-  });
+export const useGetPractice = (practiceId: string) => {
+  return useQuery(getPracticeQueryOptions(practiceId));
 };
 
 // MUTATIONS //

@@ -1,15 +1,24 @@
-import { Box, Grid, Paper, Typography } from "@mui/material";
+import { useAppStore } from "@client/store";
+import {
+  useSelectLoggedInUser,
+  useSelectPractice,
+} from "@client/store/selectors";
+import { Box, Paper, Typography } from "@mui/material";
+import Grid from "@mui/material/Grid2";
 
 export const DashboardContent = () => {
+  const loggedInUser = useAppStore(useSelectLoggedInUser);
+  const practice = useAppStore(useSelectPractice);
+
   return (
     <Box sx={{ flexGrow: 1 }}>
       <Typography variant='h4' sx={{ mb: 4 }}>
-        Practice Dashboard
+        {practice?.practiceName} Dashboard
       </Typography>
 
       <Grid container spacing={3}>
         {/* Overview Cards */}
-        <Grid item xs={12} md={4}>
+        <Grid size={{ xs: 12, md: 4 }}>
           <Paper sx={{ p: 3, height: "100%" }}>
             <Typography variant='h6' gutterBottom>
               Total Patients
@@ -18,7 +27,7 @@ export const DashboardContent = () => {
           </Paper>
         </Grid>
 
-        <Grid item xs={12} md={4}>
+        <Grid size={{ xs: 12, md: 4 }}>
           <Paper sx={{ p: 3, height: "100%" }}>
             <Typography variant='h6' gutterBottom>
               Appointments Today
@@ -27,7 +36,7 @@ export const DashboardContent = () => {
           </Paper>
         </Grid>
 
-        <Grid item xs={12} md={4}>
+        <Grid size={{ xs: 12, md: 4 }}>
           <Paper sx={{ p: 3, height: "100%" }}>
             <Typography variant='h6' gutterBottom>
               Pending Tasks
@@ -37,7 +46,7 @@ export const DashboardContent = () => {
         </Grid>
 
         {/* Recent Activity */}
-        <Grid item xs={12}>
+        <Grid size={{ xs: 12 }}>
           <Paper sx={{ p: 3 }}>
             <Typography variant='h6' gutterBottom>
               Recent Activity

@@ -1,0 +1,1 @@
+ALTER TABLE "patients_schema"."patients" RENAME COLUMN "admin_ids" TO "exercise_ids";

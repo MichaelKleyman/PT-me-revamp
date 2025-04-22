@@ -8,6 +8,7 @@ import {
 } from "../db/schema/practitioners";
 import { PatientsInsert, patientsTable } from "../db/schema/patients";
 import { eq } from "drizzle-orm";
+import { PgTable } from "drizzle-orm/pg-core";
 
 export const createUser = async (session: SessionManager) => {
   try {

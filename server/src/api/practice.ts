@@ -14,7 +14,7 @@ export const practiceRouter = new Hono()
         .where(eq(practicesTable.id, Number(practiceId)));
 
       console.log(">>>", practice);
-      return c.json({ practice: practice[0] });
+      return c.json({ practice: practice[0] }, 200);
     } catch (error) {
       console.error("Error fetching practice:", error);
       return c.json({ error: "Error fetching practice" }, 500);

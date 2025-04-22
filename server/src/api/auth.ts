@@ -50,7 +50,7 @@ export const authRouter = new Hono()
   })
   .get("/me", getUser, async (c) => {
     const user = c.var.user;
-    return c.json({ user });
+    return c.json({ user }, 200);
   })
   .post("/registrationData", async (c) => {
     try {
@@ -62,7 +62,7 @@ export const authRouter = new Hono()
         session.setSessionItem(key, value);
       });
 
-      return c.json({ success: true });
+      return c.json({ success: true }, 200);
     } catch (error) {
       console.log("Error at store route: ", error);
     }

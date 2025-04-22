@@ -1,4 +1,5 @@
 import { serial, text, pgSchema, timestamp } from "drizzle-orm/pg-core";
+import { z } from "zod";
 
 export const exercisesSchema = pgSchema("exercises_schema");
 
@@ -9,3 +10,8 @@ export const exercisesTable = exercisesSchema.table("exercises", {
 });
 
 export type ExercisesInsert = typeof exercisesTable.$inferInsert;
+
+export const exerciseSchema = z.object({
+  name: z.string(),
+  // TODO: add more fields
+});

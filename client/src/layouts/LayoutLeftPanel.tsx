@@ -1,6 +1,7 @@
 import HomeIcon from "@mui/icons-material/Home";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import AccessibilityIcon from "@mui/icons-material/Accessibility";
+import FitnessCenterIcon from "@mui/icons-material/FitnessCenter";
 import SettingsIcon from "@mui/icons-material/Settings";
 import { Link } from "@tanstack/react-router";
 import {
@@ -77,6 +78,7 @@ const overviewPanelOptions = [
   { label: "Dashboard", href: "#", icon: HomeIcon },
   { label: "Schedule", href: "#", icon: CalendarMonthIcon },
   { label: "Patients", href: "#", icon: AccessibilityIcon },
+  { label: "Exercises", href: "#", icon: FitnessCenterIcon },
 ];
 
 const LayoutLeftPanel = () => {

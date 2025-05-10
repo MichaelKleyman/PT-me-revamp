@@ -1,0 +1,1 @@
+ALTER TABLE "patients_schema"."patients" ADD COLUMN "admin_ids" integer[] DEFAULT '{}';

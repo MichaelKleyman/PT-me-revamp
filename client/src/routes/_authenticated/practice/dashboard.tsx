@@ -1,4 +1,4 @@
-import { LayoutPage } from "@client/components/layouts/LayoutPage";
+import { LayoutPage } from "@client/layouts/LayoutPage";
 import { createFileRoute } from "@tanstack/react-router";
 import { DashboardContent } from "@client/components/practice/DashboardContent";
 

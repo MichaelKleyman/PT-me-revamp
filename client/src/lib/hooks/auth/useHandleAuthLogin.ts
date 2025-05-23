@@ -1,3 +1,4 @@
+import { loginUser } from "@client/lib/api/fetch";
 import { TAuthLoginForm } from "@client/lib/types/auth";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect } from "react";
@@ -32,7 +33,7 @@ export const useHandleAuthLogin = (
     //   handleError(true);
     //   return;
     // }
-    window.location.href = `/api/login/${email}`;
+    await loginUser(email);
   };
 
   return {

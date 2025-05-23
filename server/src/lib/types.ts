@@ -7,5 +7,5 @@ export interface SessionManager {
 
 export enum UserType {
   Patient = "patient",
-  Provider = "practitioner",
+  Practitioner = "practitioner",
 }

@@ -28,7 +28,7 @@ export const authRouter = new Hono()
       const session = sessionManager(c);
       await kindeClient.handleRedirectToApp(session, url);
 
-      let userType;
+      let userType: "patient" | "practice" | undefined = undefined;
       try {
         userType = await createUser(session);
         console.log("User creation complete");
@@ -50,9 +50,9 @@ export const authRouter = new Hono()
   })
   .get("/me", getUser, async (c) => {
     const user = c.var.user;
-    return c.json({ user });
+    return c.json({ user }, 200);
   })
-  .post("/auth/registrationData", async (c) => {
+  .post("/registrationData", async (c) => {
     try {
       const userData = await c.req.json();
       const session = sessionManager(c);
@@ -62,7 +62,7 @@ export const authRouter = new Hono()
         session.setSessionItem(key, value);
       });
 
-      return c.json({ success: true });
+      return c.json({ success: true }, 200);
     } catch (error) {
       console.log("Error at store route: ", error);
     }

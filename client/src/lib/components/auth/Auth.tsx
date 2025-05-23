@@ -62,16 +62,8 @@ export const Auth = (props: TAuthProps) => {
   );
 
   const renderSubmitButton = (
-    <StyledAuthButton
-      // href={`/api/register?email=${email}&practicename=${practiceName}&userType=${userType}`}
-      onClick={isLoggingIn ? handleLogin : handleRegister}
-    >
-      {/* // <a
-    //   href={`/api/register/${email}`}
-    //   onClick={isLoggingIn ? handleLogin : handleRegister}
-    // > */}
+    <StyledAuthButton onClick={isLoggingIn ? handleLogin : handleRegister}>
       {isRegistering ? "Register" : "Log In"}
-      {/* // </a> */}
     </StyledAuthButton>
   );
 

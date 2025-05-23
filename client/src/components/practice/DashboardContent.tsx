@@ -1,14 +1,25 @@
+import { useCreatePatient } from "@client/lib/api/query";
 import { useAppStore } from "@client/store";
 import {
   useSelectLoggedInUser,
   useSelectPractice,
 } from "@client/store/selectors";
-import { Box, Paper, Typography } from "@mui/material";
+import AddIcon from "@mui/icons-material/Add";
+import {
+  Box,
+  IconButton,
+  Paper,
+  Stack,
+  Tooltip,
+  Typography,
+} from "@mui/material";
 import Grid from "@mui/material/Grid2";
 
 export const DashboardContent = () => {
   const loggedInUser = useAppStore(useSelectLoggedInUser);
   const practice = useAppStore(useSelectPractice);
+
+  const { mutateAsync: createPatient } = useCreatePatient();
 
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -20,9 +31,22 @@ export const DashboardContent = () => {
         {/* Overview Cards */}
         <Grid size={{ xs: 12, md: 4 }}>
           <Paper sx={{ p: 3, height: "100%" }}>
-            <Typography variant='h6' gutterBottom>
-              Total Patients
-            </Typography>
+            <Stack
+              flexDirection='row'
+              alignItems='center'
+              justifyContent='space-between'
+            >
+              <Typography variant='h6' gutterBottom>
+                Total Patients
+              </Typography>
+              <Tooltip title='Create Patient'>
+                <span>
+                  <IconButton onClick={handleCreatePatient}>
+                    <AddIcon />
+                  </IconButton>
+                </span>
+              </Tooltip>
+            </Stack>
             <Typography variant='h3'>0</Typography>
           </Paper>
         </Grid>

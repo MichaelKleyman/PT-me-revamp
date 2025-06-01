@@ -8,11 +8,24 @@ import {
 } from "../db/schema/practitioners";
 import { PatientsInsert, patientsTable } from "../db/schema/patients";
 import { eq } from "drizzle-orm";
-import { PgTable } from "drizzle-orm/pg-core";
 
-export const createUser = async (session: SessionManager) => {
+/** Gets the user type based on registration data */
+export const getUserType = async (session: SessionManager) => {
+  const userTypeFromSession = await session.getSessionItem("userType");
+  const isPractitioner = userTypeFromSession === UserType.Practitioner;
+  const isPatient = userTypeFromSession === UserType.Patient;
+
+  const userType = isPractitioner ? UserType.Practitioner : UserType.Patient;
+  const userTypePath = !isPractitioner ? "patient" : "practice";
+  return { userType, userTypePath };
+};
+
+/** Create the user based on session info */
+export const createUser = async (
+  session: SessionManager,
+  userType: UserType
+) => {
   try {
-    const userType = await session.getSessionItem("userType");
     const email = (await session.getSessionItem("email")) || "";
     const practiceName = (await session.getSessionItem("practiceName")) || "";
     const address = await session.getSessionItem("address");
@@ -23,11 +36,25 @@ export const createUser = async (session: SessionManager) => {
     const isPatient = userType === UserType.Patient;
 
     if (isPractitioner) {
+      // Create Practice
+      const practiceInsertData: PracticesInsert = {
+        practiceName: String(practiceName || ""),
+        email: String(email || ""),
+        address: String(address || ""),
+        adminIds: [],
+      };
+
+      const newPractice = await db
+        .insert(practicesTable)
+        .values(practiceInsertData)
+        .returning({ id: practicesTable.id });
+
       const practitionerInsertData: PractitionersInsert = {
         name: String(practitionerName || ""),
         email: String(email || ""),
         userType: UserType.Practitioner,
         licenseNumber: Number(licenseNumber),
+        practiceId: String(newPractice[0].id),
       };
 
       // Create practitioner
@@ -38,27 +65,13 @@ export const createUser = async (session: SessionManager) => {
 
       // Add practitioner as admin to the practice
       const newAdminIds = [newPractitioner[0].id];
-
-      // Create Practice
-      const practiceInsertData: PracticesInsert = {
-        practiceName: String(practiceName || ""),
-        email: String(email || ""),
-        address: String(address || ""),
-        adminIds: newAdminIds,
-      };
-
-      const newPractice = await db
-        .insert(practicesTable)
-        .values(practiceInsertData)
-        .returning({ id: practicesTable.id });
-
-      // Update practitioner with practice ID (converting to string)
       await db
-        .update(practitionersTable)
-        .set({ practiceId: String(newPractice[0].id) })
-        .where(eq(practitionersTable.id, newPractitioner[0].id));
+        .update(practicesTable)
+        .set({ adminIds: newAdminIds })
+        .where(eq(practicesTable.id, newPractice[0].id));
     } else if (isPatient) {
       const patientInsertData: PatientsInsert = {
+        // TODO change this to handle patient name and registration soon
         name: String(practitionerName || ""),
         email: String(email || ""),
         userType: UserType.Patient,
@@ -68,10 +81,7 @@ export const createUser = async (session: SessionManager) => {
 
       //TODO: iterate on more new patient logic here
     }
-
-    const userTypePath = !isPractitioner ? "patient" : "practice";
-    return userTypePath;
   } catch (error) {
-    console.log(">>>>ERROR: ", error);
+    console.error("Database error during user creation:", error);
   }
 };

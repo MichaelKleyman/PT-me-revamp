@@ -6,13 +6,14 @@ import { api } from "./api";
 
 /** Grabs user details from the server */
 export const getCurrentUser = async () => {
-  const res = await api.me.$get();
-  if (!res.ok) {
-    console.log("Is unauthenticated");
-    return { user: null };
+  try {
+    const res = await api.me.$get();
+    const data = await res.json();
+    return { user: data.user };
+  } catch (error) {
+    console.error("Error fetching user:", error);
+    throw new Error("Failed to fetch user");
   }
-  const data = await res.json();
-  return { user: data.user };
 };
 
 // GET practice
@@ -25,6 +26,7 @@ export const getPractice = async (practiceId: string) => {
     return data;
   } catch (error) {
     console.error("Error fetching practice:", error);
+    throw new Error("Failed to fetch practice");
   }
 };
 

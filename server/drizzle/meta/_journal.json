@@ -57,6 +57,34 @@
       "when": 1745186744140,
       "tag": "0007_small_whiplash",
       "breakpoints": true
+    },
+    {
+      "idx": 8,
+      "version": "7",
+      "when": 1748809513537,
+      "tag": "0008_add_not_null_for_required_fields",
+      "breakpoints": true
+    },
+    {
+      "idx": 9,
+      "version": "7",
+      "when": 1748811104431,
+      "tag": "0009_not_null_added_to_practitioner_table_fields",
+      "breakpoints": true
+    },
+    {
+      "idx": 10,
+      "version": "7",
+      "when": 1748811270936,
+      "tag": "0010_not_null_removed_from_kindeId_field",
+      "breakpoints": true
+    },
+    {
+      "idx": 11,
+      "version": "7",
+      "when": 1748812732169,
+      "tag": "0011_more_not_null_additions_to_fields",
+      "breakpoints": true
     }
   ]
 }

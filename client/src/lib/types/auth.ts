@@ -6,6 +6,7 @@ export type TAuthRegisterForm = {
   address: string;
   practitionerName: string;
   licenseNumber: string | null;
+  userType: TUserType["userType"];
 };
 
 export type TAuthLoginForm = {
@@ -20,18 +21,16 @@ export const authUrlSchema = z.object({
 
 export type TUserType = z.infer<typeof authUrlSchema>;
 
-export enum UserType {
-  Patient = "patient",
-  Practitioner = "practitioner",
-}
+export const UserTypeEnum = ["patient", "practitioner"] as const;
+export type UserType = (typeof UserTypeEnum)[number];
 
 export type BaseUser = {
   /** Unique id for the user in the database */
   id?: number;
   /** Unique id from Kinde authentication service */
-  kindeId: string;
+  kindeId?: string | null;
   /** ID of the practice the user belongs to */
-  practiceId: string;
+  practiceId?: string | null;
   /** Full name of the user */
   name: string;
   /** Email address of the user */
@@ -47,19 +46,19 @@ export type Patient = BaseUser & {
   /** Physical address of the patient */
   address: string;
   /** Exercise ID's of the patients exercises  */
-  exerciseIds: number[];
+  exerciseIds?: number[];
 };
 
 export type Practitioner = BaseUser & {
   /** Whether the practitioner has admin privileges in their practice */
-  admin?: boolean | null;
+  admin?: boolean;
   /** License number of the practitioner */
-  licenseNumber?: number | null;
+  licenseNumber: number;
 };
 
 export type Practice = {
   /** Unique id for the practice */
-  id: string;
+  id: number;
   /** Name of the practice */
   practiceName: string;
   /** Email address of the practice */
@@ -69,3 +68,5 @@ export type Practice = {
   /** Array of practitioner IDs who have admin privileges */
   adminIds: number[];
 };
+
+export type User = Patient | Practitioner;

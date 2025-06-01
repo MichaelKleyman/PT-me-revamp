@@ -105,3 +105,24 @@ export const getUser = createMiddleware<Env>(async (c, next) => {
     return c.json({ error: "Unauthorized" }, 401);
   }
 });
+
+export const getUserTypeByEmail = async (email: string) => {
+  const results = await db
+    .select({
+      userType: patientsTable.userType,
+    })
+    .from(patientsTable)
+    .where(eq(patientsTable.email, email))
+    .union(
+      db
+        .select({
+          userType: practitionersTable.userType,
+        })
+        .from(practitionersTable)
+        .where(eq(practitionersTable.email, email))
+    );
+
+  const [userInfo] = results;
+
+  return userInfo.userType;
+};

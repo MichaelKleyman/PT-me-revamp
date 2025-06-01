@@ -1,0 +1,1 @@
+ALTER TABLE "practitioners_schema"."practitioners" ALTER COLUMN "kinde_id" DROP NOT NULL;

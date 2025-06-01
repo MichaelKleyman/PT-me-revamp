@@ -1,13 +1,14 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { TAuthRegisterForm } from "../../types/auth";
+import { TAuthRegisterForm, TUserType } from "../../types/auth";
 import { useEffect } from "react";
 import { registerUser } from "@client/lib/api/fetch";
 
 type TProps = {
   isRegistering: boolean;
   handleError: (val: boolean) => void;
+  userType?: TUserType["userType"];
 };
 
 const defaultValues: TAuthRegisterForm = {
@@ -16,10 +17,15 @@ const defaultValues: TAuthRegisterForm = {
   address: "",
   practitionerName: "",
   licenseNumber: null,
+  userType: undefined,
 };
 
 export const useHandleAuthRegister = (props: TProps) => {
-  const { isRegistering, handleError } = props;
+  const {
+    isRegistering,
+    //  handleError,
+    userType,
+  } = props;
 
   const resolver = zodResolver(registerSchema);
 
@@ -41,7 +47,7 @@ export const useHandleAuthRegister = (props: TProps) => {
     //   return;
     // }
 
-    await registerUser(userData);
+    await registerUser({ ...userData, userType });
   };
 
   const validateStep = async (currentStep: number) => {
@@ -60,6 +66,7 @@ export const useHandleAuthRegister = (props: TProps) => {
 };
 
 const registerSchema = z.object({
+  userType: z.enum(["patient", "practitioner"]),
   email: z.string().email().min(1, "Email address field is required"),
   practiceName: z.string().min(1, "Practice name field is required"),
   address: z

@@ -15,11 +15,11 @@ export const practitionersTable = practitionersSchema.table(
   {
     id: serial("id").primaryKey(),
     kindeId: text("kinde_id").unique(), // Unique identifier for Kinde user
-    practiceId: text("practice_id").unique(), // Id of the practice the practitioner belongs to
-    admin: boolean("admin").default(false), // Whether the practitioner is an admin of the practice
+    practiceId: text("practice_id").unique().notNull(), // Id of the practice the practitioner belongs to
+    admin: boolean("admin").default(false).notNull(), // Whether the practitioner is an admin of the practice
     name: text("name").notNull(),
     email: text("email").notNull(),
-    licenseNumber: integer("licenseNumber"), // Not needed for patient
+    licenseNumber: integer("licenseNumber").notNull(), // Not needed for patient
     userType: text("user_type", {
       enum: ["patient", "practitioner"] as const,
     }).notNull(),

@@ -36,7 +36,7 @@ export const userQueryOptions = queryOptions({
 
 export const getPracticeQueryOptions = (practiceId: string) =>
   queryOptions({
-    queryKey: ["practice"],
+    queryKey: ["practice", practiceId],
     queryFn: () => getPractice(practiceId),
     enabled: !!practiceId,
   });

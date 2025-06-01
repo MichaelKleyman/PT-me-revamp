@@ -16,10 +16,10 @@ export const patientsTable = patientsSchema.table(
     id: serial("id").primaryKey(),
     kindeId: text("kinde_id").unique(), // Unique identifier for Kinde user
     practiceId: text("practice_id").unique(), // Id of the practice the patient belongs to
-    exerciseIds: integer("exercise_ids").array().default([]),
+    exerciseIds: integer("exercise_ids").array().default([]).notNull(),
     name: text("name").notNull(),
     email: text("email").notNull(),
-    address: text("address"), // Not needed for practitioner
+    address: text("address").notNull(), // Not needed for practitioner
     userType: text("user_type", {
       enum: ["patient", "practitioner"] as const,
     }).notNull(),
@@ -31,11 +31,11 @@ export const patientsTable = patientsSchema.table(
 export type PatientsInsert = typeof patientsTable.$inferInsert;
 
 export const patientSchema = z.object({
-  kindeId: z.string().optional(),
-  practiceId: z.string().optional(),
-  exerciseIds: z.array(z.number()).optional().default([]),
+  kindeId: z.string().nullable().optional(),
+  practiceId: z.string().nullable().optional(),
+  exerciseIds: z.array(z.number()).default([]),
   name: z.string(),
   email: z.string().email(),
-  address: z.string().optional(),
+  address: z.string(),
   userType: z.enum(["patient", "practitioner"]),
 });

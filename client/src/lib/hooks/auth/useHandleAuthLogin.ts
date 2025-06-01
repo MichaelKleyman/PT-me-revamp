@@ -11,8 +11,8 @@ const defaultValues: TAuthLoginForm = {
 };
 
 export const useHandleAuthLogin = (
-  isLoggingIn: boolean,
-  handleError: (val: boolean) => void
+  isLoggingIn: boolean
+  // handleError: (val: boolean) => void
 ) => {
   const resolver = zodResolver(loginSchema);
 
@@ -27,13 +27,13 @@ export const useHandleAuthLogin = (
     if (!isLoggingIn) return;
   }, [isLoggingIn]);
 
-  const handleLogin = async () => {
+  const handleLogin = () => {
     const { email, practitionerName } = form.getValues();
     // if (!form.formState.isValid) {
     //   handleError(true);
     //   return;
     // }
-    await loginUser(email);
+    loginUser(email);
   };
 
   return {

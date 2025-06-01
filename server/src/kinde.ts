@@ -1,15 +1,18 @@
 import {
   createKindeServerClient,
   GrantType,
-  type UserType,
 } from "@kinde-oss/kinde-typescript-sdk";
 import { Context } from "hono";
 import { getCookie, setCookie, deleteCookie } from "hono/cookie";
 import { createMiddleware } from "hono/factory";
 import { SessionManager } from "./lib/types";
 import { db } from "./db";
-import { UserInsert, usersTable } from "./db/schema/users";
 import { eq } from "drizzle-orm";
+import { patientsTable, PatientsInsert } from "./db/schema/patients";
+import {
+  PractitionersInsert,
+  practitionersTable,
+} from "./db/schema/practitioners";
 
 // Client for authorization code flow
 export const kindeClient = createKindeServerClient(
@@ -63,7 +66,7 @@ export const sessionManager = (c: Context): SessionManager => ({
 
 type Env = {
   Variables: {
-    user: UserType | UserInsert;
+    user: PractitionersInsert | PatientsInsert;
   };
 };
 
@@ -72,21 +75,54 @@ export const getUser = createMiddleware<Env>(async (c, next) => {
     const manager = sessionManager(c);
     const isAuthenticated = await kindeClient.isAuthenticated(manager);
 
-    console.log(">>>", { isAuthenticated });
     if (!isAuthenticated) {
       return c.json({ error: "Unauthorized" }, 401);
     }
 
     const userFromKinde = await kindeClient.getUserProfile(manager);
-    const userFromDb = await db
-      .select()
-      .from(usersTable)
-      .where(eq(usersTable.email, userFromKinde.email));
 
-    c.set("user", userFromDb[0]);
+    // Check both tables for the user
+    const [patient] = await db
+      .select()
+      .from(patientsTable)
+      .where(eq(patientsTable.email, userFromKinde.email));
+
+    const [practitioner] = await db
+      .select()
+      .from(practitionersTable)
+      .where(eq(practitionersTable.email, userFromKinde.email));
+
+    if (!patient && !practitioner) {
+      return c.json({ error: "User not found in database" }, 404);
+    }
+
+    const user = patient || practitioner;
+    console.log(user);
+    c.set("user", user);
     await next();
   } catch (error) {
     console.error(error);
     return c.json({ error: "Unauthorized" }, 401);
   }
 });
+
+export const getUserTypeByEmail = async (email: string) => {
+  const results = await db
+    .select({
+      userType: patientsTable.userType,
+    })
+    .from(patientsTable)
+    .where(eq(patientsTable.email, email))
+    .union(
+      db
+        .select({
+          userType: practitionersTable.userType,
+        })
+        .from(practitionersTable)
+        .where(eq(practitionersTable.email, email))
+    );
+
+  const [userInfo] = results;
+
+  return userInfo.userType;
+};

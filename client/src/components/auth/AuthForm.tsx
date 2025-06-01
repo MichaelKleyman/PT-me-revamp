@@ -4,7 +4,6 @@ import { Link, useSearch } from "@tanstack/react-router";
 import { AuthRegister } from "./AuthRegister";
 import { AuthLogin } from "./AuthLogin";
 import { Route } from "../../routes/(auth)/auth";
-import { AuthLinkWrapper } from "@client/lib/components/auth/AuthLinkWrapper";
 
 export const AuthForm = () => {
   const { authType, userType } = useSearch({ from: Route.id });
@@ -12,7 +11,7 @@ export const AuthForm = () => {
   const isLoggingIn = authType === "login";
 
   return (
-    <Stack textAlign='center' width='95%'>
+    <Stack textAlign="center" width="95%">
       {!isLoggingIn ? (
         <AuthRegister userType={userType} authType={authType} />
       ) : (
@@ -21,15 +20,15 @@ export const AuthForm = () => {
       {!isLoggingIn ? (
         <Stack
           mt={3}
-          flexDirection='row'
-          alignItems='center'
-          justifyContent='center'
+          flexDirection="row"
+          alignItems="center"
+          justifyContent="center"
           gap={1}
         >
           <Typography>Already a registered user?</Typography>
           {/* <AuthLinkWrapper isLoggingIn>Login here</AuthLinkWrapper> */}
           <Link
-            to='/auth'
+            to="/auth"
             search={{ authType: isLoggingIn ? "register" : "login" }}
           >
             Login here
@@ -38,14 +37,14 @@ export const AuthForm = () => {
       ) : (
         <Stack
           mt={3}
-          flexDirection='row'
-          alignItems='center'
-          justifyContent='center'
+          flexDirection="row"
+          alignItems="center"
+          justifyContent="center"
           gap={1}
         >
           <Typography>Not registered yet?</Typography>
           <Link
-            to='/auth'
+            to="/auth"
             search={{ authType: isLoggingIn ? "register" : "login" }}
           >
             Sign up

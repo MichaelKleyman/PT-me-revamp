@@ -30,6 +30,7 @@ export const Auth = (props: TAuthProps) => {
   const { handleRegister, validateStep, registerForm } = useHandleAuthRegister({
     isRegistering,
     handleError,
+    userType,
   });
 
   const { handleLogin, loginForm } = useHandleAuthLogin(
@@ -62,30 +63,22 @@ export const Auth = (props: TAuthProps) => {
   );
 
   const renderSubmitButton = (
-    <StyledAuthButton
-      // href={`/api/register?email=${email}&practicename=${practiceName}&userType=${userType}`}
-      onClick={isLoggingIn ? handleLogin : handleRegister}
-    >
-      {/* // <a
-    //   href={`/api/register/${email}`}
-    //   onClick={isLoggingIn ? handleLogin : handleRegister}
-    // > */}
+    <StyledAuthButton onClick={isLoggingIn ? handleLogin : handleRegister}>
       {isRegistering ? "Register" : "Log In"}
-      {/* // </a> */}
     </StyledAuthButton>
   );
 
   const renderAuthLoginForm = isLoggingIn ? (
     <>
       <Controller
-        name='email'
+        name="email"
         control={loginForm.control}
         render={({ field }) => (
           <TextField
             {...field}
-            variant='outlined'
-            placeholder='Enter your email'
-            label='Email'
+            variant="outlined"
+            placeholder="Enter your email"
+            label="Email"
             fullWidth
             error={!!loginForm.formState.errors.email}
             helperText={
@@ -102,14 +95,14 @@ export const Auth = (props: TAuthProps) => {
   const renderStep1 = (
     <>
       <Controller
-        name='email'
+        name="email"
         control={registerForm.control}
         render={({ field }) => (
           <TextField
             {...field}
-            variant='outlined'
-            placeholder='Enter your email'
-            label='Email'
+            variant="outlined"
+            placeholder="Enter your email"
+            label="Email"
             fullWidth
             error={!!registerForm.formState.errors.email}
             helperText={
@@ -121,14 +114,14 @@ export const Auth = (props: TAuthProps) => {
         )}
       />
       <Controller
-        name='practiceName'
+        name="practiceName"
         control={registerForm.control}
         render={({ field }) => (
           <TextField
             {...field}
-            variant='outlined'
-            placeholder='Enter your practice name'
-            label='Practice Name'
+            variant="outlined"
+            placeholder="Enter your practice name"
+            label="Practice Name"
             fullWidth
             error={!!registerForm.formState.errors.practiceName}
             helperText={
@@ -140,14 +133,14 @@ export const Auth = (props: TAuthProps) => {
         )}
       />
       <Controller
-        name='address'
+        name="address"
         control={registerForm.control}
         render={({ field }) => (
           <TextField
             {...field}
-            variant='outlined'
-            placeholder='Enter address'
-            label='Address'
+            variant="outlined"
+            placeholder="Enter address"
+            label="Address"
             fullWidth
             error={!!registerForm.formState.errors.address}
             helperText={
@@ -164,14 +157,14 @@ export const Auth = (props: TAuthProps) => {
   const renderStep2 = (
     <>
       <Controller
-        name='practitionerName'
+        name="practitionerName"
         control={registerForm.control}
         render={({ field }) => (
           <TextField
             {...field}
-            variant='outlined'
-            placeholder='Enter admin practitioner username'
-            label='Admin Practitioner Username'
+            variant="outlined"
+            placeholder="Enter admin practitioner username"
+            label="Admin Practitioner Username"
             fullWidth
             error={!!registerForm.formState.errors.practitionerName}
             helperText={
@@ -183,14 +176,14 @@ export const Auth = (props: TAuthProps) => {
         )}
       />
       <Controller
-        name='licenseNumber'
+        name="licenseNumber"
         control={registerForm.control}
         render={({ field }) => (
           <TextField
             {...field}
-            variant='outlined'
-            placeholder='Enter license number'
-            label='Practitioner License Number'
+            variant="outlined"
+            placeholder="Enter license number"
+            label="Practitioner License Number"
             fullWidth
             error={!!registerForm.formState.errors.licenseNumber}
             helperText={
@@ -205,7 +198,7 @@ export const Auth = (props: TAuthProps) => {
   );
 
   const renderSubmitError = error ? (
-    <Typography color='error'>Please complete all fields*</Typography>
+    <Typography color="error">Please complete all fields*</Typography>
   ) : null;
 
   const registerPageSteps: Record<number, ReactElement> = {
@@ -222,7 +215,7 @@ export const Auth = (props: TAuthProps) => {
           {registerStep < 2 ? (
             renderNextStepButton
           ) : (
-            <Stack direction='row' justifyContent='center' gap={2}>
+            <Stack direction="row" justifyContent="center" gap={2}>
               {renderPreviousStepButton}
               {renderSubmitButton}
             </Stack>

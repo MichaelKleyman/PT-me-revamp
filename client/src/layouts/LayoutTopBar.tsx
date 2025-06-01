@@ -22,7 +22,7 @@ interface BreadcrumbItem {
 
 const LayoutTopBar = () => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-  
+
   const breadcrumbs: BreadcrumbItem[] = [{ label: "dashboard", href: "#" }];
 
   const handleMenuOpen = (event: React.MouseEvent<HTMLElement>) => {

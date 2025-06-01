@@ -1,15 +1,13 @@
 import { Stack } from "@mui/material";
-import { TopBar } from "../top-bar/TopBar";
-import { LandingPageSectionOne } from "./LandingPageSectionOne";
-import { LandingPageSectionTwo } from "./LandingPageSectionTwo";
-import { LandingPageSectionMiddle } from "./LandingPageSectionMiddle";
+import { TopBar } from "@client/components/top-bar/TopBar";
+import { LandingPageSectionOne } from "@client/components/landing-page/LandingPageSectionOne";
+import { LandingPageSectionTwo } from "@client/components/landing-page/LandingPageSectionTwo";
+import { LandingPageSectionMiddle } from "@client/components/landing-page/LandingPageSectionMiddle";
 import { useRef } from "react";
-import { MenuRef, MenuRefs } from "../../lib/utils/types/types";
-import { LandingPageFooter } from "./LandingPageFooter";
+import { MenuRef, MenuRefs } from "@client/lib/utils/types/types";
+import { LandingPageFooter } from "@client/components/landing-page/LandingPageFooter";
 
 export const LandingPage = () => {
-  // const { data: session, error } = authClient.useSession();
-
   const servicesRef = useRef<HTMLDivElement | null>(null);
 
   const menuRefs: MenuRefs = {
@@ -23,19 +21,19 @@ export const LandingPage = () => {
   return (
     <Stack sx={{ background: "transparent" }}>
       <TopBar menuRefs={menuRefs} handleClick={handleClick} />
-      <Stack alignItems='center'>
-        {/* First section */}
-        <Stack>
-          <LandingPageSectionOne />
-        </Stack>
+      {/* First section */}
+      <Stack>
+        <LandingPageSectionOne />
+      </Stack>
+      <Stack alignItems="center">
         {/* Middle section */}
         <LandingPageSectionMiddle />
-        {/* Second section */}
-        <Stack ref={servicesRef}>
-          <LandingPageSectionTwo />
-        </Stack>
-        <LandingPageFooter />
       </Stack>
+      {/* Second section */}
+      <Stack ref={servicesRef}>
+        <LandingPageSectionTwo />
+      </Stack>
+      <LandingPageFooter />
     </Stack>
   );
 };

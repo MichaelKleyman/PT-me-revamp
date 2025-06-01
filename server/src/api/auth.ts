@@ -1,12 +1,20 @@
 import { Hono } from "hono";
-import { getUser, kindeClient, sessionManager } from "../kinde";
-import { createUser } from "../lib/utils";
+import {
+  getUser,
+  getUserTypeByEmail,
+  kindeClient,
+  sessionManager,
+} from "../kinde";
+import { createUser, getUserType } from "../lib/utils";
+import { UserType } from "../lib/types";
 
 let authType: "isRegistering" | "isLoggingIn" | null = null;
 
 export const authRouter = new Hono()
   .get("/login/:email", async (c) => {
+    const session = sessionManager(c);
     const email = c.req.param("email");
+    session.setSessionItem("email", email);
     const loginUrl = await kindeClient.login(sessionManager(c), {
       authUrlParams: { login_hint: email },
     });
@@ -28,18 +36,22 @@ export const authRouter = new Hono()
       const session = sessionManager(c);
       await kindeClient.handleRedirectToApp(session, url);
 
-      let userType;
-      try {
-        userType = await createUser(session);
-        console.log("User creation complete");
-      } catch (dbError) {
-        console.error("Database error during user creation:", dbError);
-      }
+      // Create the user if auth action is registration
+      if (authType === "isRegistering") {
+        const { userType, userTypePath } = await getUserType(session);
+        await createUser(session, userType);
 
-      console.log(`redirect to ${userType}`);
-      return c.redirect(`/${userType}/dashboard`);
+        // Redirect to the appropriate path based on the user type
+        return c.redirect(`/${userTypePath}/dashboard`);
+      } else if (authType === "isLoggingIn") {
+        const email = (await session.getSessionItem("email")) || "";
+        const userType = await getUserTypeByEmail(email);
+        const userTypePath =
+          userType === "practitioner" ? "practice" : "patient";
+
+        return c.redirect(`/${userTypePath}/dashboard`);
+      }
     } catch (error) {
-      console.log("YO");
       console.error("Callback error:", error);
       return c.redirect("/auth?error=callback_failed");
     }
@@ -50,9 +62,9 @@ export const authRouter = new Hono()
   })
   .get("/me", getUser, async (c) => {
     const user = c.var.user;
-    return c.json({ user });
+    return c.json({ user }, 200);
   })
-  .post("/auth/registrationData", async (c) => {
+  .post("/registrationData", async (c) => {
     try {
       const userData = await c.req.json();
       const session = sessionManager(c);
@@ -62,7 +74,7 @@ export const authRouter = new Hono()
         session.setSessionItem(key, value);
       });
 
-      return c.json({ success: true });
+      return c.json({ success: true }, 200);
     } catch (error) {
       console.log("Error at store route: ", error);
     }

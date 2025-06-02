@@ -48,7 +48,6 @@ export const authRouter = new Hono()
         const userType = await getUserTypeByEmail(email);
         const userTypePath =
           userType === "practitioner" ? "practice" : "patient";
-
         return c.redirect(`/${userTypePath}/dashboard`);
       }
     } catch (error) {

@@ -1,10 +1,10 @@
+import { PracticePatientsCard } from "@client/components/practice/PracticePatientsCard";
 import { useAppStore } from "@client/store";
 import { useSelectPractice } from "@client/store/selectors";
 import { Box, Paper, Typography } from "@mui/material";
 import Grid from "@mui/material/Grid2";
-import { PracticePatientsCard } from "./PracticePatientsCard";
 
-export const PracticeDashboard = () => {
+export const ViewDashboardPage = () => {
   const practice = useAppStore(useSelectPractice);
 
   return (

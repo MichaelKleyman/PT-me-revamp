@@ -50,6 +50,9 @@ export const getAllPatients = async (practiceId: string) => {
       param: { practiceId },
     });
     const data = await res.json();
+    if ("error" in data) {
+      throw new Error(data.error);
+    }
     return data;
   } catch (error) {
     console.error("Error fetching all patients:", error);

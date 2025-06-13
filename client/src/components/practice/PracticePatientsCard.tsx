@@ -21,7 +21,7 @@ import {
   useSelectLoggedInUser,
   useSelectPractice,
 } from "@client/store/selectors";
-import { useCreatePatient } from "@client/lib/api/query";
+import { useCreatePatient, useGetAllPatients } from "@client/lib/api/query";
 
 const defaultFormInfo = {
   name: "",
@@ -35,6 +35,9 @@ export const PracticePatientsCard = () => {
   const loggedInUser = useAppStore(useSelectLoggedInUser);
   const practice = useAppStore(useSelectPractice);
 
+  const practiceId = String(practice?.id);
+
+  const { data: patients } = useGetAllPatients(practiceId);
   const { mutateAsync: createPatient } = useCreatePatient();
 
   const schema = z.object({
@@ -54,13 +57,12 @@ export const PracticePatientsCard = () => {
 
   const handleCreatePatient = useCallback(() => {
     const formValues = getValues();
-    const practiceId = String(practice?.id);
     const userType = loggedInUser?.userType;
 
     if (!userType) return;
     createPatient({ ...formValues, practiceId, userType });
     setOpenCreatePatient(false);
-  }, [createPatient, getValues, loggedInUser?.userType, practice?.id]);
+  }, [createPatient, getValues, loggedInUser?.userType, practiceId]);
 
   const onClickCreatePatient = useCallback(() => {
     setOpenCreatePatient((prev) => !prev);
@@ -161,7 +163,7 @@ export const PracticePatientsCard = () => {
             </span>
           </Tooltip>
         </Stack>
-        <Typography variant="h3">0</Typography>
+        <Typography variant="h3">{patients?.length}</Typography>
       </Paper>
       <DialogMultiStepForm
         fullWidth

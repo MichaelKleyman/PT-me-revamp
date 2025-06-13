@@ -10,12 +10,11 @@ export const patientsRouter = new Hono()
   .get("/practice/:practiceId", async (c) => {
     try {
       const practiceId = c.req.param("practiceId");
-      const allPatients = await db
+      const patients = await db
         .select()
         .from(patientsTable)
         .where(eq(patientsTable.practiceId, practiceId));
-      console.log(">>>", allPatients);
-      return c.json({ allPatients }, 200);
+      return c.json(patients, 200);
     } catch (error) {
       console.error("Error fetching patients:", error);
       return c.json({ error: "Error fetching patients" }, 500);

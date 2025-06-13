@@ -15,7 +15,7 @@ export const practitionersTable = practitionersSchema.table(
   {
     id: serial("id").primaryKey(),
     kindeId: text("kinde_id").unique(), // Unique identifier for Kinde user
-    practiceId: text("practice_id").unique().notNull(), // Id of the practice the practitioner belongs to
+    practiceId: text("practice_id").notNull(), // Id of the practice the practitioner belongs to
     admin: boolean("admin").default(false).notNull(), // Whether the practitioner is an admin of the practice
     name: text("name").notNull(),
     email: text("email").notNull(),

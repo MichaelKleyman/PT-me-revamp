@@ -24,7 +24,7 @@ const NavSection = (props: TNavSectionProps) => {
   return (
     <Box sx={{ mb: 3 }}>
       <Typography
-        variant='caption'
+        variant="caption"
         sx={{
           px: 3,
           mb: 1,
@@ -46,48 +46,88 @@ const NavSection = (props: TNavSectionProps) => {
 
 const NavItem = (props: TNavItemProps) => {
   const { href, icon: Icon, children } = props;
+  const themeInstance = useTheme();
 
   return (
     <ListItem disablePadding>
-      <ListItemButton
-        component={Link}
-        href={href}
-        // onClick={handleNavigation}
-        sx={{
-          borderRadius: 1,
-          py: 0.5,
-          my: 0.5,
-          color: "grey.600",
-          "&:hover": {
-            backgroundColor: "grey.50",
-            color: "grey.900",
+      <Link
+        to={href}
+        activeOptions={{ exact: true }}
+        activeProps={{
+          style: {
+            display: "block",
+            width: "100%",
+            backgroundColor: themeInstance.palette.action.hover,
+            borderRadius: "0px 12px 12px 0px",
+            borderLeft: `3px solid ${themeInstance.palette.primary.main}`,
+            color: themeInstance.palette.primary.main,
           },
         }}
+        inactiveProps={{
+          style: {
+            display: "block",
+            width: "100%",
+            borderLeft: "3px solid transparent",
+            color: themeInstance.palette.primary.main,
+          },
+        }}
+        style={{
+          textDecoration: "none",
+        }}
       >
-        <ListItemIcon sx={{ minWidth: 36, color: "inherit" }}>
-          <Icon fontSize='medium' />
-        </ListItemIcon>
-        <ListItemText primary={children} />
-      </ListItemButton>
+        <ListItemButton
+          sx={{
+            borderRadius: 1,
+            py: 0.5,
+            my: 0.5,
+            width: "100%",
+            color: "inherit",
+            "&:hover": {
+              backgroundColor: "grey.50",
+              color: "grey.900",
+            },
+          }}
+        >
+          <ListItemIcon sx={{ minWidth: 36, color: "inherit" }}>
+            <Icon fontSize="medium" />
+          </ListItemIcon>
+          <ListItemText primary={children} />
+        </ListItemButton>
+      </Link>
     </ListItem>
   );
 };
 
 const drawerWidth = 200;
 const overviewPanelOptions = [
-  { label: "Dashboard", href: "#", icon: HomeIcon },
-  { label: "Schedule", href: "#", icon: CalendarMonthIcon },
-  { label: "Patients", href: "#", icon: AccessibilityIcon },
-  { label: "Exercises", href: "#", icon: FitnessCenterIcon },
+  {
+    label: "Dashboard",
+    href: "/_authenticated/practice/dashboard",
+    icon: HomeIcon,
+  },
+  {
+    label: "Schedule",
+    href: "/_authenticated/practice/schedule",
+    icon: CalendarMonthIcon,
+  },
+  {
+    label: "Patients",
+    href: "/_authenticated/practice/patients",
+    icon: AccessibilityIcon,
+  },
+  {
+    label: "Exercises",
+    href: "/_authenticated/practice/exercises",
+    icon: FitnessCenterIcon,
+  },
 ];
-
 const LayoutLeftPanel = () => {
   const theme = useTheme();
   const isDesktop = useMediaQuery(theme.breakpoints.up("md"));
 
   const renderPanelContent = (
     <Stack
-      flexDirection='column'
+      flexDirection="column"
       sx={{
         height: "100%",
         bgcolor: theme.palette.mode === "dark" ? "#0F0F12" : "background.paper",
@@ -103,9 +143,9 @@ const LayoutLeftPanel = () => {
           borderColor: "grey.200",
         }}
       >
-        <Link href='https://kokonutui.com/'>
+        <Link href="https://kokonutui.com/">
           <Typography
-            variant='h6'
+            variant="h6"
             sx={{
               fontWeight: 600,
               cursor: "pointer",
@@ -117,8 +157,8 @@ const LayoutLeftPanel = () => {
         </Link>
       </Box>
 
-      <Box flexGrow={1} overflow='auto' p={2}>
-        <NavSection title='Overview'>
+      <Box flexGrow={1} overflow="auto" p={2}>
+        <NavSection title="Overview">
           {overviewPanelOptions.map((item, idx) => (
             <NavItem
               key={`item-${idx}`}
@@ -131,9 +171,9 @@ const LayoutLeftPanel = () => {
         </NavSection>
       </Box>
 
-      <Box p={2} borderTop={1} borderColor='grey.200'>
+      <Box p={2} borderTop={1} borderColor="grey.200">
         <List dense disablePadding>
-          <NavItem href='#' icon={SettingsIcon}>
+          <NavItem href="#" icon={SettingsIcon}>
             Settings
           </NavItem>
         </List>
@@ -146,16 +186,16 @@ const LayoutLeftPanel = () => {
       {/* Desktop persistent drawer */}
       {isDesktop && (
         <Box
-          component='nav'
+          component="nav"
           borderTop={1}
-          borderColor='grey.200'
+          borderColor="grey.200"
           sx={{
             width: { lg: drawerWidth },
             flexShrink: { lg: 0 },
           }}
         >
           <Drawer
-            variant='permanent'
+            variant="permanent"
             sx={{
               display: { xs: "none", md: "block" },
               "& .MuiDrawer-paper": {

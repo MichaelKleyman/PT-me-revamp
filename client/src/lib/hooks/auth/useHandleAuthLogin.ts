@@ -1,4 +1,4 @@
-import { loginUser } from "@client/lib/api/fetch";
+import { loginUser } from "@client/lib/api/practitioner/fetch";
 import { TAuthLoginForm } from "@client/lib/types/auth";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect } from "react";

@@ -1,5 +1,5 @@
-import { Patient, TAuthRegisterForm } from "../types/auth";
-import { Exercise } from "../types/exercise";
+import { Patient, TAuthRegisterForm } from "../../types/auth";
+import { Exercise } from "../../types/exercise";
 import { api } from "./api";
 
 // QUERIES
@@ -50,6 +50,9 @@ export const getAllPatients = async (practiceId: string) => {
       param: { practiceId },
     });
     const data = await res.json();
+    if ("error" in data) {
+      throw new Error(data.error);
+    }
     return data;
   } catch (error) {
     console.error("Error fetching all patients:", error);

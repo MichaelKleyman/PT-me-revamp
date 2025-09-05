@@ -106,6 +106,7 @@ export const getUser = createMiddleware<Env>(async (c, next) => {
   }
 });
 
+/** Get user type from the database by using the users email */
 export const getUserTypeByEmail = async (email: string) => {
   const results = await db
     .select({

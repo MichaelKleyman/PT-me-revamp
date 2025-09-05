@@ -1,11 +1,11 @@
 import { LayoutPage } from "@client/layouts/LayoutPage";
+import { ViewDashboardPage } from "@client/views/ViewDashboardPage";
 import { createFileRoute } from "@tanstack/react-router";
-import { DashboardContent } from "@client/components/practice/DashboardContent";
 
 export const Route = createFileRoute("/_authenticated/practice/dashboard")({
   component: () => (
     <LayoutPage>
-      <DashboardContent />
+      <ViewDashboardPage />
     </LayoutPage>
   ),
 });

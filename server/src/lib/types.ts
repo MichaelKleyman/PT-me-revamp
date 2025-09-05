@@ -9,3 +9,9 @@ export enum UserType {
   Patient = "patient",
   Practitioner = "practitioner",
 }
+
+export enum WSMessageKind {
+  PatientCreated = "patient_created",
+  PatientDeleted = "patient_deleted",
+  PatientUpdated = "patient_updated",
+}

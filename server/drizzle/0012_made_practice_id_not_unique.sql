@@ -1,0 +1,2 @@
+ALTER TABLE "patients_schema"."patients" DROP CONSTRAINT "patients_practice_id_unique";--> statement-breakpoint
+ALTER TABLE "practitioners_schema"."practitioners" DROP CONSTRAINT "practitioners_practice_id_unique";

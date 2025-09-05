@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { TAuthRegisterForm, TUserType } from "../../types/auth";
 import { useEffect } from "react";
-import { registerUser } from "@client/lib/api/fetch";
+import { registerUser } from "@client/lib/api/practitioner/fetch";
 
 type TProps = {
   isRegistering: boolean;

@@ -15,7 +15,7 @@ export const patientsTable = patientsSchema.table(
   {
     id: serial("id").primaryKey(),
     kindeId: text("kinde_id").unique(), // Unique identifier for Kinde user
-    practiceId: text("practice_id").unique(), // Id of the practice the patient belongs to
+    practiceId: text("practice_id"), // Id of the practice the patient belongs to
     exerciseIds: integer("exercise_ids").array().default([]).notNull(),
     name: text("name").notNull(),
     email: text("email").notNull(),

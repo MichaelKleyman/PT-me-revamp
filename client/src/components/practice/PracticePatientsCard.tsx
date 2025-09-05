@@ -21,7 +21,10 @@ import {
   useSelectLoggedInUser,
   useSelectPractice,
 } from "@client/store/selectors";
-import { useCreatePatient, useGetAllPatients } from "@client/lib/api/query";
+import {
+  useCreatePatient,
+  useGetAllPatients,
+} from "@client/lib/api/practitioner/query";
 
 const defaultFormInfo = {
   name: "",

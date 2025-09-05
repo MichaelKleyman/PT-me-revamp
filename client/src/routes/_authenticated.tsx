@@ -1,5 +1,8 @@
 import { updateAppSlice } from "@client/store/selectors";
-import { getPracticeQueryOptions, userQueryOptions } from "../lib/api/query";
+import {
+  getPracticeQueryOptions,
+  userQueryOptions,
+} from "../lib/api/practitioner/query";
 import { createFileRoute, redirect } from "@tanstack/react-router";
 import { Practice, User } from "@client/lib/types/auth";
 

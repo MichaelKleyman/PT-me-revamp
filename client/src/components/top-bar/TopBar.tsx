@@ -1,6 +1,6 @@
 import { Stack, Typography } from "@mui/material";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
-import { MenuRef, MenuRefs } from "../../lib/utils/types/types";
+import { MenuRef, MenuRefs } from "../../lib/types/types";
 import { StyledContainer, StyledLink, StyledNavItem } from "./styles";
 
 const menuItems = ["Services", "About Us", "Blog", "Pricing"] as const;
@@ -22,11 +22,11 @@ export const TopBar = ({
 
   return (
     <Stack
-      flexDirection='row'
-      alignItems='center'
-      justifyContent='space-between'
+      flexDirection="row"
+      alignItems="center"
+      justifyContent="space-between"
       p={2}
-      width='100%'
+      width="100%"
       sx={{
         background: "transparent ",
         position: "fixed",
@@ -48,8 +48,8 @@ export const TopBar = ({
           </StyledNavItem>
         ))}
       </StyledContainer>
-      <StyledLink to='/auth'>
-        <Typography fontSize='15px'>Get started</Typography>
+      <StyledLink to="/auth">
+        <Typography fontSize="15px">Get started</Typography>
         <ArrowForwardIcon />
       </StyledLink>
     </Stack>

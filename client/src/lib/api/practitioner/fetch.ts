@@ -1,5 +1,5 @@
-import { Patient, TAuthRegisterForm } from "../types/auth";
-import { Exercise } from "../types/exercise";
+import { Patient, TAuthRegisterForm } from "../../types/auth";
+import { Exercise } from "../../types/exercise";
 import { api } from "./api";
 
 // QUERIES

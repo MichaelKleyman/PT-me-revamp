@@ -1,4 +1,4 @@
-import { useGetAllPatients } from "@client/lib/api/query";
+import { useGetAllPatients } from "@client/lib/api/practitioner/query";
 import { useAppStore } from "@client/store";
 import { useSelectPractice } from "@client/store/selectors";
 import { alpha } from "@mui/material/styles";
@@ -19,7 +19,7 @@ import IconButton from "@mui/material/IconButton";
 import Tooltip from "@mui/material/Tooltip";
 import DeleteIcon from "@mui/icons-material/Delete";
 import FilterListIcon from "@mui/icons-material/FilterList";
-import { useMemo, useState } from "react";
+import { usePatientsTable } from "@client/lib/hooks/patients-table/usePatientsTable";
 
 const headCells = [
   {
@@ -88,10 +88,11 @@ function EnhancedTableHead(props: EnhancedTableProps) {
 }
 interface EnhancedTableToolbarProps {
   numSelected: number;
+  onDeletePatient: () => void;
 }
 
 function EnhancedTableToolbar(props: EnhancedTableToolbarProps) {
-  const { numSelected } = props;
+  const { numSelected, onDeletePatient } = props;
   return (
     <Toolbar
       sx={[
@@ -123,7 +124,7 @@ function EnhancedTableToolbar(props: EnhancedTableToolbarProps) {
       )}
       {numSelected > 0 ? (
         <Tooltip title="Delete">
-          <IconButton>
+          <IconButton onClick={onDeletePatient}>
             <DeleteIcon />
           </IconButton>
         </Tooltip>
@@ -138,75 +139,31 @@ function EnhancedTableToolbar(props: EnhancedTableToolbarProps) {
   );
 }
 export const ViewPatientsPage = () => {
-  const [selected, setSelected] = useState<readonly number[]>([]);
-  const [page, setPage] = useState(0);
-  const [dense, setDense] = useState(false);
-  const [rowsPerPage, setRowsPerPage] = useState(5);
-
   const practice = useAppStore(useSelectPractice);
   const practiceId = String(practice?.id);
 
   const { data: patients } = useGetAllPatients(practiceId);
 
-  const handleSelectAllClick = (event: React.ChangeEvent<HTMLInputElement>) => {
-    if (event.target.checked) {
-      const newSelected = patients?.map((n) => n.id);
-      setSelected(newSelected);
-      return;
-    }
-    setSelected([]);
-  };
-
-  const handleClick = (event: React.MouseEvent<unknown>, id: number) => {
-    const selectedIndex = selected.indexOf(id);
-    let newSelected: readonly number[] = [];
-
-    if (selectedIndex === -1) {
-      newSelected = newSelected.concat(selected, id);
-    } else if (selectedIndex === 0) {
-      newSelected = newSelected.concat(selected.slice(1));
-    } else if (selectedIndex === selected.length - 1) {
-      newSelected = newSelected.concat(selected.slice(0, -1));
-    } else if (selectedIndex > 0) {
-      newSelected = newSelected.concat(
-        selected.slice(0, selectedIndex),
-        selected.slice(selectedIndex + 1)
-      );
-    }
-    setSelected(newSelected);
-  };
-
-  const handleChangePage = (event: unknown, newPage: number) => {
-    setPage(newPage);
-  };
-
-  const handleChangeRowsPerPage = (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    setRowsPerPage(parseInt(event.target.value, 10));
-    setPage(0);
-  };
-
-  // Avoid a layout jump when reaching the last page with empty rows.
-  const emptyRows =
-    page > 0 && patients
-      ? Math.max(0, (1 + page) * rowsPerPage - patients.length)
-      : 0;
-
-  const visibleRows = useMemo(
-    () =>
-      patients
-        ? [...patients]
-            .sort()
-            .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-        : [],
-    [page, patients, rowsPerPage]
-  );
+  const {
+    selected,
+    page,
+    dense,
+    rowsPerPage,
+    handleSelectAllClick,
+    handleClick,
+    handleChangePage,
+    handleChangeRowsPerPage,
+    emptyRows,
+    visibleRows,
+  } = usePatientsTable({ patients });
 
   return (
     <Box sx={{ width: "100%" }}>
       <Paper sx={{ width: "100%", mb: 2 }}>
-        <EnhancedTableToolbar numSelected={selected.length} />
+        <EnhancedTableToolbar
+          numSelected={selected.length}
+          onDeletePatient={handleDeletePatient}
+        />
         <TableContainer>
           <Table
             sx={{ minWidth: 750 }}
@@ -220,6 +177,7 @@ export const ViewPatientsPage = () => {
             />
             <TableBody>
               {visibleRows.map((row, index) => {
+                if (!row.id) return null;
                 const isItemSelected = selected.includes(row.id);
                 const labelId = `enhanced-table-checkbox-${index}`;
 

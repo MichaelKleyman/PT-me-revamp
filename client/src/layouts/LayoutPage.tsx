@@ -1,3 +1,4 @@
+import { useConnectWebsocket } from "@client/lib/api/practitioner/query";
 import { Box } from "@mui/material";
 import { lazy } from "react";
 
@@ -7,6 +8,8 @@ const LayoutLeftPanel = lazy(() => import("./LayoutLeftPanel"));
 const LayoutTopBar = lazy(() => import("./LayoutTopBar"));
 
 export const LayoutPage = ({ children }: { children: React.ReactNode }) => {
+  useConnectWebsocket();
+
   return (
     <Box
       sx={{
@@ -31,7 +34,7 @@ export const LayoutPage = ({ children }: { children: React.ReactNode }) => {
 
         {/* Main content */}
         <Box
-          component='main'
+          component="main"
           sx={{
             flexGrow: 1,
             p: 3,

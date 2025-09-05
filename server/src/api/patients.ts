@@ -4,6 +4,8 @@ import { eq, inArray } from "drizzle-orm";
 import { db } from "../db";
 import { exercisesTable } from "../db/schema/exercises";
 import { zValidator } from "@hono/zod-validator";
+import { server, topic } from "..";
+import { WSMessageKind } from "../lib/types";
 
 export const patientsRouter = new Hono()
   // Get all patients by practice ID
@@ -50,7 +52,16 @@ export const patientsRouter = new Hono()
         .insert(patientsTable)
         .values(newPatientData)
         .returning();
-      return c.json({ newPatient }, 200);
+
+      // TODO Add logic for edge case where newPatient is undefined or an empty array
+      server.publish(
+        topic,
+        JSON.stringify({
+          patient: newPatient[0],
+          kind: WSMessageKind.PatientCreated,
+        })
+      );
+      return c.json(newPatient[0].id, 200);
     } catch (error) {
       console.error("Error creating new patient:", error);
       return c.json({ error: "Error creating new patient" }, 500);

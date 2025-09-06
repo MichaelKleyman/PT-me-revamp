@@ -121,6 +121,7 @@ const overviewPanelOptions = [
     icon: FitnessCenterIcon,
   },
 ];
+
 const LayoutLeftPanel = () => {
   const theme = useTheme();
   const isDesktop = useMediaQuery(theme.breakpoints.up("md"));

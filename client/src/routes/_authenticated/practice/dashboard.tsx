@@ -4,7 +4,7 @@ import { createFileRoute } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/_authenticated/practice/dashboard")({
   component: () => (
-    <LayoutPage>
+    <LayoutPage page={"dashboard"}>
       <ViewDashboardPage />
     </LayoutPage>
   ),

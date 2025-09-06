@@ -7,7 +7,13 @@ const drawerWidth = 200;
 const LayoutLeftPanel = lazy(() => import("./LayoutLeftPanel"));
 const LayoutTopBar = lazy(() => import("./LayoutTopBar"));
 
-export const LayoutPage = ({ children }: { children: React.ReactNode }) => {
+export const LayoutPage = ({
+  children,
+  page,
+}: {
+  children: React.ReactNode;
+  page: string;
+}) => {
   useConnectWebsocket();
 
   return (
@@ -30,7 +36,7 @@ export const LayoutPage = ({ children }: { children: React.ReactNode }) => {
         }}
       >
         {/* Top Bar */}
-        <LayoutTopBar />
+        <LayoutTopBar page={page} />
 
         {/* Main content */}
         <Box

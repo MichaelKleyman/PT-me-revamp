@@ -2,7 +2,7 @@
 
 ## TODO
 
-- [] Clean up the `ViewPatientsPage` component and split it up into chunks
+- [x] Clean up the `ViewPatientsPage` component and split it up into chunks
 - [] Address any type errors on the client side
 - [] Look into setting up proper eslint rules for the code base as well as some fix check scripts that catch type errors globally
 - [] Create exercises page with proper CRUD actions on client and server side

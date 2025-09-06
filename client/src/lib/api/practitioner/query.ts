@@ -98,7 +98,7 @@ const onRecieveWSMessage = (data: WSEvent) => {
       handlePatientsBulkDeleted(data.patientIds);
       break;
     default:
-      console.warn("Unhandled WS message kind:", data.kind);
+      console.warn("Unhandled WS message kind:", data);
       break;
   }
 };

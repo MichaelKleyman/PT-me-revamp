@@ -7,7 +7,7 @@ export const Route = createFileRoute("/_authenticated/practice/exercises")({
 
 function RouteComponent() {
   return (
-    <LayoutPage>
+    <LayoutPage page={"exercises"}>
       <p>exercises</p>
     </LayoutPage>
   );

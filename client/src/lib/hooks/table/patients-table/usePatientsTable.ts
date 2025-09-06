@@ -23,7 +23,7 @@ export const usePatientsTable = (props: TPatientsTableProps) => {
     setSelected([]);
   };
 
-  const handleClick = (event: React.MouseEvent<unknown>, id?: number) => {
+  const handleClick = (id?: number) => {
     if (id === undefined) return;
 
     const selectedIndex = selected.indexOf(id);

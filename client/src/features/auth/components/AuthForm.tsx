@@ -1,9 +1,9 @@
 import { Typography } from "@mui/material";
 import Stack from "@mui/material/Stack";
 import { Link, useSearch } from "@tanstack/react-router";
-import { AuthRegister } from "./AuthRegister";
 import { AuthLogin } from "./AuthLogin";
-import { Route } from "../../routes/(auth)/auth";
+import { Route } from "../../../routes/(auth)/auth";
+import { AuthRegister } from "./AuthRegister";
 
 export const AuthForm = () => {
   const { authType, userType } = useSearch({ from: Route.id });

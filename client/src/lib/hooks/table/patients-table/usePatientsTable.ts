@@ -2,13 +2,13 @@ import { Patient } from "@client/lib/types/auth";
 import { useMemo, useState } from "react";
 
 type TPatientsTableProps = {
-  patients: Patient[];
+  patients?: Patient[];
 };
 
 export const usePatientsTable = (props: TPatientsTableProps) => {
   const { patients } = props;
 
-  const [selected, setSelected] = useState<readonly number[]>([]);
+  const [selected, setSelected] = useState<number[]>([]);
   const [page, setPage] = useState(0);
   const [dense, setDense] = useState(false);
   const [rowsPerPage, setRowsPerPage] = useState(5);
@@ -27,7 +27,7 @@ export const usePatientsTable = (props: TPatientsTableProps) => {
     if (id === undefined) return;
 
     const selectedIndex = selected.indexOf(id);
-    let newSelected: readonly number[] = [];
+    let newSelected: number[] = [];
 
     if (selectedIndex === -1) {
       newSelected = newSelected.concat(selected, id);

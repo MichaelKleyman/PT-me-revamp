@@ -9,6 +9,7 @@ import {
   createPatient,
   deleteExercise,
   deletePatient,
+  deletePatients,
   getAllExercises,
   getAllPatients,
   getCurrentUser,
@@ -92,6 +93,9 @@ const onRecieveWSMessage = (data: WSEvent) => {
     // Handle new patient creation
     case WSMessageKind.PatientCreated:
       handleNewPatientCreated(data.patient);
+      break;
+    case WSMessageKind.PatientsBulkDeleted:
+      handlePatientsBulkDeleted(data.patientIds);
       break;
     default:
       console.warn("Unhandled WS message kind:", data.kind);
@@ -197,6 +201,12 @@ export const useDeletePatient = () => {
   });
 };
 
+export const useBulkDeletePatients = () => {
+  return useMutation({
+    mutationFn: deletePatients,
+  });
+};
+
 export const useCreateExercise = () => {
   return useMutation({
     mutationFn: createExercise,
@@ -216,5 +226,16 @@ const handleNewPatientCreated = (patient: Patient) => {
     if (!oldData.length) return [patient];
 
     return [...oldData, patient];
+  });
+};
+
+const handlePatientsBulkDeleted = (patientIds: number[]) => {
+  queryClient.setQueryData(baseKeys.allPatients(), (oldData: Patient[]) => {
+    if (!oldData.length) return [];
+
+    // Remove deleted patients from the cache
+    return oldData.filter(
+      (patient) => patient.id && !patientIds.includes(patient.id)
+    );
   });
 };

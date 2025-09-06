@@ -1,11 +1,12 @@
 import { Stack, styled } from "@mui/material";
 import Typography from "@mui/material/Typography";
-import patientIcon from "../../assets/patient.png";
-import doctorIcon from "../../assets/doctor.png";
-import { TUserType } from "../../lib/types/auth";
-import { Auth } from "../../lib/components/auth/Auth";
+import patientIcon from "../../../assets/patient.png";
+import doctorIcon from "../../../assets/doctor.png";
+
 import { Link } from "@tanstack/react-router";
 import { useState } from "react";
+import { TUserType } from "@client/lib/types/auth";
+import { Auth } from "../exports";
 
 export const AuthRegister = (props: TUserType) => {
   const { userType, authType } = props;
@@ -19,7 +20,7 @@ export const AuthRegister = (props: TUserType) => {
     <StyledProfileOption>
       <Stack>
         <img
-          alt='patient-icon'
+          alt="patient-icon"
           src={patientIcon}
           style={{
             height: "45px",
@@ -30,13 +31,13 @@ export const AuthRegister = (props: TUserType) => {
       </Stack>
       <Link
         style={{ textDecoration: "none" }}
-        to='/auth'
+        to="/auth"
         search={{ authType: "register", userType: "patient" }}
       >
-        <Typography variant='h6' fontWeight='bold' textAlign='start'>
+        <Typography variant="h6" fontWeight="bold" textAlign="start">
           Patient / Consumer
         </Typography>
-        <Typography textAlign='start'>Register as a patient...</Typography>
+        <Typography textAlign="start">Register as a patient...</Typography>
       </Link>
     </StyledProfileOption>
   );
@@ -45,20 +46,20 @@ export const AuthRegister = (props: TUserType) => {
     <StyledProfileOption>
       <Stack>
         <img
-          alt='patient-icon'
+          alt="patient-icon"
           src={doctorIcon}
           style={{ height: "45px", width: "45px", marginTop: "8px" }}
         />
       </Stack>
       <Link
         style={{ textDecoration: "none" }}
-        to='/auth'
+        to="/auth"
         search={{ authType: "register", userType: "practitioner" }}
       >
-        <Typography variant='h6' fontWeight='bold' textAlign='start'>
+        <Typography variant="h6" fontWeight="bold" textAlign="start">
           Licensed Physical Therapist / PT Practice
         </Typography>
-        <Typography textAlign='start'>
+        <Typography textAlign="start">
           Register as a physical therapist...
         </Typography>
       </Link>
@@ -76,10 +77,10 @@ export const AuthRegister = (props: TUserType) => {
 
   return (
     <>
-      <Typography variant='h4' fontWeight='bold'>
+      <Typography variant="h4" fontWeight="bold">
         Register <span style={{ color: "#007FFF" }}>{userType}</span>
       </Typography>
-      <Typography variant='h6'>
+      <Typography variant="h6">
         {!userType
           ? "Choose the profile that best describes you"
           : `Complete step ${registerStep} of the registration process`}

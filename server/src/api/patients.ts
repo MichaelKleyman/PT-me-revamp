@@ -6,6 +6,11 @@ import { exercisesTable } from "../db/schema/exercises";
 import { zValidator } from "@hono/zod-validator";
 import { server, topic } from "..";
 import { WSMessageKind } from "../lib/types";
+import { z } from "zod";
+
+const bulkDeleteSchema = z.object({
+  ids: z.array(z.number()),
+});
 
 export const patientsRouter = new Hono()
   // Get all patients by practice ID
@@ -44,7 +49,7 @@ export const patientsRouter = new Hono()
       return c.json({ error: "Error fetching patient exercises" }, 500);
     }
   })
-  // Create a patient
+  // Create a patient (Needed the validation middleware)
   .post("/", zValidator("json", patientSchema), async (c) => {
     try {
       const newPatientData = await c.req.valid("json");
@@ -61,7 +66,7 @@ export const patientsRouter = new Hono()
           kind: WSMessageKind.PatientCreated,
         })
       );
-      return c.json(newPatient[0].id, 200);
+      return c.json({ success: true }, 200);
     } catch (error) {
       console.error("Error creating new patient:", error);
       return c.json({ error: "Error creating new patient" }, 500);
@@ -74,9 +79,41 @@ export const patientsRouter = new Hono()
       await db
         .delete(patientsTable)
         .where(eq(patientsTable.id, Number(patientId)));
+
+      server.publish(
+        topic,
+        JSON.stringify({
+          patientId: patientId, //TODO change the id type to number on the client
+          kind: WSMessageKind.PatientDeleted,
+        })
+      );
+
+      return c.json({ success: true }, 200);
     } catch (error) {
       console.error("Error deleting patient:", error);
       return c.json({ error: "Error deleting patient" }, 500);
+    }
+  })
+  // Bulk delete patients (Needed the validation middleware)
+  .delete("bulk-delete", zValidator("json", bulkDeleteSchema), async (c) => {
+    try {
+      const { ids } = await c.req.valid("json");
+
+      // Delete patients with IDs in the ids array
+      await db.delete(patientsTable).where(inArray(patientsTable.id, ids));
+
+      server.publish(
+        topic,
+        JSON.stringify({
+          patientIds: ids,
+          kind: WSMessageKind.PatientsBulkDeleted,
+        })
+      );
+
+      return c.json({ success: true }, 200);
+    } catch (error) {
+      console.error("Error deleting patients:", error);
+      return c.json({ error: "Error deleting patients" }, 500);
     }
   });
 
@@ -88,7 +125,6 @@ const handleGetPatient = async (id: number) => {
     .from(patientsTable)
     .where(eq(patientsTable.id, id));
 
-  console.log(">>>", patients);
   return patients[0];
 };
 

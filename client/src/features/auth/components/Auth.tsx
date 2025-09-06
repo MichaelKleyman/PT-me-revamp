@@ -24,13 +24,13 @@ export const Auth = () => {
           background: "linear-gradient(135deg, #161616, #CACACA)",
         }}
       >
-        <StyledLink to='/'>
+        <StyledLink to="/">
           <ArrowBackIcon />
           <Typography>Back</Typography>
         </StyledLink>
 
         <img
-          alt='auth-image'
+          alt="auth-image"
           src={authImage}
           style={{
             height: "100%",

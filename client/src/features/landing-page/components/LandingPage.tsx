@@ -1,11 +1,11 @@
 import { Stack } from "@mui/material";
-import { TopBar } from "@client/components/top-bar/TopBar";
-import { LandingPageSectionOne } from "@client/components/landing-page/LandingPageSectionOne";
-import { LandingPageSectionTwo } from "@client/components/landing-page/LandingPageSectionTwo";
-import { LandingPageSectionMiddle } from "@client/components/landing-page/LandingPageSectionMiddle";
+import { TopBar } from "@client/features/top-bar/TopBar";
+import { LandingPageSectionOne } from "@client/features/landing-page/components/LandingPageSectionOne";
+import { LandingPageSectionTwo } from "@client/features/landing-page/components/LandingPageSectionTwo";
+import { LandingPageSectionMiddle } from "@client/features/landing-page/components/LandingPageSectionMiddle";
 import { useRef } from "react";
 import { MenuRef, MenuRefs } from "@client/lib/types/types";
-import { LandingPageFooter } from "@client/components/landing-page/LandingPageFooter";
+import { LandingPageFooter } from "@client/features/landing-page/components/LandingPageFooter";
 
 export const LandingPage = () => {
   const servicesRef = useRef<HTMLDivElement | null>(null);

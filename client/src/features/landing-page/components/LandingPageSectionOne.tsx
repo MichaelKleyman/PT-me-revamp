@@ -1,17 +1,17 @@
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
-import LandingImage from "../../assets/doctor-patient.jpg";
+import LandingImage from "../../../assets/doctor-patient.jpg";
 import { styled, useTheme } from "@mui/material";
 import { Link } from "@tanstack/react-router";
-import { FloatingPaths } from "../../lib/components/animations/AnimationsFloatingPaths";
+import { FloatingPaths } from "../../../lib/components/animations/AnimationsFloatingPaths";
 
 export const LandingPageSectionOne = () => {
   const theme = useTheme();
 
   return (
     <Stack
-      alignItems='center'
+      alignItems="center"
       sx={{
         minHeight: "100vh",
         background:
@@ -24,9 +24,9 @@ export const LandingPageSectionOne = () => {
         <FloatingPaths position={1} />
         <FloatingPaths position={-1} />
       </div>
-      <Stack flexDirection='row' alignItems='center' mt={30} width='55%'>
+      <Stack flexDirection="row" alignItems="center" mt={30} width="55%">
         <Stack>
-          <Typography fontSize='40px' lineHeight='1.2' color='white'>
+          <Typography fontSize="40px" lineHeight="1.2" color="white">
             Build custom PT plans,{" "}
             <span
               style={{
@@ -49,10 +49,10 @@ export const LandingPageSectionOne = () => {
           </Typography>
 
           <Stack>
-            <Typography mt={1} fontSize='20px' lineHeight='1.2' color='white'>
+            <Typography mt={1} fontSize="20px" lineHeight="1.2" color="white">
               Lets get started today!
             </Typography>
-            <StyledLink to='/auth'>
+            <StyledLink to="/auth">
               <Typography>Get started</Typography>
               <ArrowForwardIcon />
             </StyledLink>
@@ -66,7 +66,7 @@ export const LandingPageSectionOne = () => {
               borderRadius: "50%",
               objectFit: "cover",
             }}
-            alt='Landing-image'
+            alt="Landing-image"
             src={LandingImage}
           />
         </Stack>

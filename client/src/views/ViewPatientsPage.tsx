@@ -19,7 +19,9 @@ import IconButton from "@mui/material/IconButton";
 import Tooltip from "@mui/material/Tooltip";
 import DeleteIcon from "@mui/icons-material/Delete";
 import FilterListIcon from "@mui/icons-material/FilterList";
-import { usePatientsTable } from "@client/lib/hooks/patients-table/usePatientsTable";
+import { usePatientsTable } from "@client/lib/hooks/table/patients-table/usePatientsTable";
+import { usePatientActions } from "@client/lib/hooks/patient/usePatientActions";
+import { DialogConfirmation } from "@client/lib/components/dialog/DialogConfirmation";
 
 const headCells = [
   {
@@ -88,11 +90,11 @@ function EnhancedTableHead(props: EnhancedTableProps) {
 }
 interface EnhancedTableToolbarProps {
   numSelected: number;
-  onDeletePatient: () => void;
+  handleDeletePatientsDialog: (open: boolean) => void;
 }
 
 function EnhancedTableToolbar(props: EnhancedTableToolbarProps) {
-  const { numSelected, onDeletePatient } = props;
+  const { numSelected, handleDeletePatientsDialog } = props;
   return (
     <Toolbar
       sx={[
@@ -124,7 +126,7 @@ function EnhancedTableToolbar(props: EnhancedTableToolbarProps) {
       )}
       {numSelected > 0 ? (
         <Tooltip title="Delete">
-          <IconButton onClick={onDeletePatient}>
+          <IconButton onClick={() => handleDeletePatientsDialog(true)}>
             <DeleteIcon />
           </IconButton>
         </Tooltip>
@@ -144,6 +146,9 @@ export const ViewPatientsPage = () => {
 
   const { data: patients } = useGetAllPatients(practiceId);
 
+  const { openDeleteDialog, handleDeletePatientsDialog, handleDeletePatient } =
+    usePatientActions();
+
   const {
     selected,
     page,
@@ -157,12 +162,22 @@ export const ViewPatientsPage = () => {
     visibleRows,
   } = usePatientsTable({ patients });
 
+  const renderDeletePatientsDialog = (
+    <DialogConfirmation
+      open={openDeleteDialog}
+      title="Delete Patients"
+      body="Are you sure you want to delete the selected patient(s)? This action cannot be undone."
+      onConfirm={() => handleDeletePatient(selected)}
+      onCancel={() => handleDeletePatientsDialog(false)}
+    />
+  );
+
   return (
     <Box sx={{ width: "100%" }}>
       <Paper sx={{ width: "100%", mb: 2 }}>
         <EnhancedTableToolbar
           numSelected={selected.length}
-          onDeletePatient={handleDeletePatient}
+          handleDeletePatientsDialog={handleDeletePatientsDialog}
         />
         <TableContainer>
           <Table
@@ -236,6 +251,7 @@ export const ViewPatientsPage = () => {
           onRowsPerPageChange={handleChangeRowsPerPage}
         />
       </Paper>
+      {renderDeletePatientsDialog}
     </Box>
   );
 };

@@ -1,4 +1,4 @@
-import { PracticePatientsCard } from "@client/components/practice/PracticePatientsCard";
+import { PracticePatientsCard } from "@client/features/practice/exports";
 import { useAppStore } from "@client/store";
 import { useSelectPractice } from "@client/store/selectors";
 import { Box, Paper, Typography } from "@mui/material";

@@ -128,7 +128,18 @@ export const deletePatient = async (id: string) => {
       param: { patientId: id },
     });
   } catch (error) {
-    console.error("Error deleting new patient:", error);
+    console.error("Error deleting patient:", error);
+  }
+};
+
+// BULK DELETE patients
+export const deletePatients = async (ids: number[]) => {
+  try {
+    await api.patients["bulk-delete"].$delete({
+      json: { ids },
+    });
+  } catch (error) {
+    console.error("Error bulk deleting patients:", error);
   }
 };
 

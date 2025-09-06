@@ -39,8 +39,8 @@ const LayoutTopBar = () => {
 
   return (
     <AppBar
-      position='static'
-      color='default'
+      position="static"
+      color="default"
       elevation={0}
       sx={{
         backgroundColor: "white",
@@ -59,16 +59,16 @@ const LayoutTopBar = () => {
         >
           <Breadcrumbs
             separator={
-              <ChevronRight fontSize='small' sx={{ color: "grey.500" }} />
+              <ChevronRight fontSize="small" sx={{ color: "grey.500" }} />
             }
-            aria-label='breadcrumb'
+            aria-label="breadcrumb"
           >
             {breadcrumbs.map((item) => (
               <Typography
                 key={item.label}
                 color={"grey.700"}
-                variant='body2'
-                fontWeight='medium'
+                variant="body2"
+                fontWeight="medium"
               >
                 {item.label}
               </Typography>
@@ -77,9 +77,9 @@ const LayoutTopBar = () => {
         </Box>
 
         {/* Right side controls */}
-        <Box display='flex' alignItems='center' sx={{ gap: { xs: 1, sm: 2 } }}>
+        <Box display="flex" alignItems="center" sx={{ gap: { xs: 1, sm: 2 } }}>
           <IconButton
-            size='small'
+            size="small"
             sx={{
               p: { xs: 0.75, sm: 1 },
               "&:hover": {
@@ -88,13 +88,13 @@ const LayoutTopBar = () => {
               color: "grey.600",
             }}
           >
-            <NotificationsIcon fontSize='small' />
+            <NotificationsIcon fontSize="small" />
           </IconButton>
 
-          <IconButton size='small' onClick={handleMenuOpen} sx={{ p: 0 }}>
+          <IconButton size="small" onClick={handleMenuOpen} sx={{ p: 0 }}>
             <Avatar
-              src='https://ferf1mheo22r9ira.public.blob.vercel-storage.com/avatar-01-n0x8HFv8EUetf9z6ht0wScJKoTHqf8.png'
-              alt='User avatar'
+              src="https://ferf1mheo22r9ira.public.blob.vercel-storage.com/avatar-01-n0x8HFv8EUetf9z6ht0wScJKoTHqf8.png"
+              alt="User avatar"
               sx={{
                 width: { xs: 28, sm: 32 },
                 height: { xs: 28, sm: 32 },

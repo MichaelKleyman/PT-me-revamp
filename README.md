@@ -2,9 +2,11 @@
 
 ## TODO
 
-- [x] Make the new routes/pages when logged in be authenticated routes
-- [x] Choose which section to begin working on (Dashboard, Schedule, Patients)
-- [x] Set up queries/mutations for whatever necessary operations are needed
+- [] Clean up the `ViewPatientsPage` component and split it up into chunks
+- [] Address any type errors on the client side
+- [] Look into setting up proper eslint rules for the code base as well as some fix check scripts that catch type errors globally
+- [] Create exercises page with proper CRUD actions on client and server side
+- [] Add more logic to the patients page table like filtering and sorting etc.
 - [] Create reusable helper function on the backend that will perform simple `getById` drizzle calls
 
 ## Current Practice/Practitioner creation flow

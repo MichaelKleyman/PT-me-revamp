@@ -6,7 +6,7 @@ import { CssBaseline } from "@mui/material";
 // import theme from "./theme/appTheme.ts";
 import theme from "./theme/appThemeSub.ts";
 import { QueryClientProvider } from "@tanstack/react-query";
-import ErrorBoundary from "./components/error/error-boundary.tsx";
+import ErrorBoundary from "./lib/components/error/error-boundary.tsx";
 import { LoadingPage } from "./lib/components/loading/LoadingPage.tsx";
 import { queryClient } from "./lib/api/practitioner/query.ts";
 

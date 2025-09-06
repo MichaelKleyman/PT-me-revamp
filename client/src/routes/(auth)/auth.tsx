@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { Auth } from "../../components/auth/Auth";
+import { Auth } from "../../features/auth/exports";
 import { authUrlSchema } from "../../lib/types/auth";
 
 export const Route = createFileRoute("/(auth)/auth")({

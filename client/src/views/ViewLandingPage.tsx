@@ -1,4 +1,4 @@
-import { LandingPage } from "@client/components/landing-page/LandingPage";
+import { LandingPage } from "@client/features/landing-page/exports";
 import { Outlet } from "@tanstack/react-router";
 
 export const ViewLandingPage = () => {

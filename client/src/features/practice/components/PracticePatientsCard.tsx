@@ -84,7 +84,7 @@ export const PracticePatientsCard = () => {
           variant="outlined"
           placeholder="Patient Address"
           label="Type Patient Address"
-          error={Boolean(formState.errors.name)}
+          error={Boolean(formState.errors.address)}
           fullWidth
           helperText={
             formState.errors.address ? formState.errors.address.message : ""

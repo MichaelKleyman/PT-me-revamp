@@ -7,7 +7,7 @@
 - [] Look into setting up proper eslint rules for the code base as well as some fix check scripts that catch type errors globally
 - [] Create exercises page with proper CRUD actions on client and server side
 - [] Add more logic to the patients page table like filtering and sorting etc.
-- [] Make the patient input form not take full name in one text field but have seperate fields for first name and last name and possiby middle name
+- [x] Make the patient input form not take full name in one text field but have seperate fields for first name and last name and possiby middle name
   - Requires many BE changes in the database tables as well as the hono routes
 - [] Split up the zustand store folder into appropriate stores
 - [] Create reusable helper function on the backend that will perform simple `getById` drizzle calls

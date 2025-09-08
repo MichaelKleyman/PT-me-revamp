@@ -3,6 +3,7 @@ import {
   queryOptions,
   useMutation,
   useQuery,
+  useSuspenseQuery,
 } from "@tanstack/react-query";
 import {
   createExercise,
@@ -149,7 +150,7 @@ export const useGetPatient = (patientId: string) => {
 };
 
 export const useGetAllPatients = (practiceId: string) => {
-  return useQuery(
+  return useSuspenseQuery(
     queryOptions({
       queryKey: baseKeys.allPatients(),
       queryFn: () => getAllPatients(practiceId),
@@ -159,7 +160,7 @@ export const useGetAllPatients = (practiceId: string) => {
 };
 
 export const useGetPatientsExercises = (patientId: string) => {
-  return useQuery(
+  return useSuspenseQuery(
     queryOptions({
       queryKey: baseKeys.patientsExercises(patientId),
       queryFn: () => getPatientsExercises(patientId),

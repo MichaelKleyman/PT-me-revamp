@@ -17,7 +17,9 @@ export const patientsTable = patientsSchema.table(
     kindeId: text("kinde_id").unique(), // Unique identifier for Kinde user
     practiceId: text("practice_id"), // Id of the practice the patient belongs to
     exerciseIds: integer("exercise_ids").array().default([]).notNull(),
-    name: text("name").notNull(),
+    firstName: text("firstName").notNull(),
+    middleName: text("middleName"),
+    lastName: text("lastName").notNull(),
     email: text("email").notNull(),
     address: text("address").notNull(), // Not needed for practitioner
     userType: text("user_type", {
@@ -34,7 +36,9 @@ export const patientSchema = z.object({
   kindeId: z.string().nullable().optional(),
   practiceId: z.string().nullable().optional(),
   exerciseIds: z.array(z.number()).default([]),
-  name: z.string(),
+  firstName: z.string(),
+  middleName: z.string().nullable().optional(),
+  lastName: z.string(),
   email: z.string().email(),
   address: z.string(),
   userType: z.enum(["patient", "practitioner"]),

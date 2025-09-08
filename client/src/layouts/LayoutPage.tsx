@@ -11,8 +11,8 @@ export const LayoutPage = ({
   children,
   page,
 }: {
-  children: React.ReactNode;
-  page: string;
+  children?: React.ReactNode;
+  page?: string;
 }) => {
   useConnectWebsocket();
 

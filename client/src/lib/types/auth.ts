@@ -31,8 +31,12 @@ export type BaseUser = {
   kindeId?: string | null;
   /** ID of the practice the user belongs to */
   practiceId?: string | null;
-  /** Full name of the user */
-  name: string;
+  /** First name of the user */
+  firstName: string;
+  /** Middle name of the user */
+  middleName?: string | null;
+  /** Last name of the user */
+  lastName: string;
   /** Email address of the user */
   email: string;
   /** Type of user, patient or practitioner */

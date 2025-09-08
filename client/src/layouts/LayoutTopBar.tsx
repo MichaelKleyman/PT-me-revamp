@@ -20,10 +20,10 @@ interface BreadcrumbItem {
   href?: string;
 }
 
-const LayoutTopBar = ({ page }: { page: string }) => {
+const LayoutTopBar = ({ page }: { page?: string }) => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
-  const breadcrumbs: BreadcrumbItem[] = [{ label: page, href: "#" }];
+  const breadcrumbs: BreadcrumbItem[] = [{ label: page ?? "", href: "#" }];
 
   const handleMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);

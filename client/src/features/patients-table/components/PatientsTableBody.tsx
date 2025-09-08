@@ -40,9 +40,11 @@ export const PatientsTableBody = (props: TPatientsTableBodyProps) => {
               />
             </TableCell>
             <TableCell component="th" id={labelId} scope="row" padding="none">
-              {row.name}
+              {row.firstName} {row.middleName} {row.lastName}
             </TableCell>
-            <TableCell align="right">{row.name}</TableCell>
+            <TableCell align="right">
+              {row.firstName} {row.middleName} {row.lastName}
+            </TableCell>
             <TableCell align="right">{row.email}</TableCell>
             <TableCell align="right">{row.address}</TableCell>
           </TableRow>

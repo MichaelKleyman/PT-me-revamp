@@ -24,6 +24,7 @@ export const usePatientsTable = (props: TPatientsTableProps) => {
   };
 
   const handleClick = (id?: number) => {
+    console.log(id);
     if (id === undefined) return;
 
     const selectedIndex = selected.indexOf(id);

@@ -68,6 +68,7 @@ export const PatientsTable = (props: TPatientsTableProps) => {
 
   const renderPatientsToolbar = (
     <PatientsTableToolbar
+      selected={selected}
       numSelected={selected.length}
       handleDeletePatientsDialog={handleDeletePatientsDialog}
     />

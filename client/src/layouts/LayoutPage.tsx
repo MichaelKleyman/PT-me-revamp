@@ -9,10 +9,13 @@ const LayoutTopBar = lazy(() => import("./LayoutTopBar"));
 
 export const LayoutPage = ({
   children,
-  page,
+  pageBreadcrumbs,
 }: {
   children?: React.ReactNode;
-  page?: string;
+  pageBreadcrumbs?: {
+    label: string;
+    href: string;
+  }[];
 }) => {
   useConnectWebsocket();
 
@@ -36,7 +39,7 @@ export const LayoutPage = ({
         }}
       >
         {/* Top Bar */}
-        <LayoutTopBar page={page} />
+        <LayoutTopBar pageBreadcrumbs={pageBreadcrumbs} />
 
         {/* Main content */}
         <Box

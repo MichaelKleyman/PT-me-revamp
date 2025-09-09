@@ -52,7 +52,6 @@ const NavItem = (props: TNavItemProps) => {
     <ListItem disablePadding>
       <Link
         to={href}
-        activeOptions={{ exact: true }}
         activeProps={{
           style: {
             display: "block",

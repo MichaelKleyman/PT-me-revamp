@@ -47,7 +47,6 @@ export const PatientsTable = (props: TPatientsTableProps) => {
   const {
     selected,
     page,
-    dense,
     rowsPerPage,
     handleSelectAllClick,
     handleClick,
@@ -79,7 +78,6 @@ export const PatientsTable = (props: TPatientsTableProps) => {
       visibleRows={visibleRows}
       selected={selected}
       handleClick={handleClick}
-      dense={dense}
       emptyRows={emptyRows}
     />
   );
@@ -112,7 +110,7 @@ export const PatientsTable = (props: TPatientsTableProps) => {
         <Table
           sx={{ minWidth: 750 }}
           aria-labelledby="tableTitle"
-          size={dense ? "small" : "medium"}
+          size={"medium"}
         >
           {renderPatientsTableHead}
           {renderTableBody}

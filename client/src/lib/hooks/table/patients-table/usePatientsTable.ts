@@ -10,7 +10,6 @@ export const usePatientsTable = (props: TPatientsTableProps) => {
 
   const [selected, setSelected] = useState<number[]>([]);
   const [page, setPage] = useState(0);
-  const [dense, setDense] = useState(false);
   const [rowsPerPage, setRowsPerPage] = useState(5);
 
   const handleSelectAllClick = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -24,7 +23,6 @@ export const usePatientsTable = (props: TPatientsTableProps) => {
   };
 
   const handleClick = (id?: number) => {
-    console.log(id);
     if (id === undefined) return;
 
     const selectedIndex = selected.indexOf(id);
@@ -75,7 +73,6 @@ export const usePatientsTable = (props: TPatientsTableProps) => {
   return {
     selected,
     page,
-    dense,
     rowsPerPage,
     handleSelectAllClick,
     handleClick,

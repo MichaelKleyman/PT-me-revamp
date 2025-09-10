@@ -69,9 +69,8 @@ const LayoutTopBar = ({
             aria-label="breadcrumb"
           >
             {breadcrumbs.map((item) => (
-              <Link href={item.href}>
+              <Link key={item.label} href={item.href}>
                 <Typography
-                  key={item.label}
                   color={"grey.700"}
                   variant="body2"
                   fontWeight="medium"

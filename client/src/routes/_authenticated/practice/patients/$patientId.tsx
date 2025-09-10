@@ -1,4 +1,4 @@
-import { PatientPage } from "@client/features/patient-page/components/PatientPage";
+import { PatientPage } from "@client/features/patient-page/exports";
 import { LayoutPage } from "@client/layouts/LayoutPage";
 import { useGetPatient } from "@client/lib/api/practitioner/query";
 import { LoadingPage } from "@client/lib/components/loading/LoadingPage";

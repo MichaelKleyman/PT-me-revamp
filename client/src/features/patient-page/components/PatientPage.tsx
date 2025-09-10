@@ -1,7 +1,10 @@
 import { useGetPatient } from "@client/lib/api/practitioner/query";
 import { Link, useParams } from "@tanstack/react-router";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import { Tooltip } from "@mui/material";
+import { Box, Grid2, Tooltip } from "@mui/material";
+import { PatientPageHeader } from "./PatientPageHeader";
+import { PatientQuickInformation } from "./PatientQuickInformation";
+import { PatientTreatmentHistory } from "./PatientTreatmentHistory";
 
 export const PatientPage = () => {
   const params = useParams({
@@ -21,10 +24,22 @@ export const PatientPage = () => {
     </Link>
   );
 
+  const renderPatientHeader = <PatientPageHeader patient={patient} />;
+
+  const renderPatientQuickInfo = <PatientQuickInformation patient={patient} />;
+
+  const renderPatientTreatmentHistory = (
+    <PatientTreatmentHistory patientId={patient?.id} />
+  );
+
   return (
-    <div>
+    <Box>
       {renderGoBack}
-      <h1>PatientPage: {patient?.firstName}</h1>
-    </div>
+      {renderPatientHeader}
+      <Grid2 container spacing={2} mt={2}>
+        <Grid2 size={{ xs: 12, sm: 4 }}>{renderPatientQuickInfo}</Grid2>
+        <Grid2 size={{ xs: 12, sm: 8 }}>{renderPatientTreatmentHistory}</Grid2>
+      </Grid2>
+    </Box>
   );
 };

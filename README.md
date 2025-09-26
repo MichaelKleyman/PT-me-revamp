@@ -20,3 +20,19 @@
   - Following successful completion, they are routed to their practice dashboard where second round of necessary information regarding the practice is required to be filled out.
 - When a new practitioner needs to be added to the existing software, they do not go through the normal registration process.
   - They need to be given an invitation link by one of the admins of the practice where they are routed to a special portal to complete theyre enrollment for the practice they will be affiliated with.
+
+## Current Exercise Data To Be Presented
+
+- the **beginner**, **intermediate**, and **advanced** labels represent the **difficulty level** of each exercise. These labels help physical therapists:
+  - **Beginner** (green badge) - Easier exercises suitable for patients just starting their recovery or with limited mobility
+  - **Intermediate** (yellow badge) - Moderate difficulty exercises for patients who have progressed beyond basic movements
+  - **Advanced** (red badge) - More challenging exercises for patients with good strength and mobility
+
+The status would be managed by the physical therapist through the "Update Program" button, where they can:
+
+- Assign new exercises (set to "pending")
+- Activate exercises when patient is ready (change to "active")
+- Mark exercises as completed when patient has mastered them
+- Track session-by-session completion with the checkboxes
+
+This creates a workflow where exercises progress from pending → active → completed as the patient advances through their rehabilitation program.

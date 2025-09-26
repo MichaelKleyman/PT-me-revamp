@@ -13,7 +13,7 @@ import CalendarTodayOutlinedIcon from "@mui/icons-material/CalendarTodayOutlined
 import AccessTimeOutlinedIcon from "@mui/icons-material/AccessTimeOutlined";
 import ArticleOutlinedIcon from "@mui/icons-material/ArticleOutlined";
 
-type TPatientTreatmentHistoryProps = { patientId: number };
+type TPatientTreatmentHistoryProps = { patientId?: number };
 
 // Mock treatment data
 const mockTreatments = [
@@ -51,6 +51,7 @@ export const PatientTreatmentHistory = (
   props: TPatientTreatmentHistoryProps
 ) => {
   const { patientId } = props;
+  console.log({ patientId });
 
   return (
     <Card>

@@ -4,11 +4,14 @@ export type Exercise = {
   description: string;
   sets: number;
   reps: string;
+  duration: string;
+  benefits: string[];
+  equipment: string;
   frequency: string;
-  status: "active" | "completed" | "pending";
+  status?: "active" | "completed" | "pending"; // TODO: consider removing
   difficulty: "beginner" | "intermediate" | "advanced";
   targetArea: string;
   instructions: string[];
   videoUrl: string;
-  completedInSession: boolean;
+  completedInSession?: boolean; // TODO: consider removing
 };

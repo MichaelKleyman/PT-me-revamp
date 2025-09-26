@@ -1,6 +1,7 @@
 import {
   Button,
   IconButton,
+  Stack,
   Toolbar,
   Tooltip,
   Typography,
@@ -9,6 +10,8 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import FilterListIcon from "@mui/icons-material/FilterList";
 import { alpha } from "@mui/material/styles";
 import { useNavigate } from "@tanstack/react-router";
+import { useCallback, useState } from "react";
+import { PatientCreate } from "@client/features/patient-create/components/PatientCreate";
 
 interface EnhancedTableToolbarProps {
   selected: number[];
@@ -22,6 +25,8 @@ export const PatientsTableToolbar = (props: TPatientsTableToolbarProps) => {
   const { selected, numSelected, handleDeletePatientsDialog } = props;
   const navigate = useNavigate();
 
+  const [openCreatePatient, setOpenCreatePatient] = useState(false);
+
   const handleViewPatient = () => {
     navigate({
       to: "/practice/patients/$patientId",
@@ -29,10 +34,27 @@ export const PatientsTableToolbar = (props: TPatientsTableToolbarProps) => {
     });
   };
 
+  const onClickCreatePatient = useCallback(() => {
+    setOpenCreatePatient((prev) => !prev);
+  }, []);
+
   const renderViewPatientButton = (
     <Button variant="contained" onClick={handleViewPatient}>
       View
     </Button>
+  );
+
+  const renderCreatePatientButton = (
+    <Button variant="contained" onClick={onClickCreatePatient}>
+      Create
+    </Button>
+  );
+
+  const renderCreatePatientDialog = (
+    <PatientCreate
+      openCreatePatient={openCreatePatient}
+      onClickCreatePatient={onClickCreatePatient}
+    />
   );
 
   return (
@@ -72,12 +94,16 @@ export const PatientsTableToolbar = (props: TPatientsTableToolbarProps) => {
           </IconButton>
         </Tooltip>
       ) : (
-        <Tooltip title="Filter list">
-          <IconButton>
-            <FilterListIcon />
-          </IconButton>
-        </Tooltip>
+        <Stack flexDirection="row" gap={1}>
+          {renderCreatePatientButton}
+          <Tooltip title="Filter list">
+            <IconButton>
+              <FilterListIcon />
+            </IconButton>
+          </Tooltip>
+        </Stack>
       )}
+      {renderCreatePatientDialog}
     </Toolbar>
   );
 };

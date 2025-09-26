@@ -1,4 +1,14 @@
 export type Exercise = {
+  id: string;
   name: string;
-  // TODO: add more fields
+  description: string;
+  sets: number;
+  reps: string;
+  frequency: string;
+  status: "active" | "completed" | "pending";
+  difficulty: "beginner" | "intermediate" | "advanced";
+  targetArea: string;
+  instructions: string[];
+  videoUrl: string;
+  completedInSession: boolean;
 };

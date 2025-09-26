@@ -31,8 +31,8 @@ export const patientsRouter = new Hono()
   .get("/:patientId", async (c) => {
     try {
       const patientId = c.req.param("patientId");
-      const patient = handleGetPatient(Number(patientId));
-      return c.json({ patient: patient }, 200);
+      const patient = await handleGetPatient(Number(patientId));
+      return c.json({ patient }, 200);
     } catch (error) {
       console.error("Error fetching patient:", error);
       return c.json({ error: "Error fetching patient" }, 500);

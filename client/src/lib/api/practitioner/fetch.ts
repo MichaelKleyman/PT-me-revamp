@@ -36,8 +36,12 @@ export const getPatient = async (patientId: string) => {
     const res = await api.patients[":patientId"].$get({
       param: { patientId },
     });
+    if (!res.ok) {
+      throw new Error(`Failed to fetch patient: ${res.status}`);
+    }
+
     const data = await res.json();
-    return data;
+    return data.patient;
   } catch (error) {
     console.error("Error fetching patient:", error);
   }

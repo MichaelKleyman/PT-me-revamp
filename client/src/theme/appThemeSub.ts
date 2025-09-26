@@ -1,5 +1,15 @@
 import { createTheme } from "@mui/material/styles";
 
+declare module "@mui/material/styles/createPalette" {
+  interface TypeBackground {
+    paperSecondary: string;
+  }
+
+  interface TypeText {
+    tertiary: string;
+  }
+}
+
 const theme = createTheme({
   palette: {
     mode: "light",
@@ -14,6 +24,7 @@ const theme = createTheme({
     background: {
       default: "#f5f5f0",
       paper: "#ffffff",
+      paperSecondary: "#F2F0EF",
     },
     text: {
       primary: "#1e3a1e",

@@ -5,12 +5,11 @@ type TPatientsTableBodyProps = {
   visibleRows: Patient[];
   selected: number[];
   handleClick: (id?: number) => void;
-  dense: boolean;
   emptyRows: number;
 };
 
 export const PatientsTableBody = (props: TPatientsTableBodyProps) => {
-  const { visibleRows, selected, handleClick, dense, emptyRows } = props;
+  const { visibleRows, selected, handleClick, emptyRows } = props;
 
   return (
     <TableBody>
@@ -53,7 +52,7 @@ export const PatientsTableBody = (props: TPatientsTableBodyProps) => {
       {emptyRows > 0 && (
         <TableRow
           style={{
-            height: (dense ? 33 : 53) * emptyRows,
+            height: 53 * emptyRows,
           }}
         >
           <TableCell colSpan={6} />

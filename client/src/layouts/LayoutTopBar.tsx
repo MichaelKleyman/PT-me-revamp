@@ -14,16 +14,21 @@ import {
   ChevronRight,
 } from "@mui/icons-material";
 import { useState } from "react";
+import { Link } from "@tanstack/react-router";
 
 interface BreadcrumbItem {
   label: string;
   href?: string;
 }
 
-const LayoutTopBar = ({ page }: { page?: string }) => {
+const LayoutTopBar = ({
+  pageBreadcrumbs,
+}: {
+  pageBreadcrumbs?: BreadcrumbItem[];
+}) => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
-  const breadcrumbs: BreadcrumbItem[] = [{ label: page ?? "", href: "#" }];
+  const breadcrumbs: BreadcrumbItem[] = pageBreadcrumbs || [];
 
   const handleMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
@@ -64,14 +69,15 @@ const LayoutTopBar = ({ page }: { page?: string }) => {
             aria-label="breadcrumb"
           >
             {breadcrumbs.map((item) => (
-              <Typography
-                key={item.label}
-                color={"grey.700"}
-                variant="body2"
-                fontWeight="medium"
-              >
-                {item.label}
-              </Typography>
+              <Link key={item.label} href={item.href}>
+                <Typography
+                  color={"grey.700"}
+                  variant="body2"
+                  fontWeight="medium"
+                >
+                  {item.label}
+                </Typography>
+              </Link>
             ))}
           </Breadcrumbs>
         </Box>

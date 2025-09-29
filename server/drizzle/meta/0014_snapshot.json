@@ -1,6 +1,6 @@
 {
-  "id": "33718503-0b0e-4906-8432-e08ddeec0f59",
-  "prevId": "0d26fd36-e083-432c-81b0-e2ad6bb012f5",
+  "id": "3943626d-5753-4554-b3f2-54fab52faac5",
+  "prevId": "88c0b197-5df6-4994-bddf-062835623828",
   "version": "7",
   "dialect": "postgresql",
   "tables": {
@@ -26,8 +26,20 @@
           "primaryKey": false,
           "notNull": false
         },
-        "name": {
-          "name": "name",
+        "firstName": {
+          "name": "firstName",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "middleName": {
+          "name": "middleName",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "lastName": {
+          "name": "lastName",
           "type": "text",
           "primaryKey": false,
           "notNull": true
@@ -42,7 +54,7 @@
           "name": "address",
           "type": "text",
           "primaryKey": false,
-          "notNull": false
+          "notNull": true
         },
         "user_type": {
           "name": "user_type",
@@ -67,13 +79,6 @@
           "nullsNotDistinct": false,
           "columns": [
             "kinde_id"
-          ]
-        },
-        "patients_practice_id_unique": {
-          "name": "patients_practice_id_unique",
-          "nullsNotDistinct": false,
-          "columns": [
-            "practice_id"
           ]
         }
       },
@@ -101,13 +106,13 @@
           "name": "practice_id",
           "type": "text",
           "primaryKey": false,
-          "notNull": false
+          "notNull": true
         },
         "admin": {
           "name": "admin",
           "type": "boolean",
           "primaryKey": false,
-          "notNull": false,
+          "notNull": true,
           "default": false
         },
         "name": {
@@ -126,7 +131,7 @@
           "name": "licenseNumber",
           "type": "integer",
           "primaryKey": false,
-          "notNull": false
+          "notNull": true
         },
         "user_type": {
           "name": "user_type",
@@ -152,13 +157,6 @@
           "columns": [
             "kinde_id"
           ]
-        },
-        "practitioners_practice_id_unique": {
-          "name": "practitioners_practice_id_unique",
-          "nullsNotDistinct": false,
-          "columns": [
-            "practice_id"
-          ]
         }
       },
       "policies": {},
@@ -179,7 +177,7 @@
           "name": "practiceName",
           "type": "text",
           "primaryKey": false,
-          "notNull": false
+          "notNull": true
         },
         "email": {
           "name": "email",
@@ -197,7 +195,7 @@
           "name": "admin_ids",
           "type": "integer[]",
           "primaryKey": false,
-          "notNull": false,
+          "notNull": true,
           "default": "'{}'"
         },
         "created_at": {
@@ -247,6 +245,54 @@
           "type": "text",
           "primaryKey": false,
           "notNull": true
+        },
+        "description": {
+          "name": "description",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "difficulty": {
+          "name": "difficulty",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "target-area": {
+          "name": "target-area",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "duration": {
+          "name": "duration",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "equipment": {
+          "name": "equipment",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "video_url": {
+          "name": "video_url",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "instructions": {
+          "name": "instructions",
+          "type": "text[]",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "benefits": {
+          "name": "benefits",
+          "type": "text[]",
+          "primaryKey": false,
+          "notNull": false
         },
         "created_at": {
           "name": "created_at",

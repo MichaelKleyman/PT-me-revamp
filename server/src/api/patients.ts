@@ -7,6 +7,7 @@ import { zValidator } from "@hono/zod-validator";
 import { server, topic } from "..";
 import { WSMessageKind } from "../lib/types";
 import { z } from "zod";
+import { patientExercisesTable } from "../db/schema/patient-exercises";
 
 const bulkDeleteSchema = z.object({
   ids: z.array(z.number()),
@@ -130,12 +131,10 @@ const handleGetPatient = async (id: number) => {
 
 /** Get all exercises for a specific patient */
 const handleGetPatientsExercises = async (id: number) => {
-  const patient = handleGetPatient(id);
-  const patientExerciseIds = (await patient).exerciseIds ?? [];
   // Get exercises by ID from the list of exercise IDs
   const patientExercises = await db
     .select()
-    .from(exercisesTable)
-    .where(inArray(exercisesTable.id, patientExerciseIds));
+    .from(patientExercisesTable)
+    .where(eq(patientExercisesTable.patientId, id));
   return patientExercises;
 };

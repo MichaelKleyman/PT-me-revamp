@@ -43,8 +43,10 @@ export const patientsRouter = new Hono()
   .get("/exercises/:patientId", async (c) => {
     try {
       const patientId = c.req.param("patientId");
-      const patientExercises = handleGetPatientsExercises(Number(patientId));
-      return c.json({ patientExercises }, 200);
+      const patientExercises = await handleGetPatientsExercises(
+        Number(patientId)
+      );
+      return c.json(patientExercises, 200);
     } catch (error) {
       console.error("Error fetching patient exercises:", error);
       return c.json({ error: "Error fetching patient exercises" }, 500);
@@ -130,11 +132,15 @@ const handleGetPatient = async (id: number) => {
 };
 
 /** Get all exercises for a specific patient */
-const handleGetPatientsExercises = async (id: number) => {
-  // Get exercises by ID from the list of exercise IDs
+const handleGetPatientsExercises = async (patientId: number) => {
+  // Get exercises by looking it up in the patient-exercises table
   const patientExercises = await db
     .select()
     .from(patientExercisesTable)
-    .where(eq(patientExercisesTable.patientId, id));
+    .innerJoin(
+      exercisesTable,
+      eq(patientExercisesTable.exerciseId, exercisesTable.id)
+    )
+    .where(eq(patientExercisesTable.patientId, patientId));
   return patientExercises;
 };

@@ -1,6 +1,7 @@
-import { desc } from "drizzle-orm";
+import { desc, relations } from "drizzle-orm";
 import { serial, text, pgSchema, timestamp } from "drizzle-orm/pg-core";
 import { z } from "zod";
+import { patientExercisesTable } from "./patient-exercises";
 
 enum ExerciseDifficulty {
   BEGINNER = "beginner",
@@ -56,3 +57,10 @@ export const exerciseSchema = z.object({
     .min(2, { message: "At least two instructions are required" }),
   benefits: z.array(z.string()).optional(),
 });
+
+/** One exercise can be assigned to many patients.
+ * One-to-many relationship
+ */
+export const exercisesRelations = relations(exercisesTable, ({ many }) => ({
+  patientExercises: many(patientExercisesTable),
+}));

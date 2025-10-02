@@ -8,10 +8,12 @@ import {
 } from "drizzle-orm/pg-core";
 import { patientsTable } from "./patients";
 import { exercisesTable } from "./exercises";
+import { relations } from "drizzle-orm";
 
 enum PatientExerciseStatus {
   ACTIVE = "active",
   COMPLETED = "completed",
+  PENDING = "pending",
   SKIPPED = "skipped",
 }
 
@@ -36,6 +38,7 @@ export const patientExercisesTable = patientExercisesSchema.table(
         PatientExerciseStatus.ACTIVE,
         PatientExerciseStatus.COMPLETED,
         PatientExerciseStatus.SKIPPED,
+        PatientExerciseStatus.PENDING,
       ] as const,
     }).notNull(),
     lastCompletedDate: timestamp("last_completed_date").notNull(),
@@ -45,3 +48,24 @@ export const patientExercisesTable = patientExercisesSchema.table(
 );
 
 export type PatientExercisesInsert = typeof patientExercisesTable.$inferInsert;
+
+/** Each patient exercise belongs to one patient and one exercise.
+ * Many-to-one relationship
+ */
+export const patientExercisesRelations = relations(
+  patientExercisesTable,
+  ({ one }) => ({
+    patient: one(patientsTable, {
+      fields: [patientExercisesTable.patientId],
+      references: [patientsTable.id],
+    }),
+    exercise: one(exercisesTable, {
+      fields: [patientExercisesTable.exerciseId],
+      references: [exercisesTable.id],
+    }),
+  })
+);
+
+// patients (1) ←→ (many) patient_exercises (many) ←→ (1) exercises
+// One patient can have many exercises
+// One exercise can be assigned to many patients

@@ -1,6 +1,7 @@
+import { useGetPatientsExercises } from "@client/lib/api/practitioner/query";
 import { Patient } from "@client/lib/types/auth";
+import { Exercise } from "@client/lib/types/exercise";
 import {
-  Check,
   CheckCircle,
   Close,
   PlayArrow,
@@ -23,23 +24,9 @@ import {
   Typography,
 } from "@mui/material";
 import { useState } from "react";
+import { PatientExercisesEmpty } from "./PatientExercisesEmpty";
 
-interface Exercise {
-  id: string;
-  name: string;
-  description: string;
-  sets: number;
-  reps: string;
-  frequency: string;
-  status: "active" | "completed" | "pending";
-  difficulty: "beginner" | "intermediate" | "advanced";
-  targetArea: string;
-  instructions: string[];
-  videoUrl: string;
-  completedInSession: boolean;
-}
-
-const mockExercises: Exercise[] = [
+const mockExercises = [
   {
     id: "1",
     name: "Cat-Cow Stretch",
@@ -118,10 +105,12 @@ const mockExercises: Exercise[] = [
   },
 ];
 
+console.log(mockExercises);
 const statusConfig = {
   active: { color: "success" as const, icon: PlayArrow },
   completed: { color: "info" as const, icon: CheckCircle },
   pending: { color: "warning" as const, icon: Schedule },
+  skipped: { color: "warning" as const, icon: Schedule },
 };
 
 const difficultyConfig = {
@@ -137,17 +126,22 @@ type TPatientExerciseHistoryProps = {
 export const PatientExerciseHistory = (props: TPatientExerciseHistoryProps) => {
   const { patient } = props;
 
-  const [exercises, setExercises] = useState(mockExercises);
+  // const [exercises, setExercises] = useState(mockExercises);
   const [selectedVideo, setSelectedVideo] = useState<string | null>(null);
 
+  const { data } = useGetPatientsExercises(String(patient?.id));
+
+  console.log(patientsExercises);
+
   const handleSessionCompletion = (exerciseId: string, completed: boolean) => {
-    setExercises((prev) =>
-      prev.map((exercise) =>
-        exercise.id === exerciseId
-          ? { ...exercise, completedInSession: completed }
-          : exercise
-      )
-    );
+    console.log({ exerciseId, completed });
+    // setExercises((prev) =>
+    //   prev.map((exercise) =>
+    //     exercise.id === exerciseId
+    //       ? { ...exercise, completedInSession: completed }
+    //       : exercise
+    //   )
+    // );
   };
 
   const handleSetSelectedVideo = (exercise?: Exercise) => {
@@ -156,10 +150,6 @@ export const PatientExerciseHistory = (props: TPatientExerciseHistoryProps) => {
       selectedVideo === exercise?.id ? null : (exercise?.id ?? "")
     );
   };
-
-  const completedInSessionCount = exercises.filter(
-    (e) => e.completedInSession
-  ).length;
 
   const renderCurrentSessionProgress = (
     <CardContent sx={{ pt: 3 }}>
@@ -173,9 +163,9 @@ export const PatientExerciseHistory = (props: TPatientExerciseHistoryProps) => {
           </Typography>
         </Box>
         <Box textAlign="right">
-          <Typography variant="h4" fontWeight="bold" color="primary.main">
+          {/* <Typography variant="h4" fontWeight="bold" color="primary.main">
             {completedInSessionCount}/{exercises.length}
-          </Typography>
+          </Typography> */}
           <Typography variant="body2" color="text.secondary">
             Completed
           </Typography>
@@ -193,10 +183,14 @@ export const PatientExerciseHistory = (props: TPatientExerciseHistoryProps) => {
         fontWeight="medium"
         sx={{ ml: 1 }}
       >
-        {exercises.filter((e) => e.status === "completed").length}
+        {patientsExercises?.filter((e) => e.status === "completed").length}
       </Typography>
     </Typography>
   );
+
+  if (!patientsExercises?.length) {
+    return <PatientExercisesEmpty />;
+  }
 
   return (
     <Stack spacing={3}>
@@ -219,7 +213,7 @@ export const PatientExerciseHistory = (props: TPatientExerciseHistoryProps) => {
         />
         <CardContent>
           <Stack spacing={2}>
-            {exercises.map((exercise) => {
+            {patientsExercises?.map((exercise) => {
               return (
                 <PatientExercise
                   key={exercise.id}
@@ -262,7 +256,10 @@ export const PatientExerciseHistory = (props: TPatientExerciseHistoryProps) => {
                       fontWeight="medium"
                       sx={{ ml: 1 }}
                     >
-                      {exercises.filter((e) => e.status === "active").length}
+                      {
+                        patientsExercises?.filter((e) => e.status === "active")
+                          .length
+                      }
                     </Typography>
                   </Typography>
                 </Grid>
@@ -275,7 +272,8 @@ export const PatientExerciseHistory = (props: TPatientExerciseHistoryProps) => {
                       fontWeight="medium"
                       sx={{ ml: 1 }}
                     >
-                      {completedInSessionCount}
+                      {/* {completedInSessionCount} */}
+                      N/A
                     </Typography>
                   </Typography>
                 </Grid>
@@ -291,7 +289,10 @@ export const PatientExerciseHistory = (props: TPatientExerciseHistoryProps) => {
                       fontWeight="medium"
                       sx={{ ml: 1 }}
                     >
-                      {exercises.filter((e) => e.status === "pending").length}
+                      {
+                        patientsExercises?.filter((e) => e.status === "pending")
+                          .length
+                      }
                     </Typography>
                   </Typography>
                 </Grid>
@@ -339,14 +340,14 @@ const PatientExercise = (props: TPatientExerciseProps) => {
           variant="outlined"
           size="small"
         />
-        {exercise.completedInSession && (
+        {/* {exercise.completedInSession && (
           <Chip
             icon={<Check />}
             label="Session Complete"
             color="success"
             size="small"
           />
-        )}
+        )} */}
       </Stack>
       <Typography variant="body2" color="text.secondary" sx={{ mb: 1 }}>
         {exercise.description}
@@ -492,7 +493,7 @@ const PatientExercise = (props: TPatientExerciseProps) => {
             <FormControlLabel
               control={
                 <Checkbox
-                  checked={exercise.completedInSession}
+                  checked={true} // TODO: Revisit
                   onChange={(e) =>
                     handleSessionCompletion(exercise.id, e.target.checked)
                   }

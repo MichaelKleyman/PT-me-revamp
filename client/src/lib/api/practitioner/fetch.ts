@@ -70,6 +70,9 @@ export const getPatientsExercises = async (patientId: string) => {
       param: { patientId },
     });
     const data = await res.json();
+    if ("error" in data) {
+      throw new Error(data.error);
+    }
     return data;
   } catch (error) {
     console.error("Error fetching all patients exercises:", error);

@@ -1,3 +1,16 @@
+export enum ExerciseDifficulty {
+  BEGINNER = "beginner",
+  INTERMEDIATE = "intermediate",
+  ADVANCED = "advanced",
+}
+
+export enum ExerciseStatus {
+  ACTIVE = "active",
+  COMPLETED = "completed",
+  PENDING = "pending",
+  SKIPPED = "skipped",
+}
+
 export type Exercise = {
   id: string;
   name: string;
@@ -8,10 +21,13 @@ export type Exercise = {
   benefits: string[];
   equipment: string;
   frequency: string;
-  status?: "active" | "completed" | "pending"; // TODO: consider removing
-  difficulty: "beginner" | "intermediate" | "advanced";
+  status:
+    | ExerciseStatus.ACTIVE
+    | ExerciseStatus.COMPLETED
+    | ExerciseStatus.PENDING
+    | ExerciseStatus.SKIPPED; // TODO: consider removing
+  difficulty: ExerciseDifficulty;
   targetArea: string;
   instructions: string[];
   videoUrl: string;
-  completedInSession?: boolean; // TODO: consider removing
 };

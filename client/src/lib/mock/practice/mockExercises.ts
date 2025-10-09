@@ -1,5 +1,25 @@
 import { Exercise } from "@client/lib/types/exercise";
 
+// {
+//   id: "1",
+//   name: "Cat-Cow Stretch",
+//   description: "Gentle spinal mobility exercise to improve flexibility",
+//   sets: 2,
+//   reps: "10-15",
+//   frequency: "2x daily",
+//   status: "active",
+//   difficulty: "beginner",
+//   targetArea: "Lower Back",
+//   videoUrl: "/cat-cow-stretch-exercise-demonstration.jpg",
+//   completedInSession: false,
+//   instructions: [
+//     "Start on hands and knees in tabletop position",
+//     "Arch your back and look up (Cow pose)",
+//     "Round your spine and tuck chin to chest (Cat pose)",
+//     "Move slowly between positions",
+//   ],
+// },
+
 export const exerciseLibrary: Exercise[] = [
   {
     id: "1",
@@ -7,9 +27,9 @@ export const exerciseLibrary: Exercise[] = [
     description:
       "Gentle spinal mobility exercise to improve flexibility and reduce lower back tension",
     difficulty: "beginner",
-    sets: 3,
-    reps: "10-15",
-    frequency: "Daily",
+    sets: 3, // Will be used in the junction table for patient exercises
+    reps: "10-15", // Will be used in the junction table for patient exercises
+    frequency: "Daily", // Will be used in the junction table for patient exercises
 
     targetArea: "Lower Back",
     duration: "2-3 minutes",

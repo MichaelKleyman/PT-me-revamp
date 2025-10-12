@@ -2,7 +2,6 @@ import {
   serial,
   text,
   pgSchema,
-  index,
   timestamp,
   integer,
   boolean,

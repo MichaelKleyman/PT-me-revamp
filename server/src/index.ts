@@ -1,7 +1,7 @@
 import { Hono } from "hono";
 import { logger } from "hono/logger";
 import { authRouter } from "./api/auth";
-import { serve, ServerWebSocket } from "bun";
+import { ServerWebSocket } from "bun";
 import { practiceRouter } from "./api/practice";
 import { patientsRouter } from "./api/patients";
 import { exercisesRouter } from "./api/exercises";

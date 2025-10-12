@@ -1,11 +1,4 @@
-import {
-  serial,
-  text,
-  pgSchema,
-  index,
-  timestamp,
-  integer,
-} from "drizzle-orm/pg-core";
+import { serial, text, pgSchema, index, timestamp } from "drizzle-orm/pg-core";
 import { z } from "zod";
 
 export const patientsSchema = pgSchema("patients_schema");

@@ -1,0 +1,31 @@
+version: "3.8"
+
+services:
+  client:
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+    ports:
+      - "80:80"
+    depends_on:
+      - server
+    environment:
+      - VITE_API_URL=http://localhost:3000
+
+  server:
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+      - PORT=3000
+      - DATABASE_URL=postgresql://ptme_owner:npg_Tx3I5DckQovt@ep-proud-pond-a5f7sd68-pooler.us-east-2.aws.neon.tech/ptme?sslmode=require
+      - KINDE_CLIENT_ID=05ab87ad00464dabb2805bf4297bdb5a
+      - KINDE_CLIENT_SECRET=P38XK8LhFXdtPuyx6FP3LqHhFhcWK2AC5snLBvIQUg2cDBkK
+      - KINDE_SITE_URL=http://localhost:5173
+      - KINDE_ISSUER_URL=https://ptme.kinde.com
+      - KINDE_LOGOUT_REDIRECT_URI=http://localhost:5173
+      - KINDE_DOMAIN=https://ptme.kinde.com
+      - KINDE_REDIRECT_URI=http://localhost:5173/api/callback

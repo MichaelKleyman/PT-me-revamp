@@ -1,4 +1,4 @@
-import { Exercise } from "@client/lib/types/exercise";
+import { ExerciseDifficulty } from "@client/lib/types/exercise";
 
 // {
 //   id: "1",
@@ -8,7 +8,7 @@ import { Exercise } from "@client/lib/types/exercise";
 //   reps: "10-15",
 //   frequency: "2x daily",
 //   status: "active",
-//   difficulty: "beginner",
+//   difficulty: ExerciseDifficulty.BEGINNER,
 //   targetArea: "Lower Back",
 //   videoUrl: "/cat-cow-stretch-exercise-demonstration.jpg",
 //   completedInSession: false,
@@ -20,13 +20,13 @@ import { Exercise } from "@client/lib/types/exercise";
 //   ],
 // },
 
-export const exerciseLibrary: Exercise[] = [
+export const exerciseLibrary = [
   {
     id: "1",
     name: "Cat-Cow Stretch",
     description:
       "Gentle spinal mobility exercise to improve flexibility and reduce lower back tension",
-    difficulty: "beginner",
+    difficulty: ExerciseDifficulty.BEGINNER,
     sets: 3, // Will be used in the junction table for patient exercises
     reps: "10-15", // Will be used in the junction table for patient exercises
     frequency: "Daily", // Will be used in the junction table for patient exercises
@@ -52,7 +52,7 @@ export const exerciseLibrary: Exercise[] = [
     name: "Pelvic Tilts",
     description:
       "Strengthen core muscles and improve pelvic alignment for better posture",
-    difficulty: "beginner",
+    difficulty: ExerciseDifficulty.BEGINNER,
     sets: 3,
     reps: "10-15",
     frequency: "Daily",
@@ -77,7 +77,7 @@ export const exerciseLibrary: Exercise[] = [
     name: "Bird Dog",
     description:
       "Core stability exercise to improve balance, coordination, and back strength",
-    difficulty: "intermediate",
+    difficulty: ExerciseDifficulty.INTERMEDIATE,
     sets: 3,
     reps: "10-15",
     frequency: "Daily",
@@ -101,7 +101,7 @@ export const exerciseLibrary: Exercise[] = [
     id: "4",
     name: "Wall Sits",
     description: "Strengthen leg muscles and improve lower body endurance",
-    difficulty: "intermediate",
+    difficulty: ExerciseDifficulty.INTERMEDIATE,
     sets: 3,
     reps: "10-15",
     frequency: "Daily",
@@ -125,7 +125,7 @@ export const exerciseLibrary: Exercise[] = [
     id: "5",
     name: "Shoulder Blade Squeezes",
     description: "Improve posture and strengthen upper back muscles",
-    difficulty: "beginner",
+    difficulty: ExerciseDifficulty.BEGINNER,
     sets: 3,
     reps: "10-15",
     frequency: "Daily",
@@ -149,7 +149,7 @@ export const exerciseLibrary: Exercise[] = [
     id: "6",
     name: "Calf Raises",
     description: "Strengthen calf muscles and improve ankle stability",
-    difficulty: "beginner",
+    difficulty: ExerciseDifficulty.BEGINNER,
     sets: 3,
     reps: "10-15",
     frequency: "Daily",
@@ -173,7 +173,7 @@ export const exerciseLibrary: Exercise[] = [
     id: "7",
     name: "Knee to Chest Stretch",
     description: "Gentle stretch for lower back and hip flexors",
-    difficulty: "beginner",
+    difficulty: ExerciseDifficulty.BEGINNER,
     sets: 3,
     reps: "10-15",
     frequency: "Daily",
@@ -197,7 +197,7 @@ export const exerciseLibrary: Exercise[] = [
     id: "8",
     name: "Arm Circles",
     description: "Warm up shoulder joints and improve range of motion",
-    difficulty: "beginner",
+    difficulty: ExerciseDifficulty.BEGINNER,
     sets: 3,
     reps: "10-15",
     frequency: "Daily",
@@ -222,7 +222,7 @@ export const exerciseLibrary: Exercise[] = [
     name: "Hip Bridges",
     description:
       "Strengthen glutes and hamstrings while improving hip mobility",
-    difficulty: "intermediate",
+    difficulty: ExerciseDifficulty.INTERMEDIATE,
     sets: 3,
     reps: "10-15",
     frequency: "Daily",
@@ -246,7 +246,7 @@ export const exerciseLibrary: Exercise[] = [
     id: "10",
     name: "Neck Rolls",
     description: "Gentle mobility exercise for neck and upper shoulders",
-    difficulty: "beginner",
+    difficulty: ExerciseDifficulty.BEGINNER,
     sets: 3,
     reps: "10-15",
     frequency: "Daily",

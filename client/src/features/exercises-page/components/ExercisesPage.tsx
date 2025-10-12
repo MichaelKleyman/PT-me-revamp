@@ -14,6 +14,7 @@ import { useState } from "react";
 
 export const ExercisesPage = () => {
   const { data: exercises } = useGetAllExercises();
+  console.log(exercises);
 
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedTargetArea, setSelectedTargetArea] = useState("All");

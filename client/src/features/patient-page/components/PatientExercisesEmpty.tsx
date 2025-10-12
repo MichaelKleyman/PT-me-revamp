@@ -7,8 +7,15 @@ import {
   CardHeader,
   Typography,
 } from "@mui/material";
+import { useNavigate } from "@tanstack/react-router";
 
 export const PatientExercisesEmpty = () => {
+  const navigate = useNavigate();
+
+  const onNavigateToExercices = async () => {
+    await navigate({ to: "/practice/exercises" });
+  };
+
   return (
     <Box sx={{ display: "flex", flexDirection: "column", gap: 6 }}>
       <Card>
@@ -56,7 +63,11 @@ export const PatientExercisesEmpty = () => {
               <Button variant="contained" startIcon={<Add />}>
                 Add Exercises
               </Button>
-              <Button variant="outlined" startIcon={<TextSnippet />}>
+              <Button
+                variant="outlined"
+                startIcon={<TextSnippet />}
+                onClick={onNavigateToExercices}
+              >
                 Browse Exercise Library
               </Button>
             </Box>

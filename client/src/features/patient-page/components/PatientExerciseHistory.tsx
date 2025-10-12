@@ -140,20 +140,20 @@ export const PatientExerciseHistory = (props: TPatientExerciseHistoryProps) => {
         <CardContent>
           <Stack spacing={2}>
             {allExercisesMetaData?.map((metadata) => {
-              return (
+              return allExercises?.length ? (
                 <PatientExercise
                   key={metadata.id}
                   exercise={
-                    allExercises.filter(
-                      ({ id }) => id === metadata.exerciseId
-                    )[0]
+                    allExercises
+                      .filter(({ id }) => id === metadata.exerciseId)
+                      .map((e) => ({ ...e, id: e.id.toString() }))[0]
                   }
                   exerciseMetadata={metadata}
                   selectedVideo={selectedVideo}
                   handleSessionCompletion={handleSessionCompletion}
                   handleSetSelectedVideo={handleSetSelectedVideo}
                 />
-              );
+              ) : null;
             })}
 
             <Paper
@@ -571,3 +571,4 @@ const mockPatientExercises = [
     },
   },
 ];
+console.log(mockPatientExercises);

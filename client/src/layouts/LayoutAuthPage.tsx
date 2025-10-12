@@ -1,12 +1,10 @@
-import Grid from "@mui/material/Grid2";
+import { AuthForm } from "@client/features/auth/exports";
+import { Grid, styled, Typography } from "@mui/material";
 import authImage from "@client/assets/dashboard.png";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { Link } from "@tanstack/react-router";
-import { styled } from "@mui/material/styles";
-import { Typography } from "@mui/material";
-import { AuthForm } from "./AuthForm";
 
-export const Auth = () => {
+export const LayoutAuthPage = () => {
   return (
     <Grid
       container

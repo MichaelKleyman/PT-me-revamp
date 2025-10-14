@@ -1,3 +1,4 @@
 {
-  "cSpell.words": ["KINDE", "practicename"]
+  "cSpell.words": ["KINDE", "practicename"],
+  "eslint.useFlatConfig": true
 }

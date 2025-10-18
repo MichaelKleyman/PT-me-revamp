@@ -100,7 +100,7 @@ export const patientsRouter = new Hono()
   // Bulk delete patients (Needed the validation middleware)
   .delete("bulk-delete", zValidator("json", bulkDeleteSchema), async (c) => {
     try {
-      const { ids } = await c.req.valid("json");
+      const { ids } = c.req.valid("json");
 
       // Delete patients with IDs in the ids array
       await db.delete(patientsTable).where(inArray(patientsTable.id, ids));

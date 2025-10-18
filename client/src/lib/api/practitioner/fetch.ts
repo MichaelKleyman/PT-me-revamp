@@ -1,3 +1,4 @@
+import { PatientExerciseMetaData } from "@client/lib/types/patient";
 import { Patient, TAuthRegisterForm } from "../../types/auth";
 import { Exercise } from "../../types/exercise";
 import { api } from "./api";
@@ -64,7 +65,12 @@ export const getAllPatients = async (practiceId: string) => {
 };
 
 /** GET all the patients current exercises */
-export const getPatientsExercises = async (patientId: string) => {
+export const getPatientsExercises = async (
+  patientId: string
+): Promise<
+  | { patient_exercises: PatientExerciseMetaData; exercises: Exercise }[]
+  | undefined
+> => {
   try {
     const res = await api.patients.exercises[":patientId"].$get({
       param: { patientId },

@@ -6,7 +6,6 @@ import { practiceRouter } from "./api/practice";
 import { patientsRouter } from "./api/patients";
 import { exercisesRouter } from "./api/exercises";
 import { createBunWebSocket } from "hono/bun";
-import { timestamp } from "drizzle-orm/mysql-core";
 
 export const topic = "pt-me-ws";
 
@@ -48,7 +47,7 @@ app.get("/api/health", (c) => {
 });
 
 // Base API routes
-const apiRoutes = app
+const _apiRoutes = app
   .basePath("/api")
   .route("/", authRouter)
   .route("/practice", practiceRouter)
@@ -62,4 +61,4 @@ app.all("*", (c) => {
 
 export const server = Bun.serve({ fetch: app.fetch, port, websocket });
 export default app;
-export type ApiRoutes = typeof apiRoutes;
+export type ApiRoutes = keyof typeof _apiRoutes;

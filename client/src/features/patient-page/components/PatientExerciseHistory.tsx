@@ -145,7 +145,7 @@ export const PatientExerciseHistory = (props: TPatientExerciseHistoryProps) => {
                   key={metadata.id}
                   exercise={
                     allExercises
-                      .filter(({ id }) => id === metadata.exerciseId)
+                      .filter(({ id }) => id === metadata.exerciseId.toString())
                       .map((e) => ({ ...e, id: e.id.toString() }))[0]
                   }
                   exerciseMetadata={metadata}

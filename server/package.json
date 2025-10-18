@@ -4,21 +4,22 @@
   "type": "module",
   "scripts": {
     "dev": "bun run --hot src/index.ts",
-    "db:generate": "drizzle-kit generate"
+    "db:generate": "drizzle-kit generate",
+    "lint": "eslint server/src --ext .ts,.tsx --max-warnings=0 --debug",
+    "typecheck": "tsc --noEmit --pretty --listFiles --traceResolution",
+    "check": "pnpm typecheck && pnpm lint"
   },
   "devDependencies": {
-    "typescript-eslint": "^8.18.1",
     "@eslint/js": "^9.17.0",
-    "eslint": "^9.17.0",
-    "eslint-plugin-react-hooks": "^5.0.0",
-    "eslint-plugin-react-refresh": "^0.4.16",
     "@types/bun": "latest",
     "@types/pg": "^8.11.11",
     "drizzle-kit": "^0.30.4",
-    "tsx": "^4.19.2"
-  },
-  "peerDependencies": {
-    "typescript": "^5.0.0"
+    "eslint": "^9.17.0",
+    "eslint-plugin-react-hooks": "^5.0.0",
+    "eslint-plugin-react-refresh": "^0.4.16",
+    "tsx": "^4.19.2",
+    "typescript": "~5.4.5",
+    "typescript-eslint": "^8.18.1"
   },
   "dependencies": {
     "@hono/node-server": "^1.13.8",

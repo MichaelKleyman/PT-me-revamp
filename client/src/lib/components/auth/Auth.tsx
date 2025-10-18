@@ -34,14 +34,16 @@ export const Auth = (props: TAuthProps) => {
   });
 
   const { handleLogin, loginForm } = useHandleAuthLogin(
-    isLoggingIn,
-    handleError
+    isLoggingIn
+    // handleError
   );
 
   const practiceName = registerForm.watch("practiceName") ?? "";
   const email = isRegistering
     ? registerForm.watch("email")
     : loginForm.watch("email");
+
+  console.log({ practiceName, email });
 
   const renderNextStepButton = (
     <StyledAuthButton

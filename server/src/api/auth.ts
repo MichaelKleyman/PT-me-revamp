@@ -6,7 +6,6 @@ import {
   sessionManager,
 } from "../kinde";
 import { createUser, getUserType } from "../lib/utils";
-import { UserType } from "../lib/types";
 
 let authType: "isRegistering" | "isLoggingIn" | null = null;
 

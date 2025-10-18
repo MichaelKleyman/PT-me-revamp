@@ -26,13 +26,6 @@
           "primaryKey": false,
           "notNull": false
         },
-        "exercise_ids": {
-          "name": "exercise_ids",
-          "type": "integer[]",
-          "primaryKey": false,
-          "notNull": true,
-          "default": "'{}'"
-        },
         "name": {
           "name": "name",
           "type": "text",

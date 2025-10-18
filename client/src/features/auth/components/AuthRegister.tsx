@@ -6,7 +6,7 @@ import doctorIcon from "../../../assets/doctor.png";
 import { Link } from "@tanstack/react-router";
 import { useState } from "react";
 import { TUserType } from "@client/lib/types/auth";
-import { Auth } from "../exports";
+import { Auth } from "@client/lib/components/auth/Auth";
 
 export const AuthRegister = (props: TUserType) => {
   const { userType, authType } = props;
@@ -14,7 +14,7 @@ export const AuthRegister = (props: TUserType) => {
   const [registerStep, setRegisterStep] = useState(1);
 
   const isRegistering = authType === "register";
-  const isPatient = userType === "patient";
+  // const isPatient = userType === "patient";
 
   const renderPatientConsumer = (
     <StyledProfileOption>

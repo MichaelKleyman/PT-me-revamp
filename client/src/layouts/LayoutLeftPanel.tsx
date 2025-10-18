@@ -143,7 +143,7 @@ const LayoutLeftPanel = () => {
           borderColor: "grey.200",
         }}
       >
-        <Link href="https://kokonutui.com/">
+        <Link href="https://kokonutui.com/" to="/">
           <Typography
             variant="h6"
             sx={{

@@ -6,8 +6,10 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
-    "lint": "eslint .",
-    "preview": "vite preview"
+    "lint": "eslint src --ext .ts,.tsx --max-warnings=0",
+    "typecheck": "tsc --noEmit",
+    "preview": "vite preview",
+    "check": "pnpm typecheck && pnpm lint"
   },
   "dependencies": {
     "@emotion/react": "^11.14.0",

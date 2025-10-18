@@ -1,1 +1,1 @@
-export { Auth } from "./components/Auth";
+export { AuthForm } from "./components/AuthForm";

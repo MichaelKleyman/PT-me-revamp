@@ -1,7 +1,7 @@
 import { Hono } from "hono";
 import { logger } from "hono/logger";
 import { authRouter } from "./api/auth";
-import { serve, ServerWebSocket } from "bun";
+import { ServerWebSocket } from "bun";
 import { practiceRouter } from "./api/practice";
 import { patientsRouter } from "./api/patients";
 import { exercisesRouter } from "./api/exercises";
@@ -10,6 +10,8 @@ import { createBunWebSocket } from "hono/bun";
 export const topic = "pt-me-ws";
 
 const app = new Hono();
+
+const port = process.env.port || 3000;
 
 const { upgradeWebSocket, websocket } = createBunWebSocket();
 
@@ -39,8 +41,13 @@ app.get(
   }))
 );
 
+// Health check
+app.get("/api/health", (c) => {
+  return c.json({ status: "ok", timestamp: new Date().toISOString() });
+});
+
 // Base API routes
-const apiRoutes = app
+const _apiRoutes = app
   .basePath("/api")
   .route("/", authRouter)
   .route("/practice", practiceRouter)
@@ -52,6 +59,6 @@ app.all("*", (c) => {
   return c.json({ error: "Not Found", status: 404 }, 404);
 });
 
-export const server = Bun.serve({ fetch: app.fetch, port: 3000, websocket });
+export const server = Bun.serve({ fetch: app.fetch, port, websocket });
 export default app;
-export type ApiRoutes = typeof apiRoutes;
+export type ApiRoutes = typeof _apiRoutes;

@@ -7,6 +7,7 @@ import { zValidator } from "@hono/zod-validator";
 import { server, topic } from "..";
 import { WSMessageKind } from "../lib/types";
 import { z } from "zod";
+import { patientExercisesTable } from "../db/schema/patient-exercises";
 
 const bulkDeleteSchema = z.object({
   ids: z.array(z.number()),
@@ -42,8 +43,10 @@ export const patientsRouter = new Hono()
   .get("/exercises/:patientId", async (c) => {
     try {
       const patientId = c.req.param("patientId");
-      const patientExercises = handleGetPatientsExercises(Number(patientId));
-      return c.json({ patientExercises }, 200);
+      const patientExercises = await handleGetPatientsExercises(
+        Number(patientId)
+      );
+      return c.json(patientExercises, 200);
     } catch (error) {
       console.error("Error fetching patient exercises:", error);
       return c.json({ error: "Error fetching patient exercises" }, 500);
@@ -97,7 +100,7 @@ export const patientsRouter = new Hono()
   // Bulk delete patients (Needed the validation middleware)
   .delete("bulk-delete", zValidator("json", bulkDeleteSchema), async (c) => {
     try {
-      const { ids } = await c.req.valid("json");
+      const { ids } = c.req.valid("json");
 
       // Delete patients with IDs in the ids array
       await db.delete(patientsTable).where(inArray(patientsTable.id, ids));
@@ -129,13 +132,15 @@ const handleGetPatient = async (id: number) => {
 };
 
 /** Get all exercises for a specific patient */
-const handleGetPatientsExercises = async (id: number) => {
-  const patient = handleGetPatient(id);
-  const patientExerciseIds = (await patient).exerciseIds ?? [];
-  // Get exercises by ID from the list of exercise IDs
+const handleGetPatientsExercises = async (patientId: number) => {
+  // Get exercises by looking it up in the patient-exercises table
   const patientExercises = await db
     .select()
-    .from(exercisesTable)
-    .where(inArray(exercisesTable.id, patientExerciseIds));
+    .from(patientExercisesTable)
+    .innerJoin(
+      exercisesTable,
+      eq(patientExercisesTable.exerciseId, exercisesTable.id)
+    )
+    .where(eq(patientExercisesTable.patientId, patientId));
   return patientExercises;
 };

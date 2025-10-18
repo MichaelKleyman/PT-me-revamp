@@ -1,11 +1,16 @@
 FROM oven/bun:1 AS base
 
-WORKDIR /usr/src/app
+WORKDIR /server
 
-COPY package*.json ./
-RUN bun install
+# Copy package files
+COPY package.json bun.lockb* ./
 
+# Install dependencies (production only)
+RUN bun install --frozen-lockfile --production
+
+# Copy all source files
 COPY . .
 
-EXPOSE 5431
+EXPOSE 3000
+
 CMD [ "bun", "run", "dev" ]

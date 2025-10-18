@@ -29,6 +29,7 @@ export const useHandleAuthLogin = (
 
   const handleLogin = () => {
     const { email, practitionerName } = form.getValues();
+    console.log({ practitionerName });
     // if (!form.formState.isValid) {
     //   handleError(true);
     //   return;

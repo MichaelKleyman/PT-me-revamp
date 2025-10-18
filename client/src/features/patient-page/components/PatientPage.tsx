@@ -33,7 +33,7 @@ export const PatientPage = () => {
   };
 
   const renderGoBack = (
-    <Link href="/practice/patients">
+    <Link href="/practice/patients" to="/practice/patients">
       <Tooltip title="Go Back">
         <span>
           <ArrowBackIcon color="primary" />

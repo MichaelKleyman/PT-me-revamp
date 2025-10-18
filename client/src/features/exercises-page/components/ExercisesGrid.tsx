@@ -177,7 +177,7 @@ export const ExercisesGrid = (props: TExercisesGridProps) => {
                   Key Benefits:
                 </Typography>
                 <Stack spacing={0.5}>
-                  {exercise.benefits.slice(0, 3).map((benefit, index) => (
+                  {exercise.benefits?.slice(0, 3).map((benefit, index) => (
                     <Stack
                       key={index}
                       direction="row"

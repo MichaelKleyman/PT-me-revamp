@@ -30,7 +30,7 @@ interface SessionStore {
   [key: string]: unknown;
 }
 
-let store: SessionStore = {};
+const store: SessionStore = {};
 
 export const sessionManager = (c: Context): SessionManager => ({
   async getSessionItem<T>(key: string): Promise<T | null> {

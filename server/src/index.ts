@@ -61,4 +61,4 @@ app.all("*", (c) => {
 
 export const server = Bun.serve({ fetch: app.fetch, port, websocket });
 export default app;
-export type ApiRoutes = keyof typeof _apiRoutes;
+export type ApiRoutes = typeof _apiRoutes;

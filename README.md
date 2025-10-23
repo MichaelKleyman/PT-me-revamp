@@ -5,7 +5,6 @@
 - [x] Clean up the `ViewPatientsPage` component and split it up into chunks
 - [] Address any type errors on the client side
 - [x] Look into setting up proper eslint rules for the code base as well as some fix check scripts that catch type errors globally
-- [] Make one shared eslint config for the client and server
 - [] Create exercises page with proper CRUD actions on client and server side
 - [] Add more logic to the patients page table like filtering and sorting etc.
 - [x] Make the patient input form not take full name in one text field but have seperate fields for first name and last name and possiby middle name
@@ -14,6 +13,7 @@
 - [] Create reusable helper function on the backend that will perform simple `getById` drizzle calls
 - [] Add return types to fetch calls on the client (TS reasons)
 - [] Look into bringing in pnpm workspace in order to use catalogs
+- [] Make one shared eslint config for the client and server
 
 ## Current Practice/Practitioner creation flow
 

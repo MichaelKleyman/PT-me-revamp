@@ -55,7 +55,7 @@ export const patientsRouter = new Hono()
   // Create a patient (Needed the validation middleware)
   .post("/", zValidator("json", patientSchema), async (c) => {
     try {
-      const newPatientData = await c.req.valid("json");
+      const newPatientData = c.req.valid("json");
       const newPatient = await db
         .insert(patientsTable)
         .values(newPatientData)

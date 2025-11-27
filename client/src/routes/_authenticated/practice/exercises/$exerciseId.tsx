@@ -1,3 +1,4 @@
+import { ExercisePage } from "@client/features/exercise-page/exports";
 import { LayoutPage } from "@client/layouts/LayoutPage";
 import { useGetExercise } from "@client/lib/api/practitioner/query";
 import { LoadingPage } from "@client/lib/components/loading/LoadingPage";
@@ -25,7 +26,7 @@ function RouteComponent() {
   return (
     <LayoutPage pageBreadcrumbs={pageBreadcrumbs}>
       <Suspense fallback={<LoadingPage />}>
-        <p>Exercise {exercise?.name}</p>
+        <ExercisePage exercise={exercise} />
       </Suspense>
     </LayoutPage>
   );

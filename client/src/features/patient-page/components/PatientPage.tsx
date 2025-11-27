@@ -1,5 +1,4 @@
-import { useGetPatient } from "@client/lib/api/practitioner/query";
-import { Link, useParams } from "@tanstack/react-router";
+import { Link } from "@tanstack/react-router";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { Box, Grid2, Stack, styled, Tab, Tabs, Tooltip } from "@mui/material";
 import { PatientPageHeader } from "./PatientPageHeader";
@@ -8,6 +7,7 @@ import { PatientTreatmentHistory } from "./PatientTreatmentHistory";
 import { useState } from "react";
 import theme from "@client/theme/appTheme";
 import { PatientExerciseHistory } from "./PatientExerciseHistory";
+import { Patient } from "@client/lib/types/auth";
 
 enum PatientPageTabs {
   PatientOverview = "Patient Overview",
@@ -15,17 +15,16 @@ enum PatientPageTabs {
   ExerciseHistory = "Exercise History",
 }
 
-export const PatientPage = () => {
+type TPatientPageProps = {
+  patient?: Patient;
+};
+
+export const PatientPage = (props: TPatientPageProps) => {
+  const { patient } = props;
+
   const [tab, setTab] = useState<PatientPageTabs>(
     PatientPageTabs.PatientOverview
   );
-
-  const params = useParams({
-    from: "/_authenticated/practice/patients/$patientId",
-  });
-  const patientId = params.patientId;
-
-  const { data: patient } = useGetPatient(patientId);
 
   const handleChangeTab = (tab: PatientPageTabs) => {
     console.log(tab);

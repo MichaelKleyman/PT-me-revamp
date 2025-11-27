@@ -34,7 +34,7 @@ export type UserType = (typeof UserTypeEnum)[number];
 
 export type BaseUser = {
   /** Unique id for the user in the database */
-  id?: number;
+  id?: number; // TODO: Change to string
   /** Unique id from Kinde authentication service */
   kindeId?: string | null;
   /** ID of the practice the user belongs to */

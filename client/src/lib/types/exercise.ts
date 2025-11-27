@@ -6,7 +6,7 @@ export enum ExerciseDifficulty {
 
 // TODO: fix these null additions to the fields
 export type Exercise = {
-  id: string;
+  id: number; // TODO: Change to string
   name: string;
   description: string;
   duration: string | null;

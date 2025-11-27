@@ -1,5 +1,4 @@
 import { useGetAllExercises } from "@client/lib/api/practitioner/query";
-import { exerciseLibrary } from "@client/lib/mock/practice/mockExercises";
 import {
   Box,
   Button,
@@ -14,13 +13,12 @@ import { useState } from "react";
 
 export const ExercisesPage = () => {
   const { data: exercises } = useGetAllExercises();
-  console.log(exercises);
 
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedTargetArea, setSelectedTargetArea] = useState("All");
   const [selectedDifficulty, setSelectedDifficulty] = useState("All");
 
-  const filteredExercises = exerciseLibrary?.filter((exercise) => {
+  const filteredExercises = exercises?.filter((exercise) => {
     const matchesSearch =
       exercise.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
       exercise.description.toLowerCase().includes(searchTerm.toLowerCase());
@@ -68,7 +66,8 @@ export const ExercisesPage = () => {
         </Typography>
       </Box>
       <Typography variant="body2" color="text.secondary">
-        Showing {filteredExercises.length} of {exerciseLibrary.length} exercises
+        Showing {filteredExercises?.length} of {filteredExercises?.length}{" "}
+        exercises
       </Typography>
     </Stack>
   );
@@ -90,7 +89,7 @@ export const ExercisesPage = () => {
   );
 
   const renderNoExercisesFound =
-    filteredExercises.length === 0 ? (
+    filteredExercises?.length === 0 ? (
       <Card>
         <CardContent sx={{ textAlign: "center", py: 6 }}>
           <Typography variant="h1" sx={{ fontSize: 64, opacity: 0.5, mb: 2 }}>

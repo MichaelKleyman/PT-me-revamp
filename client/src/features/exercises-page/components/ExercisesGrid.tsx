@@ -11,10 +11,11 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
+import { useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
 
 type TExercisesGridProps = {
-  filteredExercises: Exercise[];
+  filteredExercises?: Exercise[];
 };
 
 const difficultyConfig = {
@@ -24,9 +25,17 @@ const difficultyConfig = {
 };
 
 export const ExercisesGrid = (props: TExercisesGridProps) => {
-  const { filteredExercises } = props;
+  const { filteredExercises = [] } = props;
+  const navigate = useNavigate();
 
   const [selectedVideo, setSelectedVideo] = useState<string | null>(null);
+
+  const handleViewExercise = (exerciseId: string) => {
+    navigate({
+      to: "/practice/exercises/$exerciseId",
+      params: { exerciseId },
+    });
+  };
 
   return (
     <Grid container spacing={3}>
@@ -206,6 +215,10 @@ export const ExercisesGrid = (props: TExercisesGridProps) => {
                   size="small"
                   fullWidth
                   startIcon={<Visibility />}
+                  onClick={() => {
+                    console.log(exercise);
+                    handleViewExercise(exercise.id);
+                  }}
                 >
                   View Details
                 </Button>

@@ -7,7 +7,8 @@
     "db:generate": "drizzle-kit generate",
     "lint": "eslint server/src --ext .ts,.tsx --max-warnings=0 --debug",
     "typecheck": "tsc --noEmit --pretty --listFiles --traceResolution",
-    "check": "pnpm typecheck && pnpm lint"
+    "check": "pnpm typecheck && pnpm lint",
+    "db:seed": "tsx src/db/seed/exercises.ts"
   },
   "devDependencies": {
     "@eslint/js": "^9.17.0",
@@ -29,6 +30,7 @@
     "@neondatabase/serverless": "^1.0.0",
     "dotenv": "^16.4.7",
     "drizzle-orm": "^0.39.1",
+    "drizzle-seed": "^0.3.1",
     "hono": "^4.7.5",
     "pg": "^8.13.1",
     "pg-hstore": "^2.3.4",

@@ -91,6 +91,11 @@ export const getExercise = async (exerciseId: string) => {
     const res = await api.exercises[":exerciseId"].$get({
       param: { exerciseId },
     });
+
+    if (!res.ok) {
+      throw new Error(`Failed to fetch exercise: ${res.status}`);
+    }
+
     const data = await res.json();
     return data;
   } catch (error) {
@@ -102,8 +107,13 @@ export const getExercise = async (exerciseId: string) => {
 export const getAllExercises = async () => {
   try {
     const res = await api.exercises.$get();
+
+    if (!res.ok) {
+      throw new Error(`Failed to fetch all exercises: ${res.status}`);
+    }
+
     const data = await res.json();
-    return data;
+    return data.allExercises;
   } catch (error) {
     console.error("Error fetching all exercises:", error);
   }

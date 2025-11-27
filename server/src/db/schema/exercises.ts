@@ -3,7 +3,7 @@ import { serial, text, pgSchema, timestamp } from "drizzle-orm/pg-core";
 import { z } from "zod";
 import { patientExercisesTable } from "./patient-exercises";
 
-enum ExerciseDifficulty {
+export enum ExerciseDifficulty {
   BEGINNER = "beginner",
   INTERMEDIATE = "intermediate",
   ADVANCED = "advanced",

@@ -17,10 +17,11 @@ import { Route as authAuthImport } from './routes/(auth)/auth'
 import { Route as AuthenticatedPracticeIndexImport } from './routes/_authenticated/practice/index'
 import { Route as AuthenticatedPatientIndexImport } from './routes/_authenticated/patient/index'
 import { Route as AuthenticatedPracticeScheduleImport } from './routes/_authenticated/practice/schedule'
-import { Route as AuthenticatedPracticeExercisesImport } from './routes/_authenticated/practice/exercises'
 import { Route as AuthenticatedPracticeDashboardImport } from './routes/_authenticated/practice/dashboard'
 import { Route as AuthenticatedPracticePatientsIndexImport } from './routes/_authenticated/practice/patients/index'
+import { Route as AuthenticatedPracticeExercisesIndexImport } from './routes/_authenticated/practice/exercises/index'
 import { Route as AuthenticatedPracticePatientsPatientIdImport } from './routes/_authenticated/practice/patients/$patientId'
+import { Route as AuthenticatedPracticeExercisesExerciseIdImport } from './routes/_authenticated/practice/exercises/$exerciseId'
 
 // Create/Update Routes
 
@@ -62,13 +63,6 @@ const AuthenticatedPracticeScheduleRoute =
     getParentRoute: () => AuthenticatedRoute,
   } as any)
 
-const AuthenticatedPracticeExercisesRoute =
-  AuthenticatedPracticeExercisesImport.update({
-    id: '/practice/exercises',
-    path: '/practice/exercises',
-    getParentRoute: () => AuthenticatedRoute,
-  } as any)
-
 const AuthenticatedPracticeDashboardRoute =
   AuthenticatedPracticeDashboardImport.update({
     id: '/practice/dashboard',
@@ -83,10 +77,24 @@ const AuthenticatedPracticePatientsIndexRoute =
     getParentRoute: () => AuthenticatedRoute,
   } as any)
 
+const AuthenticatedPracticeExercisesIndexRoute =
+  AuthenticatedPracticeExercisesIndexImport.update({
+    id: '/practice/exercises/',
+    path: '/practice/exercises/',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
+
 const AuthenticatedPracticePatientsPatientIdRoute =
   AuthenticatedPracticePatientsPatientIdImport.update({
     id: '/practice/patients/$patientId',
     path: '/practice/patients/$patientId',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
+
+const AuthenticatedPracticeExercisesExerciseIdRoute =
+  AuthenticatedPracticeExercisesExerciseIdImport.update({
+    id: '/practice/exercises/$exerciseId',
+    path: '/practice/exercises/$exerciseId',
     getParentRoute: () => AuthenticatedRoute,
   } as any)
 
@@ -122,13 +130,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedPracticeDashboardImport
       parentRoute: typeof AuthenticatedImport
     }
-    '/_authenticated/practice/exercises': {
-      id: '/_authenticated/practice/exercises'
-      path: '/practice/exercises'
-      fullPath: '/practice/exercises'
-      preLoaderRoute: typeof AuthenticatedPracticeExercisesImport
-      parentRoute: typeof AuthenticatedImport
-    }
     '/_authenticated/practice/schedule': {
       id: '/_authenticated/practice/schedule'
       path: '/practice/schedule'
@@ -150,11 +151,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedPracticeIndexImport
       parentRoute: typeof AuthenticatedImport
     }
+    '/_authenticated/practice/exercises/$exerciseId': {
+      id: '/_authenticated/practice/exercises/$exerciseId'
+      path: '/practice/exercises/$exerciseId'
+      fullPath: '/practice/exercises/$exerciseId'
+      preLoaderRoute: typeof AuthenticatedPracticeExercisesExerciseIdImport
+      parentRoute: typeof AuthenticatedImport
+    }
     '/_authenticated/practice/patients/$patientId': {
       id: '/_authenticated/practice/patients/$patientId'
       path: '/practice/patients/$patientId'
       fullPath: '/practice/patients/$patientId'
       preLoaderRoute: typeof AuthenticatedPracticePatientsPatientIdImport
+      parentRoute: typeof AuthenticatedImport
+    }
+    '/_authenticated/practice/exercises/': {
+      id: '/_authenticated/practice/exercises/'
+      path: '/practice/exercises'
+      fullPath: '/practice/exercises'
+      preLoaderRoute: typeof AuthenticatedPracticeExercisesIndexImport
       parentRoute: typeof AuthenticatedImport
     }
     '/_authenticated/practice/patients/': {
@@ -171,22 +186,26 @@ declare module '@tanstack/react-router' {
 
 interface AuthenticatedRouteChildren {
   AuthenticatedPracticeDashboardRoute: typeof AuthenticatedPracticeDashboardRoute
-  AuthenticatedPracticeExercisesRoute: typeof AuthenticatedPracticeExercisesRoute
   AuthenticatedPracticeScheduleRoute: typeof AuthenticatedPracticeScheduleRoute
   AuthenticatedPatientIndexRoute: typeof AuthenticatedPatientIndexRoute
   AuthenticatedPracticeIndexRoute: typeof AuthenticatedPracticeIndexRoute
+  AuthenticatedPracticeExercisesExerciseIdRoute: typeof AuthenticatedPracticeExercisesExerciseIdRoute
   AuthenticatedPracticePatientsPatientIdRoute: typeof AuthenticatedPracticePatientsPatientIdRoute
+  AuthenticatedPracticeExercisesIndexRoute: typeof AuthenticatedPracticeExercisesIndexRoute
   AuthenticatedPracticePatientsIndexRoute: typeof AuthenticatedPracticePatientsIndexRoute
 }
 
 const AuthenticatedRouteChildren: AuthenticatedRouteChildren = {
   AuthenticatedPracticeDashboardRoute: AuthenticatedPracticeDashboardRoute,
-  AuthenticatedPracticeExercisesRoute: AuthenticatedPracticeExercisesRoute,
   AuthenticatedPracticeScheduleRoute: AuthenticatedPracticeScheduleRoute,
   AuthenticatedPatientIndexRoute: AuthenticatedPatientIndexRoute,
   AuthenticatedPracticeIndexRoute: AuthenticatedPracticeIndexRoute,
+  AuthenticatedPracticeExercisesExerciseIdRoute:
+    AuthenticatedPracticeExercisesExerciseIdRoute,
   AuthenticatedPracticePatientsPatientIdRoute:
     AuthenticatedPracticePatientsPatientIdRoute,
+  AuthenticatedPracticeExercisesIndexRoute:
+    AuthenticatedPracticeExercisesIndexRoute,
   AuthenticatedPracticePatientsIndexRoute:
     AuthenticatedPracticePatientsIndexRoute,
 }
@@ -200,11 +219,12 @@ export interface FileRoutesByFullPath {
   '': typeof AuthenticatedRouteWithChildren
   '/auth': typeof authAuthRoute
   '/practice/dashboard': typeof AuthenticatedPracticeDashboardRoute
-  '/practice/exercises': typeof AuthenticatedPracticeExercisesRoute
   '/practice/schedule': typeof AuthenticatedPracticeScheduleRoute
   '/patient': typeof AuthenticatedPatientIndexRoute
   '/practice': typeof AuthenticatedPracticeIndexRoute
+  '/practice/exercises/$exerciseId': typeof AuthenticatedPracticeExercisesExerciseIdRoute
   '/practice/patients/$patientId': typeof AuthenticatedPracticePatientsPatientIdRoute
+  '/practice/exercises': typeof AuthenticatedPracticeExercisesIndexRoute
   '/practice/patients': typeof AuthenticatedPracticePatientsIndexRoute
 }
 
@@ -213,11 +233,12 @@ export interface FileRoutesByTo {
   '': typeof AuthenticatedRouteWithChildren
   '/auth': typeof authAuthRoute
   '/practice/dashboard': typeof AuthenticatedPracticeDashboardRoute
-  '/practice/exercises': typeof AuthenticatedPracticeExercisesRoute
   '/practice/schedule': typeof AuthenticatedPracticeScheduleRoute
   '/patient': typeof AuthenticatedPatientIndexRoute
   '/practice': typeof AuthenticatedPracticeIndexRoute
+  '/practice/exercises/$exerciseId': typeof AuthenticatedPracticeExercisesExerciseIdRoute
   '/practice/patients/$patientId': typeof AuthenticatedPracticePatientsPatientIdRoute
+  '/practice/exercises': typeof AuthenticatedPracticeExercisesIndexRoute
   '/practice/patients': typeof AuthenticatedPracticePatientsIndexRoute
 }
 
@@ -227,11 +248,12 @@ export interface FileRoutesById {
   '/_authenticated': typeof AuthenticatedRouteWithChildren
   '/(auth)/auth': typeof authAuthRoute
   '/_authenticated/practice/dashboard': typeof AuthenticatedPracticeDashboardRoute
-  '/_authenticated/practice/exercises': typeof AuthenticatedPracticeExercisesRoute
   '/_authenticated/practice/schedule': typeof AuthenticatedPracticeScheduleRoute
   '/_authenticated/patient/': typeof AuthenticatedPatientIndexRoute
   '/_authenticated/practice/': typeof AuthenticatedPracticeIndexRoute
+  '/_authenticated/practice/exercises/$exerciseId': typeof AuthenticatedPracticeExercisesExerciseIdRoute
   '/_authenticated/practice/patients/$patientId': typeof AuthenticatedPracticePatientsPatientIdRoute
+  '/_authenticated/practice/exercises/': typeof AuthenticatedPracticeExercisesIndexRoute
   '/_authenticated/practice/patients/': typeof AuthenticatedPracticePatientsIndexRoute
 }
 
@@ -242,11 +264,12 @@ export interface FileRouteTypes {
     | ''
     | '/auth'
     | '/practice/dashboard'
-    | '/practice/exercises'
     | '/practice/schedule'
     | '/patient'
     | '/practice'
+    | '/practice/exercises/$exerciseId'
     | '/practice/patients/$patientId'
+    | '/practice/exercises'
     | '/practice/patients'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -254,11 +277,12 @@ export interface FileRouteTypes {
     | ''
     | '/auth'
     | '/practice/dashboard'
-    | '/practice/exercises'
     | '/practice/schedule'
     | '/patient'
     | '/practice'
+    | '/practice/exercises/$exerciseId'
     | '/practice/patients/$patientId'
+    | '/practice/exercises'
     | '/practice/patients'
   id:
     | '__root__'
@@ -266,11 +290,12 @@ export interface FileRouteTypes {
     | '/_authenticated'
     | '/(auth)/auth'
     | '/_authenticated/practice/dashboard'
-    | '/_authenticated/practice/exercises'
     | '/_authenticated/practice/schedule'
     | '/_authenticated/patient/'
     | '/_authenticated/practice/'
+    | '/_authenticated/practice/exercises/$exerciseId'
     | '/_authenticated/practice/patients/$patientId'
+    | '/_authenticated/practice/exercises/'
     | '/_authenticated/practice/patients/'
   fileRoutesById: FileRoutesById
 }
@@ -309,11 +334,12 @@ export const routeTree = rootRoute
       "filePath": "_authenticated.tsx",
       "children": [
         "/_authenticated/practice/dashboard",
-        "/_authenticated/practice/exercises",
         "/_authenticated/practice/schedule",
         "/_authenticated/patient/",
         "/_authenticated/practice/",
+        "/_authenticated/practice/exercises/$exerciseId",
         "/_authenticated/practice/patients/$patientId",
+        "/_authenticated/practice/exercises/",
         "/_authenticated/practice/patients/"
       ]
     },
@@ -322,10 +348,6 @@ export const routeTree = rootRoute
     },
     "/_authenticated/practice/dashboard": {
       "filePath": "_authenticated/practice/dashboard.tsx",
-      "parent": "/_authenticated"
-    },
-    "/_authenticated/practice/exercises": {
-      "filePath": "_authenticated/practice/exercises.tsx",
       "parent": "/_authenticated"
     },
     "/_authenticated/practice/schedule": {
@@ -340,8 +362,16 @@ export const routeTree = rootRoute
       "filePath": "_authenticated/practice/index.tsx",
       "parent": "/_authenticated"
     },
+    "/_authenticated/practice/exercises/$exerciseId": {
+      "filePath": "_authenticated/practice/exercises/$exerciseId.tsx",
+      "parent": "/_authenticated"
+    },
     "/_authenticated/practice/patients/$patientId": {
       "filePath": "_authenticated/practice/patients/$patientId.tsx",
+      "parent": "/_authenticated"
+    },
+    "/_authenticated/practice/exercises/": {
+      "filePath": "_authenticated/practice/exercises/index.tsx",
       "parent": "/_authenticated"
     },
     "/_authenticated/practice/patients/": {

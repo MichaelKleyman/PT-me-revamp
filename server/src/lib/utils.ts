@@ -14,6 +14,7 @@ export const getUserType = async (session: SessionManager) => {
   const userTypeFromSession = await session.getSessionItem("userType");
   const isPractitioner = userTypeFromSession === UserType.Practitioner;
   const isPatient = userTypeFromSession === UserType.Patient;
+  console.log({ isPatient });
 
   const userType = isPractitioner ? UserType.Practitioner : UserType.Patient;
   const userTypePath = !isPractitioner ? "patient" : "practice";
@@ -30,7 +31,14 @@ export const createUser = async (
     const practiceName = (await session.getSessionItem("practiceName")) || "";
     const address = await session.getSessionItem("address");
     const licenseNumber = await session.getSessionItem("licenseNumber");
-    const practitionerName = await session.getSessionItem("practitionerName");
+    const practitionerFirstName = await session.getSessionItem(
+      "practitionerFirstName"
+    );
+    const practitionerLastName = await session.getSessionItem(
+      "practitionerLastName"
+    );
+    const patientFirstName = await session.getSessionItem("patientFirstName");
+    const patientLastName = await session.getSessionItem("patientLastName");
 
     const isPractitioner = userType === UserType.Practitioner;
     const isPatient = userType === UserType.Patient;
@@ -50,7 +58,9 @@ export const createUser = async (
         .returning({ id: practicesTable.id });
 
       const practitionerInsertData: PractitionersInsert = {
-        name: String(practitionerName || ""),
+        // name: String(practitionerName || ""),
+        firstName: String(practitionerFirstName || ""),
+        lastName: String(practitionerLastName || ""),
         email: String(email || ""),
         userType: UserType.Practitioner,
         licenseNumber: Number(licenseNumber),
@@ -72,7 +82,8 @@ export const createUser = async (
     } else if (isPatient) {
       const patientInsertData: PatientsInsert = {
         // TODO change this to handle patient name and registration soon
-        name: String(practitionerName || ""),
+        firstName: String(patientFirstName || ""),
+        lastName: String(patientLastName || ""),
         email: String(email || ""),
         userType: UserType.Patient,
         address: String(address ?? ""),

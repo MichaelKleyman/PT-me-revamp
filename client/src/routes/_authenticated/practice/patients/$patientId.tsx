@@ -26,7 +26,7 @@ function RouteComponent() {
   return (
     <LayoutPage pageBreadcrumbs={pageBreadcrumbs}>
       <Suspense fallback={<LoadingPage />}>
-        <PatientPage />
+        <PatientPage patient={patient} />
       </Suspense>
     </LayoutPage>
   );

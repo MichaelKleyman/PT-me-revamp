@@ -1,3 +1,4 @@
+import { PatientExerciseMetaData } from "@client/lib/types/patient";
 import { Patient, TAuthRegisterForm } from "../../types/auth";
 import { Exercise } from "../../types/exercise";
 import { api } from "./api";
@@ -64,12 +65,20 @@ export const getAllPatients = async (practiceId: string) => {
 };
 
 /** GET all the patients current exercises */
-export const getPatientsExercises = async (patientId: string) => {
+export const getPatientsExercises = async (
+  patientId: string
+): Promise<
+  | { patient_exercises: PatientExerciseMetaData; exercises: Exercise }[]
+  | undefined
+> => {
   try {
     const res = await api.patients.exercises[":patientId"].$get({
       param: { patientId },
     });
     const data = await res.json();
+    if ("error" in data) {
+      throw new Error(data.error);
+    }
     return data;
   } catch (error) {
     console.error("Error fetching all patients exercises:", error);
@@ -82,6 +91,11 @@ export const getExercise = async (exerciseId: string) => {
     const res = await api.exercises[":exerciseId"].$get({
       param: { exerciseId },
     });
+
+    if (!res.ok) {
+      throw new Error(`Failed to fetch exercise: ${res.status}`);
+    }
+
     const data = await res.json();
     return data;
   } catch (error) {
@@ -93,8 +107,13 @@ export const getExercise = async (exerciseId: string) => {
 export const getAllExercises = async () => {
   try {
     const res = await api.exercises.$get();
+
+    if (!res.ok) {
+      throw new Error(`Failed to fetch all exercises: ${res.status}`);
+    }
+
     const data = await res.json();
-    return data;
+    return data.allExercises;
   } catch (error) {
     console.error("Error fetching all exercises:", error);
   }

@@ -1,7 +1,45 @@
 {
   "compilerOptions": {
+    "types": ["node"],
     "strict": true,
     "jsx": "react-jsx",
-    "jsxImportSource": "hono/jsx"
-  }
+    "jsxImportSource": "hono/jsx",
+    "target": "ESNext",
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+
+    // Add these for better IntelliSense performance
+    "incremental": true,
+    "tsBuildInfoFile": ".tsbuildinfo",
+
+    // Add these for better type resolution
+    "resolveJsonModule": true,
+    "allowSyntheticDefaultImports": true,
+    "isolatedModules": true,
+
+    // Add these for better path resolution
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/*"]
+    },
+
+    // Add lib for better type definitions
+    "lib": ["ESNext"],
+
+    // Type checking improvements
+    "noEmit": true,
+    "allowJs": false,
+    "forceConsistentCasingInFileNames": true
+  },
+  "include": ["src/**/*"],
+  "exclude": [
+    "node_modules",
+    "dist",
+    "build",
+    ".hono",
+    "**/*.test.ts",
+    "**/*.test.tsx"
+  ]
 }

@@ -3,7 +3,9 @@ import { createFileRoute } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/_authenticated/practice/schedule")({
   component: () => (
-    <LayoutPage page={"schedule"}>
+    <LayoutPage
+      pageBreadcrumbs={[{ label: "Schedule", href: "/practice/schedule" }]}
+    >
       <p>schedule</p>
     </LayoutPage>
   ),

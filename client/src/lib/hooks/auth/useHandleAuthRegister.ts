@@ -15,7 +15,9 @@ const defaultValues: TAuthRegisterForm = {
   email: "",
   practiceName: "",
   address: "",
-  practitionerName: "",
+  firstName: "",
+  middleName: "",
+  lastName: "",
   licenseNumber: null,
   userType: undefined,
 };
@@ -74,7 +76,9 @@ const registerSchema = z.object({
     .min(5, "Address is too short")
     .max(255, "Address is too long")
     .refine((address) => address.trim().length > 0, "Address cannot be empty"),
-  practitionerName: z.string().min(1, "Practitioner name field is required"),
+  firstName: z.string().min(1, "Practitioner first name field is required"),
+  middleName: z.string().optional(),
+  lastName: z.string().min(1, "Practitioner last name field is required"),
   licenseNumber: z
     .string()
     .min(4)

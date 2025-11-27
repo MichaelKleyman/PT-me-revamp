@@ -1,17 +1,19 @@
+export enum ExerciseDifficulty {
+  BEGINNER = "beginner",
+  INTERMEDIATE = "intermediate",
+  ADVANCED = "advanced",
+}
+
+// TODO: fix these null additions to the fields
 export type Exercise = {
-  id: string;
+  id: number; // TODO: Change to string
   name: string;
   description: string;
-  sets: number;
-  reps: string;
-  duration: string;
-  benefits: string[];
-  equipment: string;
-  frequency: string;
-  status?: "active" | "completed" | "pending"; // TODO: consider removing
-  difficulty: "beginner" | "intermediate" | "advanced";
+  duration: string | null;
+  benefits: string[] | null;
+  equipment: string | null;
+  difficulty: ExerciseDifficulty;
   targetArea: string;
   instructions: string[];
   videoUrl: string;
-  completedInSession?: boolean; // TODO: consider removing
 };

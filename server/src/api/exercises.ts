@@ -25,7 +25,7 @@ export const exercisesRouter = new Hono()
         .from(exercisesTable)
         .where(eq(exercisesTable.id, Number(exerciseId)));
       console.log(">>>", exercise);
-      return c.json({ exercise: exercise[0] }, 200);
+      return c.json(exercise[0], 200);
     } catch (error) {
       console.error("Error fetching exercise:", error);
       return c.json({ error: "Error fetching exercise" }, 500);

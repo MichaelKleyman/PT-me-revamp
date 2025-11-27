@@ -1,18 +1,27 @@
 {
   "name": "server",
   "module": "index.ts",
+  "type": "module",
   "scripts": {
     "dev": "bun run --hot src/index.ts",
-    "db:generate": "drizzle-kit generate"
+    "db:generate": "drizzle-kit generate",
+    "lint": "eslint server/src --ext .ts,.tsx --max-warnings=0 --debug",
+    "typecheck": "tsc --noEmit --pretty --listFiles --traceResolution",
+    "check": "pnpm typecheck && pnpm lint",
+    "db:seed": "tsx src/db/seed/exercises.ts"
   },
   "devDependencies": {
+    "@eslint/js": "^9.17.0",
     "@types/bun": "latest",
+    "@types/node": "^24.10.0",
     "@types/pg": "^8.11.11",
-    "drizzle-kit": "^0.30.4",
-    "tsx": "^4.19.2"
-  },
-  "peerDependencies": {
-    "typescript": "^5.0.0"
+    "drizzle-kit": "^0.31.6",
+    "eslint": "^9.17.0",
+    "eslint-plugin-react-hooks": "^5.0.0",
+    "eslint-plugin-react-refresh": "^0.4.16",
+    "tsx": "^4.19.2",
+    "typescript": "^5.9.3",
+    "typescript-eslint": "^8.18.1"
   },
   "dependencies": {
     "@hono/node-server": "^1.13.8",
@@ -21,6 +30,7 @@
     "@neondatabase/serverless": "^1.0.0",
     "dotenv": "^16.4.7",
     "drizzle-orm": "^0.39.1",
+    "drizzle-seed": "^0.3.1",
     "hono": "^4.7.5",
     "pg": "^8.13.1",
     "pg-hstore": "^2.3.4",

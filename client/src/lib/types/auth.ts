@@ -1,17 +1,25 @@
 import { z } from "zod";
 
+/** For practitioner */
 export type TAuthRegisterForm = {
   email: string;
   practiceName: string;
   address: string;
-  practitionerName: string;
+  firstName: string;
+  middleName?: string;
+  lastName: string;
   licenseNumber: string | null;
   userType: TUserType["userType"];
 };
 
 export type TAuthLoginForm = {
   email: string;
-  practitionerName: string;
+  /** First name of the user */
+  firstName: string;
+  /** Middle name of the user */
+  middleName?: string | null;
+  /** Last name of the user */
+  lastName: string;
 };
 
 export const authUrlSchema = z.object({
@@ -26,7 +34,7 @@ export type UserType = (typeof UserTypeEnum)[number];
 
 export type BaseUser = {
   /** Unique id for the user in the database */
-  id?: number;
+  id?: number; // TODO: Change to string
   /** Unique id from Kinde authentication service */
   kindeId?: string | null;
   /** ID of the practice the user belongs to */

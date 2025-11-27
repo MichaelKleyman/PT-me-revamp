@@ -7,7 +7,9 @@ import { z } from "zod";
 
 const defaultValues: TAuthLoginForm = {
   email: "",
-  practitionerName: "",
+  firstName: "",
+  middleName: "",
+  lastName: "",
 };
 
 export const useHandleAuthLogin = (
@@ -28,7 +30,8 @@ export const useHandleAuthLogin = (
   }, [isLoggingIn]);
 
   const handleLogin = () => {
-    const { email, practitionerName } = form.getValues();
+    const { email, firstName, middleName, lastName } = form.getValues();
+    console.log({ firstName, middleName, lastName });
     // if (!form.formState.isValid) {
     //   handleError(true);
     //   return;
@@ -44,5 +47,7 @@ export const useHandleAuthLogin = (
 
 const loginSchema = z.object({
   email: z.string().email().min(1, "Email address field is required"),
-  practitionerName: z.string().min(1, "Practitioner name field is required"),
+  firstName: z.string().min(1, "Practitioner first name field is required"),
+  middleName: z.string().optional(),
+  lastName: z.string().min(1, "Practitioner last name field is required"),
 }) satisfies z.ZodType<TAuthLoginForm>;

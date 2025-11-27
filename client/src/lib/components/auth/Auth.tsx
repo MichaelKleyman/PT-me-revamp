@@ -158,25 +158,46 @@ export const Auth = (props: TAuthProps) => {
 
   const renderStep2 = (
     <>
-      <Controller
-        name="practitionerName"
-        control={registerForm.control}
-        render={({ field }) => (
-          <TextField
-            {...field}
-            variant="outlined"
-            placeholder="Enter admin practitioner username"
-            label="Admin Practitioner Username"
-            fullWidth
-            error={!!registerForm.formState.errors.practitionerName}
-            helperText={
-              registerForm.formState.errors.practitionerName
-                ? registerForm.formState.errors.practitionerName.message
-                : ""
-            }
-          />
-        )}
-      />
+      <Stack flexDirection="row" gap={2}>
+        <Controller
+          name="firstName"
+          control={registerForm.control}
+          render={({ field }) => (
+            <TextField
+              {...field}
+              variant="outlined"
+              placeholder="Enter admin practitioner first name"
+              label="Admin Practitioner First Name"
+              fullWidth
+              error={!!registerForm.formState.errors.firstName}
+              helperText={
+                registerForm.formState.errors.firstName
+                  ? registerForm.formState.errors.firstName.message
+                  : ""
+              }
+            />
+          )}
+        />
+        <Controller
+          name="lastName"
+          control={registerForm.control}
+          render={({ field }) => (
+            <TextField
+              {...field}
+              variant="outlined"
+              placeholder="Enter admin practitioner last name"
+              label="Admin Practitioner Last Name"
+              fullWidth
+              error={!!registerForm.formState.errors.lastName}
+              helperText={
+                registerForm.formState.errors.lastName
+                  ? registerForm.formState.errors.lastName.message
+                  : ""
+              }
+            />
+          )}
+        />
+      </Stack>
       <Controller
         name="licenseNumber"
         control={registerForm.control}

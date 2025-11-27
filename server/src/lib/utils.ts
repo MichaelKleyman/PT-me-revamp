@@ -31,7 +31,12 @@ export const createUser = async (
     const practiceName = (await session.getSessionItem("practiceName")) || "";
     const address = await session.getSessionItem("address");
     const licenseNumber = await session.getSessionItem("licenseNumber");
-    const practitionerName = await session.getSessionItem("practitionerName");
+    const practitionerFirstName = await session.getSessionItem(
+      "practitionerFirstName"
+    );
+    const practitionerLastName = await session.getSessionItem(
+      "practitionerLastName"
+    );
     const patientFirstName = await session.getSessionItem("patientFirstName");
     const patientLastName = await session.getSessionItem("patientLastName");
 
@@ -53,7 +58,9 @@ export const createUser = async (
         .returning({ id: practicesTable.id });
 
       const practitionerInsertData: PractitionersInsert = {
-        name: String(practitionerName || ""),
+        // name: String(practitionerName || ""),
+        firstName: String(practitionerFirstName || ""),
+        lastName: String(practitionerLastName || ""),
         email: String(email || ""),
         userType: UserType.Practitioner,
         licenseNumber: Number(licenseNumber),

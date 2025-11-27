@@ -6,9 +6,9 @@ export enum ExerciseStatus {
 }
 
 export type PatientExerciseMetaData = {
-  id: number;
-  patientId: number;
-  exerciseId: number;
+  id: string;
+  patientId: string;
+  exerciseId: string;
   sets: number;
   reps: string;
   frequency: string;

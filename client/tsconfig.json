@@ -28,5 +28,5 @@
     }
   },
   "include": ["vite.config.ts", "src/**/*.ts", "src/**/*.tsx", "src/**/*.d.ts"], // explicitly tells Vite to recognize these file types as assets that can be imported.
-  "exclude": ["node_modules", "dist", "build", ".next", "coverage"]
+  "exclude": ["node_modules", "dist", "build", ".next", "coverage", "../server"]
 }

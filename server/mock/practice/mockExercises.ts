@@ -11,7 +11,7 @@ export const exercises: ExercisesInsert[] = [
     targetArea: "Lower Back",
     duration: "2-3 minutes",
     equipment: "None",
-    videoUrl: "/cat-cow-stretch-exercise-demonstration.jpg",
+    videoUrl: "https://www.youtube.com/embed/vuyUwtHl694?si=uAtKPXxDNQgK6pIG",
     instructions: [
       "Start on hands and knees in tabletop position",
       "Arch your back and look up (Cow pose)",
@@ -32,7 +32,7 @@ export const exercises: ExercisesInsert[] = [
     targetArea: "Core",
     duration: "3-5 minutes",
     equipment: "None",
-    videoUrl: "/pelvic-tilt-exercise-demonstration.jpg",
+    videoUrl: "https://www.youtube.com/embed/vuyUwtHl694?si=uAtKPXxDNQgK6pIG",
     instructions: [
       "Lie on back with knees bent",
       "Tighten abdominal muscles",
@@ -53,7 +53,7 @@ export const exercises: ExercisesInsert[] = [
     targetArea: "Core",
     duration: "5-8 minutes",
     equipment: "None",
-    videoUrl: "/bird-dog-exercise-demonstration.jpg",
+    videoUrl: "https://www.youtube.com/embed/vuyUwtHl694?si=uAtKPXxDNQgK6pIG",
     instructions: [
       "Start in tabletop position",
       "Extend opposite arm and leg simultaneously",
@@ -73,7 +73,7 @@ export const exercises: ExercisesInsert[] = [
     targetArea: "Legs",
     duration: "3-5 minutes",
     equipment: "Wall",
-    videoUrl: "/wall-sit-exercise-demonstration.jpg",
+    videoUrl: "https://www.youtube.com/embed/vuyUwtHl694?si=uAtKPXxDNQgK6pIG",
     instructions: [
       "Stand with back against wall",
       "Slide down until thighs are parallel to floor",
@@ -93,7 +93,7 @@ export const exercises: ExercisesInsert[] = [
     targetArea: "Shoulders",
     duration: "2-3 minutes",
     equipment: "None",
-    videoUrl: "/shoulder-blade-squeeze-exercise-demonstration.jpg",
+    videoUrl: "https://www.youtube.com/embed/vuyUwtHl694?si=uAtKPXxDNQgK6pIG",
     instructions: [
       "Sit or stand with arms at sides",
       "Squeeze shoulder blades together",
@@ -113,7 +113,7 @@ export const exercises: ExercisesInsert[] = [
     targetArea: "Legs",
     duration: "3-4 minutes",
     equipment: "None",
-    videoUrl: "/calf-raise-exercise-demonstration.jpg",
+    videoUrl: "https://www.youtube.com/embed/vuyUwtHl694?si=uAtKPXxDNQgK6pIG",
     instructions: [
       "Stand with feet hip-width apart",
       "Rise up onto toes",
@@ -133,7 +133,7 @@ export const exercises: ExercisesInsert[] = [
     targetArea: "Hips",
     duration: "2-3 minutes",
     equipment: "None",
-    videoUrl: "/knee-to-chest-stretch-demonstration.jpg",
+    videoUrl: "https://www.youtube.com/embed/vuyUwtHl694?si=uAtKPXxDNQgK6pIG",
     instructions: [
       "Lie on back with knees bent",
       "Bring one knee to chest",
@@ -153,7 +153,7 @@ export const exercises: ExercisesInsert[] = [
     targetArea: "Shoulders",
     duration: "1-2 minutes",
     equipment: "None",
-    videoUrl: "/arm-circles-exercise-demonstration.jpg",
+    videoUrl: "https://www.youtube.com/embed/vuyUwtHl694?si=uAtKPXxDNQgK6pIG",
     instructions: [
       "Stand with arms extended to sides",
       "Make small circles forward",
@@ -174,7 +174,7 @@ export const exercises: ExercisesInsert[] = [
     targetArea: "Hips",
     duration: "4-6 minutes",
     equipment: "None",
-    videoUrl: "/hip-bridge-exercise-demonstration.jpg",
+    videoUrl: "https://www.youtube.com/embed/vuyUwtHl694?si=uAtKPXxDNQgK6pIG",
     instructions: [
       "Lie on back with knees bent",
       "Lift hips up squeezing glutes",
@@ -194,7 +194,7 @@ export const exercises: ExercisesInsert[] = [
     targetArea: "Neck",
     duration: "1-2 minutes",
     equipment: "None",
-    videoUrl: "/neck-roll-exercise-demonstration.jpg",
+    videoUrl: "https://www.youtube.com/embed/vuyUwtHl694?si=uAtKPXxDNQgK6pIG",
     instructions: [
       "Sit or stand with good posture",
       "Slowly roll head in circular motion",

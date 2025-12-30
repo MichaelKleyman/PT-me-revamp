@@ -27,18 +27,13 @@ import {
 import { useState } from "react";
 import { PatientExercisesEmpty } from "./PatientExercisesEmpty";
 import { PatientExerciseMetaData } from "@client/lib/types/patient";
+import { difficultyConfig } from "@client/lib/utils/difficulty";
 
 const statusConfig = {
   active: { color: "success" as const, icon: PlayArrow },
   completed: { color: "info" as const, icon: CheckCircle },
   pending: { color: "warning" as const, icon: Schedule },
   skipped: { color: "warning" as const, icon: Schedule },
-};
-
-const difficultyConfig = {
-  beginner: { color: "success" as const },
-  intermediate: { color: "warning" as const },
-  advanced: { color: "error" as const },
 };
 
 type TPatientExerciseHistoryProps = {
@@ -73,7 +68,7 @@ export const PatientExerciseHistory = (props: TPatientExerciseHistoryProps) => {
   const handleSetSelectedVideo = (exercise?: Exercise) => {
     if (!exercise) setSelectedVideo(null);
     setSelectedVideo(
-      selectedVideo === exercise?.id ? null : (exercise?.id ?? "")
+      selectedVideo === String(exercise?.id) ? null : String(exercise?.id)
     );
   };
 
@@ -145,8 +140,11 @@ export const PatientExerciseHistory = (props: TPatientExerciseHistoryProps) => {
                   key={metadata.id}
                   exercise={
                     allExercises
-                      .filter(({ id }) => id === metadata.exerciseId.toString())
-                      .map((e) => ({ ...e, id: e.id.toString() }))[0]
+                      .filter(
+                        ({ id }) =>
+                          String(id) === metadata.exerciseId.toString()
+                      )
+                      .map((e) => ({ ...e, id: e.id }))[0]
                   }
                   exerciseMetadata={metadata}
                   selectedVideo={selectedVideo}
@@ -348,13 +346,13 @@ const PatientExercise = (props: TPatientExerciseProps) => {
         textAlign="center"
         sx={{ display: "block", mt: 0.5 }}
       >
-        {selectedVideo === exercise.id ? "Hide" : "Show"} Video
+        {selectedVideo === String(exercise.id) ? "Hide" : "Show"} Video
       </Typography>
     </Box>
   );
 
   const renderSelectedExerciseVideo =
-    selectedVideo === exercise.id ? (
+    selectedVideo === String(exercise.id) ? (
       <Box sx={{ bgcolor: "grey.50", borderRadius: 1, p: 2 }}>
         <Box
           sx={{
@@ -430,7 +428,10 @@ const PatientExercise = (props: TPatientExerciseProps) => {
                 <Checkbox
                   checked={true} // TODO: Revisit
                   onChange={(e) =>
-                    handleSessionCompletion(exercise.id, e.target.checked)
+                    handleSessionCompletion(
+                      String(exercise.id),
+                      e.target.checked
+                    )
                   }
                   size="small"
                 />

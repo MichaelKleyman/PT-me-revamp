@@ -1,5 +1,6 @@
 import { Exercise } from "@client/lib/types/exercise";
-import { Add, PlayArrow, Visibility } from "@mui/icons-material";
+import { difficultyConfig } from "@client/lib/utils/difficulty";
+import { Add, Visibility } from "@mui/icons-material";
 import {
   Box,
   Button,
@@ -12,23 +13,14 @@ import {
   Typography,
 } from "@mui/material";
 import { useNavigate } from "@tanstack/react-router";
-import { useState } from "react";
 
 type TExercisesGridProps = {
   filteredExercises?: Exercise[];
 };
 
-const difficultyConfig = {
-  beginner: { color: "success" as const },
-  intermediate: { color: "warning" as const },
-  advanced: { color: "error" as const },
-};
-
 export const ExercisesGrid = (props: TExercisesGridProps) => {
   const { filteredExercises = [] } = props;
   const navigate = useNavigate();
-
-  const [selectedVideo, setSelectedVideo] = useState<string | null>(null);
 
   const handleViewExercise = (exerciseId: string) => {
     navigate({
@@ -51,82 +43,26 @@ export const ExercisesGrid = (props: TExercisesGridProps) => {
             <Box sx={{ position: "relative" }}>
               <Box
                 sx={{
-                  aspectRatio: "16/9",
-                  bgcolor: "grey.200",
-                  cursor: "pointer",
                   position: "relative",
-                  "&:hover": { opacity: 0.8 },
-                  transition: "opacity 0.2s",
+                  paddingTop: "56.25%",
+                  width: "100%",
                 }}
-                onClick={() =>
-                  setSelectedVideo(
-                    selectedVideo === exercise.id ? null : exercise.id
-                  )
-                }
               >
-                <img
-                  src={exercise.videoUrl || "/placeholder.svg"}
-                  alt={`${exercise.name} demonstration`}
+                <iframe
                   style={{
+                    position: "absolute",
+                    top: 0,
+                    left: 0,
                     width: "100%",
                     height: "100%",
-                    objectFit: "cover",
                   }}
+                  src={exercise?.videoUrl}
+                  title="Exercise demonstration"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
                 />
-                <Box
-                  sx={{
-                    position: "absolute",
-                    inset: 0,
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    bgcolor: "rgba(0,0,0,0.2)",
-                  }}
-                >
-                  <Box
-                    sx={{
-                      bgcolor: "rgba(255,255,255,0.9)",
-                      borderRadius: "50%",
-                      p: 1.5,
-                      display: "flex",
-                    }}
-                  >
-                    <PlayArrow sx={{ fontSize: 32 }} />
-                  </Box>
-                </Box>
               </Box>
-
-              {selectedVideo === exercise.id && (
-                <Box
-                  sx={{
-                    position: "absolute",
-                    inset: 0,
-                    bgcolor: "rgba(0,0,0,0.8)",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    p: 2,
-                  }}
-                >
-                  <Card sx={{ maxWidth: 400, p: 2 }}>
-                    <Typography variant="h6" gutterBottom>
-                      Video Preview
-                    </Typography>
-                    <Typography
-                      variant="body2"
-                      color="text.secondary"
-                      paragraph
-                    >
-                      Full video demonstration would play here
-                    </Typography>
-                    <Button size="small" onClick={() => setSelectedVideo(null)}>
-                      Close Preview
-                    </Button>
-                  </Card>
-                </Box>
-              )}
             </Box>
-
             <CardHeader
               title={
                 <Stack
@@ -216,8 +152,7 @@ export const ExercisesGrid = (props: TExercisesGridProps) => {
                   fullWidth
                   startIcon={<Visibility />}
                   onClick={() => {
-                    console.log(exercise);
-                    handleViewExercise(exercise.id);
+                    handleViewExercise(String(exercise.id));
                   }}
                 >
                   View Details

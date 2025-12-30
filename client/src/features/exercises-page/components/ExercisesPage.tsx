@@ -7,7 +7,7 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
-import { ExercisePageFilters } from "./ExercisePageFilters";
+import { ExercisePageFilters } from "./ExercisesPageFilters";
 import { ExercisesGrid } from "./ExercisesGrid";
 import { useState } from "react";
 

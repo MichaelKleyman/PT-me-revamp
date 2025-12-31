@@ -5,6 +5,8 @@
   "scripts": {
     "dev": "bun run --hot src/index.ts",
     "db:generate": "drizzle-kit generate",
+    "db:generate:named": "drizzle-kit generate --name",
+    "db:migrate": "drizzle-kit migrate",
     "lint": "eslint server/src --ext .ts,.tsx --max-warnings=0 --debug",
     "typecheck": "tsc --noEmit --pretty --listFiles --traceResolution",
     "check": "pnpm typecheck && pnpm lint",

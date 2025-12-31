@@ -1,0 +1,1 @@
+ALTER TABLE "patient_exercises_schema"."patient_exercises" ADD COLUMN "duration" text;

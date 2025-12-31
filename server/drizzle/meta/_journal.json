@@ -120,6 +120,13 @@
       "when": 1762644610149,
       "tag": "0016_change_name_properties_practitioner",
       "breakpoints": true
+    },
+    {
+      "idx": 17,
+      "version": "7",
+      "when": 1767196037211,
+      "tag": "0017_add_duration_to_patient_exercises",
+      "breakpoints": true
     }
   ]
 }

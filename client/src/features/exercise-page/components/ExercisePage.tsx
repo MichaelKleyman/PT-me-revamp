@@ -1,4 +1,3 @@
-import { useState } from "react";
 import {
   Box,
   Card,
@@ -13,16 +12,15 @@ import {
   Alert,
 } from "@mui/material";
 import { ArrowBack, Verified } from "@mui/icons-material";
-import { AssignmentStep, Exercise } from "@client/lib/types/exercise";
+import { Exercise } from "@client/lib/types/exercise";
 import { Link } from "@tanstack/react-router";
 import { ExercisePatientSelect } from "./ExercisePatientSelect";
 import { VerificationInfoCard } from "@client/lib/components/cards/VerificationInfoCard";
 import { ExerciseInstructionsCard } from "@client/lib/components/cards/ExerciseInstructionsCard";
 import { ExerciseBenefits } from "./ExerciseBenefits";
 import { difficultyConfig } from "@client/lib/utils/difficulty";
-import { useAppForm } from "@client/lib/components/form/contexts/form";
 import { ExerciseConfigureAssignment } from "./ExerciseConfigureAssignment";
-import { exerciseDefaultValues, exerciseOpts } from "../utils/exerciseForm";
+import { useAssignExercise } from "@client/lib/hooks/exercise/useAssignExercise";
 
 // type CreatorInfo = {
 //   name: string;
@@ -37,65 +35,16 @@ type TExercisePageProps = {
 export const ExercisePage = (props: TExercisePageProps) => {
   const { exercise } = props;
 
-  const [assignmentStep, setAssignmentStep] =
-    useState<AssignmentStep>("select");
-
-  const form = useAppForm({
-    ...exerciseOpts,
-    defaultValues: exerciseDefaultValues,
-    onSubmit: async ({ value }) => {
-      console.log("Exercise Assignment Submitted:", {
-        exerciseId: exercise?.id,
-        exerciseName: exercise?.name,
-        ...value,
-      });
-      // TODO: Add API call to assign exercise to patients
-      // await assignExerciseToPatients(value);
-    },
+  const {
+    form,
+    assignmentStep,
+    handleAssign,
+    handleBack,
+    getStepNumber,
+    getButtonText,
+  } = useAssignExercise({
+    exercise,
   });
-
-  // const hasError =
-  //   field.state.meta.isTouched && field.state.meta.errors.length > 0;
-
-  const handleAssign = async () => {
-    if (assignmentStep === "select") {
-      setAssignmentStep("configure");
-    } else if (assignmentStep === "configure") {
-      setAssignmentStep("patients");
-    } else {
-      await form.handleSubmit();
-    }
-  };
-
-  const handleBack = () => {
-    if (assignmentStep === "configure") {
-      setAssignmentStep("select");
-    } else if (assignmentStep === "patients") {
-      setAssignmentStep("configure");
-    }
-  };
-
-  const getStepNumber = () => {
-    switch (assignmentStep) {
-      case "select":
-        return "1 of 3";
-      case "configure":
-        return "2 of 3";
-      case "patients":
-        return "3 of 3";
-    }
-  };
-
-  const getButtonText = () => {
-    switch (assignmentStep) {
-      case "select":
-        return "Select Variation";
-      case "configure":
-        return "Configure";
-      case "patients":
-        return "Assign Exercise";
-    }
-  };
 
   //   const isButtonDisabled = () => {
   //     if (assignmentStep === "patients" && selectedPatients.length === 0)

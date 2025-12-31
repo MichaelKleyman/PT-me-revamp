@@ -30,6 +30,7 @@ export const patientExercisesTable = patientExercisesSchema.table(
       .references(() => exercisesTable.id)
       .notNull(),
     // Patient specific details
+    duration: text("duration"),
     sets: integer("sets").notNull(),
     reps: text("reps").notNull(),
     frequency: text("frequency").notNull(),

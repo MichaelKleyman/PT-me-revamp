@@ -13,6 +13,12 @@ const bulkDeleteSchema = z.object({
   ids: z.array(z.number()),
 });
 
+const assignExerciseSchema = z.object({
+  patientIds: z.array(z.number()),
+  exerciseId: z.number(),
+  frequency: z.string(),
+});
+
 export const patientsRouter = new Hono()
   // Get all patients by practice ID
   .get("/practice/:practiceId", async (c) => {
@@ -116,7 +122,19 @@ export const patientsRouter = new Hono()
       console.error("Error deleting patients:", error);
       return c.json({ error: "Error deleting patients" }, 500);
     }
-  });
+  })
+  .post(
+    "assign-exercise",
+    zValidator("json", assignExerciseSchema),
+    async (c) => {
+      try {
+        const { patientIds, exerciseId, frequency } = c.req.valid("json");
+      } catch (error) {
+        console.error("Error assigning patient exercise:", error);
+        return c.json({ error: "Error assigning patient exercise" }, 500);
+      }
+    }
+  );
 
 // HELPERS
 /** Get patient by id */

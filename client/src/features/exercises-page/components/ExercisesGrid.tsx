@@ -74,8 +74,11 @@ export const ExercisesGrid = (props: TExercisesGridProps) => {
                   <Chip
                     label={exercise.difficulty}
                     size="small"
-                    variant="outlined"
-                    color={difficultyConfig[exercise.difficulty].color}
+                    sx={{
+                      bgcolor: difficultyConfig[exercise?.difficulty].bgcolor,
+                      color: difficultyConfig[exercise?.difficulty].color,
+                      fontWeight: 500,
+                    }}
                   />
                 </Stack>
               }

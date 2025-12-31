@@ -17,3 +17,5 @@ export type Exercise = {
   instructions: string[];
   videoUrl: string;
 };
+
+export type AssignmentStep = "select" | "configure" | "patients";

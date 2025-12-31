@@ -7,7 +7,7 @@ import { Suspense } from "react";
 export const Route = createFileRoute("/_authenticated/practice/exercises/")({
   component: () => (
     <LayoutPage
-      pageBreadcrumbs={[{ label: "Patients", href: "/practice/exercises" }]}
+      pageBreadcrumbs={[{ label: "Exercises", href: "/practice/exercises" }]}
     >
       <Suspense fallback={<LoadingPage />}>
         <ViewExercisesPage />{" "}

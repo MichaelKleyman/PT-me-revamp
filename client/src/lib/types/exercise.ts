@@ -1,7 +1,7 @@
 export enum ExerciseDifficulty {
-  BEGINNER = "beginner",
-  INTERMEDIATE = "intermediate",
-  ADVANCED = "advanced",
+  BEGINNER = "Beginner",
+  INTERMEDIATE = "Intermediate",
+  ADVANCED = "Advanced",
 }
 
 // TODO: fix these null additions to the fields
@@ -17,3 +17,5 @@ export type Exercise = {
   instructions: string[];
   videoUrl: string;
 };
+
+export type AssignmentStep = "select" | "configure" | "patients";

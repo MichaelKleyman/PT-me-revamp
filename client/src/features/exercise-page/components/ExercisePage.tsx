@@ -1,4 +1,3 @@
-import { useState } from "react";
 import {
   Box,
   Card,
@@ -10,16 +9,18 @@ import {
   Divider,
   Avatar,
   Tooltip,
+  Alert,
 } from "@mui/material";
 import { ArrowBack, Verified } from "@mui/icons-material";
 import { Exercise } from "@client/lib/types/exercise";
 import { Link } from "@tanstack/react-router";
-import { ExercisePageVariation } from "./ExercisePageVariation";
-import { ExerciseConfigureAssignment } from "./ExerciseConfigureAssignment";
 import { ExercisePatientSelect } from "./ExercisePatientSelect";
 import { VerificationInfoCard } from "@client/lib/components/cards/VerificationInfoCard";
 import { ExerciseInstructionsCard } from "@client/lib/components/cards/ExerciseInstructionsCard";
 import { ExerciseBenefits } from "./ExerciseBenefits";
+import { difficultyConfig } from "@client/lib/utils/difficulty";
+import { ExerciseConfigureAssignment } from "./ExerciseConfigureAssignment";
+import { useAssignPatientExercise } from "@client/lib/hooks/exercise/useAssignPatientExercise";
 
 // type CreatorInfo = {
 //   name: string;
@@ -27,93 +28,24 @@ import { ExerciseBenefits } from "./ExerciseBenefits";
 //   isVerified: boolean;
 // };
 
-// type ExerciseVariation = {
-//   id: string;
-//   name: string;
-//   description: string;
-// };
-
-// type ExerciseDetailPageProps = {
-//   exercise: Exercise;
-//   patients: Patient[];
-//   variations: ExerciseVariation[];
-//   creatorInfo: CreatorInfo;
-//   source: "practitioner" | "platform";
-//   onAssign: (assignmentData: {
-//     exerciseId: string;
-//     variation: string;
-//     duration: string;
-//     frequency: string;
-//     patients: string[];
-//   }) => void;
-// };
-
-const difficultyConfig = {
-  beginner: { bgcolor: "#e8f5e9", color: "#2e7d32", label: "Beginner" },
-  intermediate: { bgcolor: "#fff8e1", color: "#f57f17", label: "Intermediate" },
-  advanced: { bgcolor: "#ffebee", color: "#c62828", label: "Advanced" },
-};
-
-type AssignmentStep = "select" | "configure" | "patients";
-
 type TExercisePageProps = {
   exercise?: Exercise;
 };
 
 export const ExercisePage = (props: TExercisePageProps) => {
   const { exercise } = props;
+  console.log({ exercise });
 
-  //   const [selectedVariation, setSelectedVariation] = useState<string>(
-  //     variations[0]?.id || ""
-  //   );
-  const [assignmentStep, setAssignmentStep] =
-    useState<AssignmentStep>("select");
-
-  const handleAssign = () => {
-    if (assignmentStep === "select") {
-      setAssignmentStep("configure");
-    } else if (assignmentStep === "configure") {
-      setAssignmentStep("patients");
-    } else {
-      //   onAssign({
-      //     exerciseId: exercise?.id.toString(),
-      //     variation: selectedVariation,
-      //     duration: selectedDuration,
-      //     frequency: selectedFrequency,
-      //     patients: selectedPatients,
-      //   });
-    }
-  };
-
-  const handleBack = () => {
-    if (assignmentStep === "configure") {
-      setAssignmentStep("select");
-    } else if (assignmentStep === "patients") {
-      setAssignmentStep("configure");
-    }
-  };
-
-  const getStepNumber = () => {
-    switch (assignmentStep) {
-      case "select":
-        return "1 of 3";
-      case "configure":
-        return "2 of 3";
-      case "patients":
-        return "3 of 3";
-    }
-  };
-
-  const getButtonText = () => {
-    switch (assignmentStep) {
-      case "select":
-        return "Select Variation";
-      case "configure":
-        return "Configure";
-      case "patients":
-        return "Assign Exercise";
-    }
-  };
+  const {
+    form,
+    assignmentStep,
+    handleAssign,
+    handleBack,
+    getStepNumber,
+    getButtonText,
+  } = useAssignPatientExercise({
+    exercise,
+  });
 
   //   const isButtonDisabled = () => {
   //     if (assignmentStep === "patients" && selectedPatients.length === 0)
@@ -152,7 +84,6 @@ export const ExercisePage = (props: TExercisePageProps) => {
             }}
             src={exercise?.videoUrl}
             title="Exercise demonstration"
-            frameBorder="0"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
             allowFullScreen
           />
@@ -293,18 +224,23 @@ export const ExercisePage = (props: TExercisePageProps) => {
 
   const renderVerfificationInfoCard = <VerificationInfoCard />;
 
-  const renderExerciseVariation = <ExercisePageVariation />;
-
-  const renderExericseConfigureAssignment = (
-    <ExerciseConfigureAssignment
-      exercise={exercise}
-      assignmentStep={assignmentStep}
-    />
+  const renderExerciseVariation = (
+    <form.AppField name="variation">
+      {(field) => (
+        <field.TsfExercisePageVariation label="Step 1: Select Exercise Variation" />
+      )}
+    </form.AppField>
   );
 
-  const renderExercisePatientsSelect = (
-    <ExercisePatientSelect assignmentStep={assignmentStep} />
-  );
+  const renderExericseConfigureAssignment =
+    assignmentStep === "configure" || assignmentStep === "patients" ? (
+      <ExerciseConfigureAssignment form={form} exercise={exercise} />
+    ) : null;
+
+  const renderExercisePatientsSelect =
+    assignmentStep === "patients" ? (
+      <ExercisePatientSelect form={form} />
+    ) : null;
 
   return (
     <Box sx={{ minHeight: "100vh", bgcolor: "background.default", p: 3 }}>
@@ -384,6 +320,26 @@ export const ExercisePage = (props: TExercisePageProps) => {
                     {getButtonText()}
                   </Button>
                 </Stack>
+                <form.Subscribe
+                  selector={(state) => ({
+                    errors: state.errors,
+                    isValid: state.isValid,
+                    isTouched: state.isTouched,
+                  })}
+                >
+                  {({ errors, isValid, isTouched }) => (
+                    <>
+                      {isTouched &&
+                        !isValid &&
+                        errors.length > 0 &&
+                        errors.map((error, index) => (
+                          <Alert key={index} severity="error" sx={{ mt: 2 }}>
+                            {error?.toString()}
+                          </Alert>
+                        ))}
+                    </>
+                  )}
+                </form.Subscribe>
               </CardContent>
             </Card>
 

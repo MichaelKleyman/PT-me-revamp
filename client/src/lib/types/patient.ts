@@ -1,3 +1,5 @@
+import { ExerciseDifficulty } from "./exercise";
+
 export enum ExerciseStatus {
   ACTIVE = "active",
   COMPLETED = "completed",
@@ -8,7 +10,9 @@ export enum ExerciseStatus {
 export type PatientExerciseMetaData = {
   id: string;
   patientId: string;
+  difficulty: ExerciseDifficulty;
   exerciseId: string;
+  duration: string;
   sets: number;
   reps: string;
   frequency: string;

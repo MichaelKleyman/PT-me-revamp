@@ -6,6 +6,7 @@ import {
   useSuspenseQuery,
 } from "@tanstack/react-query";
 import {
+  assignExercise,
   createExercise,
   createPatient,
   deleteExercise,
@@ -217,6 +218,12 @@ export const useCreateExercise = () => {
 export const useDeleteExercise = () => {
   return useMutation({
     mutationFn: deleteExercise,
+  });
+};
+
+export const useAssignExercise = () => {
+  return useMutation({
+    mutationFn: assignExercise,
   });
 };
 

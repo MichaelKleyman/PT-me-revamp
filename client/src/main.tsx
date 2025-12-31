@@ -9,6 +9,7 @@ import { QueryClientProvider } from "@tanstack/react-query";
 import ErrorBoundary from "./lib/components/error/error-boundary.tsx";
 import { LoadingPage } from "./lib/components/loading/LoadingPage.tsx";
 import { queryClient } from "./lib/api/practitioner/query.ts";
+import { SnackProvider } from "./lib/components/snackbar/SnackbarProvider.tsx";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
@@ -17,7 +18,9 @@ createRoot(document.getElementById("root")!).render(
       <QueryClientProvider client={queryClient}>
         <ErrorBoundary>
           <Suspense fallback={<LoadingPage />}>
-            <App />
+            <SnackProvider>
+              <App />
+            </SnackProvider>
           </Suspense>
         </ErrorBoundary>
       </QueryClientProvider>

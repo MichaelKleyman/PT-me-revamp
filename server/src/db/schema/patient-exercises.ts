@@ -9,13 +9,7 @@ import {
 import { patientsTable } from "./patients";
 import { exercisesTable } from "./exercises";
 import { relations } from "drizzle-orm";
-
-enum PatientExerciseStatus {
-  ACTIVE = "active",
-  COMPLETED = "completed",
-  PENDING = "pending",
-  SKIPPED = "skipped",
-}
+import { ExerciseDifficulty, PatientExerciseStatus } from "@/lib/types";
 
 export const patientExercisesSchema = pgSchema("patient_exercises_schema");
 
@@ -30,8 +24,16 @@ export const patientExercisesTable = patientExercisesSchema.table(
       .references(() => exercisesTable.id)
       .notNull(),
     // Patient specific details
+    difficulty: text("difficulty", {
+      enum: [
+        ExerciseDifficulty.BEGINNER,
+        ExerciseDifficulty.INTERMEDIATE,
+        ExerciseDifficulty.ADVANCED,
+      ] as const,
+    }).notNull(),
+    duration: text("duration"),
     sets: integer("sets").notNull(),
-    reps: text("reps").notNull(),
+    reps: integer("reps").notNull(),
     frequency: text("frequency").notNull(),
     status: text("status", {
       enum: [
@@ -41,7 +43,7 @@ export const patientExercisesTable = patientExercisesSchema.table(
         PatientExerciseStatus.PENDING,
       ] as const,
     }).notNull(),
-    lastCompletedDate: timestamp("last_completed_date").notNull(),
+    lastCompletedDate: timestamp("last_completed_date").defaultNow().notNull(),
     createdAt: timestamp("created_at").defaultNow(),
   },
   (table) => [index("patient_idx").on(table.patientId)] // TODO: Search up exercises for the patient based on the patientId field)

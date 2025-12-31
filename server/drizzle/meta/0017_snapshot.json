@@ -1,5 +1,5 @@
 {
-  "id": "06d4ba42-499d-43b8-a880-f88406d04d9c",
+  "id": "3418299f-21a2-45e5-bd93-abf3d9ee6033",
   "prevId": "f2457b94-ab26-4ca2-9111-3dc7864469db",
   "version": "7",
   "dialect": "postgresql",
@@ -360,6 +360,12 @@
           "primaryKey": false,
           "notNull": true
         },
+        "difficulty": {
+          "name": "difficulty",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
         "duration": {
           "name": "duration",
           "type": "text",
@@ -374,7 +380,7 @@
         },
         "reps": {
           "name": "reps",
-          "type": "text",
+          "type": "integer",
           "primaryKey": false,
           "notNull": true
         },
@@ -394,7 +400,8 @@
           "name": "last_completed_date",
           "type": "timestamp",
           "primaryKey": false,
-          "notNull": true
+          "notNull": true,
+          "default": "now()"
         },
         "created_at": {
           "name": "created_at",

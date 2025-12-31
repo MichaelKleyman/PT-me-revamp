@@ -5,7 +5,11 @@ import { db } from "../db";
 import { exercisesTable } from "../db/schema/exercises";
 import { zValidator } from "@hono/zod-validator";
 import { server, topic } from "..";
-import { WSMessageKind } from "../lib/types";
+import {
+  ExerciseDifficulty,
+  PatientExerciseStatus,
+  WSMessageKind,
+} from "../lib/types";
 import { z } from "zod";
 import { patientExercisesTable } from "../db/schema/patient-exercises";
 
@@ -14,9 +18,19 @@ const bulkDeleteSchema = z.object({
 });
 
 const assignExerciseSchema = z.object({
+  variation: z.enum([
+    ExerciseDifficulty.BEGINNER,
+    ExerciseDifficulty.INTERMEDIATE,
+    ExerciseDifficulty.ADVANCED,
+  ]),
   patientIds: z.array(z.number()),
   exerciseId: z.number(),
+  duration: z.string(),
   frequency: z.string(),
+  dosage: z.object({
+    sets: z.number(),
+    reps: z.number(),
+  }),
 });
 
 export const patientsRouter = new Hono()
@@ -128,7 +142,37 @@ export const patientsRouter = new Hono()
     zValidator("json", assignExerciseSchema),
     async (c) => {
       try {
-        const { patientIds, exerciseId, frequency } = c.req.valid("json");
+        const {
+          variation,
+          duration,
+          patientIds,
+          exerciseId,
+          frequency,
+          dosage,
+        } = c.req.valid("json");
+        const { sets, reps } = dosage;
+        console.log({
+          variation,
+          patientIds,
+          exerciseId,
+          frequency,
+          duration,
+          dosage,
+        });
+        const newExerciseAssignments = patientIds.map((id) => ({
+          patientId: id,
+          exerciseId,
+          difficulty: variation,
+          duration,
+          sets,
+          reps,
+          frequency,
+          status: PatientExerciseStatus.ACTIVE,
+        }));
+
+        await db.insert(patientExercisesTable).values(newExerciseAssignments);
+
+        return c.json({ success: true }, 200);
       } catch (error) {
         console.error("Error assigning patient exercise:", error);
         return c.json({ error: "Error assigning patient exercise" }, 500);

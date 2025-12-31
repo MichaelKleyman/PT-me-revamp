@@ -9,21 +9,19 @@ import {
   Typography,
 } from "@mui/material";
 import { useFieldContext } from "../contexts/formContext";
+import { ExerciseDifficulty } from "@client/lib/types/exercise";
 
 const mockVariations = [
   {
-    id: "var-1",
-    name: "Beginner",
+    name: ExerciseDifficulty.BEGINNER,
     description: "Modified version with reduced range of motion",
   },
   {
-    id: "var-2",
-    name: "Standard",
+    name: ExerciseDifficulty.INTERMEDIATE,
     description: "Standard difficulty exercise",
   },
   {
-    id: "var-3",
-    name: "Advanced",
+    name: ExerciseDifficulty.ADVANCED,
     description: "Advanced version with increased intensity",
   },
 ];
@@ -54,32 +52,32 @@ export const TsfExercisePageVariation = (
         <Stack spacing={1}>
           {mockVariations.map((variation) => (
             <Paper
-              key={variation.id}
+              key={variation.name}
               variant="outlined"
               sx={{
                 p: 2,
                 cursor: "pointer",
                 borderColor: hasError
                   ? "error.main"
-                  : field.state.value === variation.id
+                  : field.state.value === variation.name
                     ? "primary.main"
                     : "divider",
                 bgcolor:
-                  field.state.value === variation.id
+                  field.state.value === variation.name
                     ? "primary.50"
                     : "transparent",
                 "&:hover": {
                   borderColor: hasError ? "error.light" : "primary.light",
                 },
               }}
-              onClick={() => field.handleChange(variation.id)}
+              onClick={() => field.handleChange(variation.name)}
             >
               <FormControlLabel
-                value={variation.id}
+                value={variation.name}
                 control={
                   <Radio
                     size="small"
-                    checked={field.state.value === variation.id}
+                    checked={field.state.value === variation.name}
                   />
                 }
                 label={

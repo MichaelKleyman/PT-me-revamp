@@ -1,21 +1,26 @@
+import { ExerciseDifficulty } from "@client/lib/types/exercise";
 import { formOptions } from "@tanstack/react-form";
 import { type } from "arktype";
 
 export const ExerciseForm = type({
-  variation: "string",
+  variation: type.enumerated(
+    ExerciseDifficulty.BEGINNER,
+    ExerciseDifficulty.INTERMEDIATE,
+    ExerciseDifficulty.ADVANCED
+  ),
   duration: "string",
   dosage: {
     sets: "number",
     reps: "number",
   },
   frequency: "string",
-  patientIds: "string[]",
+  patientIds: "number[]",
 });
 
-type ExerciseAssignmentFormData = typeof ExerciseForm.infer;
+export type ExerciseAssignmentFormData = typeof ExerciseForm.infer;
 
 export const exerciseDefaultValues: ExerciseAssignmentFormData = {
-  variation: "var-1",
+  variation: ExerciseDifficulty.BEGINNER,
   duration: "default",
   dosage: {
     sets: 3,

@@ -20,7 +20,7 @@ import { ExerciseInstructionsCard } from "@client/lib/components/cards/ExerciseI
 import { ExerciseBenefits } from "./ExerciseBenefits";
 import { difficultyConfig } from "@client/lib/utils/difficulty";
 import { ExerciseConfigureAssignment } from "./ExerciseConfigureAssignment";
-import { useAssignExercise } from "@client/lib/hooks/exercise/useAssignExercise";
+import { useAssignPatientExercise } from "@client/lib/hooks/exercise/useAssignPatientExercise";
 
 // type CreatorInfo = {
 //   name: string;
@@ -42,7 +42,7 @@ export const ExercisePage = (props: TExercisePageProps) => {
     handleBack,
     getStepNumber,
     getButtonText,
-  } = useAssignExercise({
+  } = useAssignPatientExercise({
     exercise,
   });
 

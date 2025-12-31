@@ -16,3 +16,16 @@ export enum WSMessageKind {
   PatientsBulkDeleted = "patients_bulk_deleted",
   PatientUpdated = "patient_updated",
 }
+
+export enum ExerciseDifficulty {
+  BEGINNER = "beginner",
+  INTERMEDIATE = "intermediate",
+  ADVANCED = "advanced",
+}
+
+export enum PatientExerciseStatus {
+  ACTIVE = "active",
+  COMPLETED = "completed",
+  PENDING = "pending",
+  SKIPPED = "skipped",
+}

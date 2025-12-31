@@ -5,26 +5,27 @@ import {
 import { useAppForm } from "@client/lib/components/form/contexts/form";
 import { AssignmentStep, Exercise } from "@client/lib/types/exercise";
 import { useState } from "react";
+import { useAssignExercise } from "@client/lib/api/practitioner/query";
 
 type TAssignExerciseProps = {
   exercise?: Exercise;
 };
 
-export const useAssignExercise = (props: TAssignExerciseProps) => {
+export const useAssignPatientExercise = (props: TAssignExerciseProps) => {
   const { exercise } = props;
 
   const [assignmentStep, setAssignmentStep] =
     useState<AssignmentStep>("select");
 
+  const { mutateAsync: assignExercise } = useAssignExercise();
+
   const form = useAppForm({
     ...exerciseOpts,
     defaultValues: exerciseDefaultValues,
     onSubmit: async ({ value }) => {
-      console.log("Exercise Assignment Submitted:", {
-        exerciseId: exercise?.id,
-        exerciseName: exercise?.name,
-        ...value,
-      });
+      if (!exercise?.id) return;
+
+      assignExercise({ data: value, exerciseId: exercise?.id });
       // TODO: Add API call to assign exercise to patients
       // await assignExerciseToPatients(value);
     },

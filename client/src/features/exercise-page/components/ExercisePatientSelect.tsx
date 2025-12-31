@@ -60,11 +60,11 @@ export const ExercisePatientSelect = withForm({
 
         <form.AppField name="patientIds">
           {(field) => {
-            const selectedPatients: string[] = field.state.value || [];
+            const selectedPatients: number[] = field.state.value || [];
 
-            const togglePatient = (patientId: string) => {
+            const togglePatient = (patientId: number) => {
               const newSelection = selectedPatients.includes(patientId)
-                ? selectedPatients.filter((id: string) => id !== patientId)
+                ? selectedPatients.filter((id: number) => id !== patientId)
                 : [...selectedPatients, patientId];
               field.handleChange(newSelection);
             };
@@ -84,15 +84,11 @@ export const ExercisePatientSelect = withForm({
                         cursor: "pointer",
                         "&:hover": { bgcolor: "action.hover" },
                       }}
-                      onClick={() =>
-                        togglePatient(patient.id?.toString() ?? "")
-                      }
+                      onClick={() => togglePatient(patient.id)}
                     >
                       <Stack direction="row" spacing={1.5} alignItems="center">
                         <Checkbox
-                          checked={selectedPatients.includes(
-                            patient.id?.toString() ?? ""
-                          )}
+                          checked={selectedPatients.includes(patient.id)}
                           size="small"
                         />
                         <Box sx={{ flex: 1 }}>

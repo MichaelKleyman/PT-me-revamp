@@ -21,7 +21,7 @@ export type ExerciseAssignmentFormData = typeof ExerciseForm.infer;
 
 export const exerciseDefaultValues: ExerciseAssignmentFormData = {
   variation: ExerciseDifficulty.BEGINNER,
-  duration: "default",
+  duration: "Use Default (2-3 minutes)",
   dosage: {
     sets: 3,
     reps: 10,

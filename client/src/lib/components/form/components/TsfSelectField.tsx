@@ -31,9 +31,6 @@ export const TsfSelectField = (props: TsfSelectFieldProps) => {
         onChange={(e) => field.handleChange(e.target.value)}
         onBlur={field.handleBlur}
       >
-        {defaultSelect?.length ? (
-          <MenuItem value="default">Use Default ({defaultSelect})</MenuItem>
-        ) : null}
         {defaultOptions?.map((option) => (
           <MenuItem key={option} value={option}>
             {option}

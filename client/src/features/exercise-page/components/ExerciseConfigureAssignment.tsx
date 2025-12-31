@@ -15,6 +15,7 @@ export const ExerciseConfigureAssignment = withForm({
             label="Duration"
             defaultSelect={exercise?.duration}
             defaultOptions={[
+              "Use Default (2-3 minutes)",
               "Short (1-2 min)",
               "Standard (2-4 min)",
               "Extended (5-10 min)",

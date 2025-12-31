@@ -18,9 +18,9 @@ export enum WSMessageKind {
 }
 
 export enum ExerciseDifficulty {
-  BEGINNER = "beginner",
-  INTERMEDIATE = "intermediate",
-  ADVANCED = "advanced",
+  BEGINNER = "Beginner",
+  INTERMEDIATE = "Intermediate",
+  ADVANCED = "Advanced",
 }
 
 export enum PatientExerciseStatus {

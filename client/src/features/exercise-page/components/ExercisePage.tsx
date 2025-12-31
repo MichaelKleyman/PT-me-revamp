@@ -34,6 +34,7 @@ type TExercisePageProps = {
 
 export const ExercisePage = (props: TExercisePageProps) => {
   const { exercise } = props;
+  console.log({ exercise });
 
   const {
     form,

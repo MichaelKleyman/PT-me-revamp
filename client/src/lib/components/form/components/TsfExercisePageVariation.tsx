@@ -1,71 +1,85 @@
 import {
   Box,
   FormControlLabel,
+  FormHelperText,
   Paper,
   Radio,
   RadioGroup,
   Stack,
   Typography,
 } from "@mui/material";
-import { useState } from "react";
+import { useFieldContext } from "../contexts/formContext";
+import { ExerciseDifficulty } from "@client/lib/types/exercise";
 
 const mockVariations = [
   {
-    id: "var-1",
-    name: "Beginner",
+    name: ExerciseDifficulty.BEGINNER,
     description: "Modified version with reduced range of motion",
   },
   {
-    id: "var-2",
-    name: "Standard",
+    name: ExerciseDifficulty.INTERMEDIATE,
     description: "Standard difficulty exercise",
   },
   {
-    id: "var-3",
-    name: "Advanced",
+    name: ExerciseDifficulty.ADVANCED,
     description: "Advanced version with increased intensity",
   },
 ];
 
-export const ExercisePageVariation = () => {
-  const [selectedVariation, setSelectedVariation] = useState<string>(
-    mockVariations[0]?.id || ""
-  );
+type TsfExercisePageVariationProps = {
+  label: string;
+};
+
+export const TsfExercisePageVariation = (
+  props: TsfExercisePageVariationProps
+) => {
+  const { label } = props;
+
+  const field = useFieldContext<string>();
+  const hasError =
+    field.state.meta.isTouched && field.state.meta.errors.length > 0;
 
   return (
     <Box sx={{ mb: 3 }}>
       <Typography variant="subtitle2" gutterBottom>
-        Step 1: Select Exercise Variation
+        {label}
       </Typography>
       <RadioGroup
-        value={selectedVariation}
-        onChange={(e) => setSelectedVariation(e.target.value)}
+        value={field.state.value}
+        onChange={(e) => field.handleChange(e.target.value)}
+        onBlur={field.handleBlur}
       >
         <Stack spacing={1}>
           {mockVariations.map((variation) => (
             <Paper
-              key={variation.id}
+              key={variation.name}
               variant="outlined"
               sx={{
                 p: 2,
                 cursor: "pointer",
-                borderColor:
-                  selectedVariation === variation.id
+                borderColor: hasError
+                  ? "error.main"
+                  : field.state.value === variation.name
                     ? "primary.main"
                     : "divider",
                 bgcolor:
-                  selectedVariation === variation.id
+                  field.state.value === variation.name
                     ? "primary.50"
                     : "transparent",
                 "&:hover": {
-                  borderColor: "primary.light",
+                  borderColor: hasError ? "error.light" : "primary.light",
                 },
               }}
-              //   onClick={() => setSelectedVariation(variation.id)}
+              onClick={() => field.handleChange(variation.name)}
             >
               <FormControlLabel
-                value={variation.id}
-                control={<Radio size="small" />}
+                value={variation.name}
+                control={
+                  <Radio
+                    size="small"
+                    checked={field.state.value === variation.name}
+                  />
+                }
                 label={
                   <Box>
                     <Typography fontWeight={500}>{variation.name}</Typography>
@@ -80,6 +94,11 @@ export const ExercisePageVariation = () => {
           ))}
         </Stack>
       </RadioGroup>
+      {hasError && (
+        <FormHelperText error sx={{ mt: 1 }}>
+          {field.state.meta.errors.join(", ")}
+        </FormHelperText>
+      )}
     </Box>
   );
 };

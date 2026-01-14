@@ -1,4 +1,5 @@
 import { useGetAllPatients } from "@client/lib/api/practitioner/query";
+import { withForm } from "@client/lib/components/form/contexts/form";
 import { useAppStore } from "@client/store";
 import { useSelectPractice } from "@client/store/selectors";
 import { CheckCircle, Search } from "@mui/icons-material";
@@ -15,38 +16,24 @@ import {
   InputAdornment,
 } from "@mui/material";
 import { useState } from "react";
+import { exerciseOpts } from "../utils/exerciseForm";
 
-type TExercisePatientSelectProps = {
-  assignmentStep: "select" | "configure" | "patients";
-};
+export const ExercisePatientSelect = withForm({
+  ...exerciseOpts,
+  render: function Render({ form }) {
+    const [searchPatient, setSearchPatient] = useState("");
 
-export const ExercisePatientSelect = (props: TExercisePatientSelectProps) => {
-  const { assignmentStep } = props;
+    const practice = useAppStore(useSelectPractice);
+    const practiceId = String(practice?.id);
 
-  const [searchPatient, setSearchPatient] = useState("");
-  const [selectedPatients, setSelectedPatients] = useState<string[]>([]);
+    const { data: patients } = useGetAllPatients(practiceId);
 
-  const practice = useAppStore(useSelectPractice);
-  const practiceId = String(practice?.id);
+    const filteredPatients = patients?.filter((patient) => {
+      const patientName = patient.firstName + patient.lastName;
+      return patientName.toLowerCase().includes(searchPatient.toLowerCase());
+    });
 
-  const { data: patients } = useGetAllPatients(practiceId);
-
-  const filteredPatients = patients?.filter((patient) => {
-    const patientName = patient.firstName + patient.lastName;
-    return patientName.toLowerCase().includes(searchPatient.toLowerCase());
-    // ||  patient.toLowerCase().includes(searchPatient.toLowerCase())
-  });
-
-  const togglePatient = (patientId: string) => {
-    setSelectedPatients((prev) =>
-      prev.includes(patientId)
-        ? prev.filter((id) => id !== patientId)
-        : [...prev, patientId]
-    );
-  };
-
-  return (
-    assignmentStep === "patients" && (
+    return (
       <Box sx={{ mb: 3 }}>
         <Divider sx={{ mb: 3 }} />
         <Typography variant="subtitle2" gutterBottom>
@@ -60,58 +47,80 @@ export const ExercisePatientSelect = (props: TExercisePatientSelectProps) => {
           value={searchPatient}
           onChange={(e) => setSearchPatient(e.target.value)}
           sx={{ mb: 2 }}
-          InputProps={{
-            startAdornment: (
-              <InputAdornment position="start">
-                <Search fontSize="small" />
-              </InputAdornment>
-            ),
+          slotProps={{
+            input: {
+              startAdornment: (
+                <InputAdornment position="start">
+                  <Search fontSize="small" />
+                </InputAdornment>
+              ),
+            },
           }}
         />
 
-        <Stack spacing={1} sx={{ maxHeight: 200, overflowY: "auto", mb: 2 }}>
-          {filteredPatients?.map((patient) => (
-            <Paper
-              key={patient.id}
-              variant="outlined"
-              sx={{
-                p: 1.5,
-                cursor: "pointer",
-                "&:hover": { bgcolor: "action.hover" },
-              }}
-              onClick={() => togglePatient(patient.id?.toString() ?? "")}
-            >
-              <Stack direction="row" spacing={1.5} alignItems="center">
-                <Checkbox
-                  checked={selectedPatients.includes(
-                    patient.id?.toString() ?? ""
-                  )}
-                  size="small"
-                />
-                <Box sx={{ flex: 1 }}>
-                  <Typography variant="body2" fontWeight={500}>
-                    {patient.firstName + patient.lastName}
-                  </Typography>
-                  <Typography variant="caption" color="text.secondary">
-                    {/* {patient.condition} */}
-                    Condition
-                  </Typography>
-                </Box>
-                <Chip label={"Active"} variant="outlined" size="small" />
-              </Stack>
-            </Paper>
-          ))}
-        </Stack>
+        <form.AppField name="patientIds">
+          {(field) => {
+            const selectedPatients: number[] = field.state.value || [];
 
-        {selectedPatients.length > 0 && (
-          <Alert icon={<CheckCircle />} severity="success">
-            <Typography variant="caption">
-              {selectedPatients.length} patient
-              {selectedPatients.length !== 1 ? "s" : ""} selected
-            </Typography>
-          </Alert>
-        )}
+            const togglePatient = (patientId: number) => {
+              const newSelection = selectedPatients.includes(patientId)
+                ? selectedPatients.filter((id: number) => id !== patientId)
+                : [...selectedPatients, patientId];
+              field.handleChange(newSelection);
+            };
+
+            return (
+              <>
+                <Stack
+                  spacing={1}
+                  sx={{ maxHeight: 200, overflowY: "auto", mb: 2 }}
+                >
+                  {filteredPatients?.map((patient) => (
+                    <Paper
+                      key={patient.id}
+                      variant="outlined"
+                      sx={{
+                        p: 1.5,
+                        cursor: "pointer",
+                        "&:hover": { bgcolor: "action.hover" },
+                      }}
+                      onClick={() => togglePatient(patient.id)}
+                    >
+                      <Stack direction="row" spacing={1.5} alignItems="center">
+                        <Checkbox
+                          checked={selectedPatients.includes(patient.id)}
+                          size="small"
+                        />
+                        <Box sx={{ flex: 1 }}>
+                          <Typography variant="body2" fontWeight={500}>
+                            {patient.firstName + " " + patient.lastName}
+                          </Typography>
+                          <Typography variant="caption" color="text.secondary">
+                            Condition
+                          </Typography>
+                        </Box>
+                        <Chip
+                          label={"Active"}
+                          variant="outlined"
+                          size="small"
+                        />
+                      </Stack>
+                    </Paper>
+                  ))}
+                </Stack>
+                {selectedPatients.length > 0 && (
+                  <Alert icon={<CheckCircle />} severity="success">
+                    <Typography variant="caption">
+                      {selectedPatients.length} patient
+                      {selectedPatients.length !== 1 ? "s" : ""} selected
+                    </Typography>
+                  </Alert>
+                )}
+              </>
+            );
+          }}
+        </form.AppField>
       </Box>
-    )
-  );
-};
+    );
+  },
+});

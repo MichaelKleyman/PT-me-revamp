@@ -253,6 +253,8 @@ const PatientExercise = (props: TPatientExerciseProps) => {
     handleSetSelectedVideo,
   } = props;
 
+  console.log({ exerciseMetadata });
+
   const StatusIcon = statusConfig[exerciseMetadata.status].icon;
 
   const renderExerciseMetadata = (
@@ -268,10 +270,13 @@ const PatientExercise = (props: TPatientExerciseProps) => {
           size="small"
         />
         <Chip
-          label={exercise.difficulty}
-          color={difficultyConfig[exercise.difficulty]?.color}
-          variant="outlined"
+          label={difficultyConfig[exercise?.difficulty].label}
           size="small"
+          sx={{
+            bgcolor: difficultyConfig[exercise?.difficulty].bgcolor,
+            color: difficultyConfig[exercise?.difficulty].color,
+            fontWeight: 500,
+          }}
         />
         {/* {exercise.completedInSession && ( */}
         <Chip
@@ -307,47 +312,27 @@ const PatientExercise = (props: TPatientExerciseProps) => {
       <Box
         sx={{
           position: "relative",
-          width: 128,
-          height: 80,
-          bgcolor: "grey.200",
+          width: 320, // Bigger width
+          height: 180, // 16:9 aspect ratio
           borderRadius: 1,
           overflow: "hidden",
-          cursor: "pointer",
-          "&:hover": { opacity: 0.8 },
-          transition: "opacity 0.2s",
         }}
-        onClick={() => handleSetSelectedVideo(exercise)}
       >
-        <img
-          src={exercise.videoUrl || "/placeholder.svg"}
-          alt={`${exercise.name} demonstration`}
+        <iframe
           style={{
+            position: "absolute",
+            top: 0,
+            left: 0,
             width: "100%",
             height: "100%",
-            objectFit: "cover",
+            border: "none",
           }}
+          src={exercise?.videoUrl}
+          title="Exercise demonstration"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowFullScreen
         />
-        <Box
-          sx={{
-            position: "absolute",
-            inset: 0,
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            bgcolor: "rgba(0,0,0,0.2)",
-          }}
-        >
-          <PlayCircle sx={{ color: "white", fontSize: 24 }} />
-        </Box>
       </Box>
-      <Typography
-        variant="caption"
-        color="text.secondary"
-        textAlign="center"
-        sx={{ display: "block", mt: 0.5 }}
-      >
-        {selectedVideo === String(exercise.id) ? "Hide" : "Show"} Video
-      </Typography>
     </Box>
   );
 

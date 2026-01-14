@@ -2,6 +2,7 @@ import { PatientExerciseMetaData } from "@client/lib/types/patient";
 import { Patient, TAuthRegisterForm } from "../../types/auth";
 import { Exercise } from "../../types/exercise";
 import { api } from "./api";
+import { ExerciseAssignmentFormData } from "@client/features/exercise-page/utils/exerciseForm";
 
 // QUERIES
 
@@ -184,5 +185,21 @@ export const deleteExercise = async (id: string) => {
     });
   } catch (error) {
     console.error("Error deleting exercise:", error);
+  }
+};
+
+// ASSIGN exercise to patient
+export const assignExercise = async ({
+  data,
+  exerciseId,
+}: {
+  data: ExerciseAssignmentFormData;
+  exerciseId: number;
+}) => {
+  try {
+    const finalData = { ...data, exerciseId };
+    await api.patients["assign-exercise"].$post({ json: finalData });
+  } catch (error) {
+    console.error("Error assigning exercise:", error);
   }
 };

@@ -9,7 +9,6 @@ export const exercisesRouter = new Hono()
   .get("/", async (c) => {
     try {
       const allExercises = await db.select().from(exercisesTable);
-      console.log(">>>", allExercises);
       return c.json({ allExercises }, 200);
     } catch (error) {
       console.error("Error fetching exercises:", error);
@@ -24,7 +23,6 @@ export const exercisesRouter = new Hono()
         .select()
         .from(exercisesTable)
         .where(eq(exercisesTable.id, Number(exerciseId)));
-      console.log(">>>", exercise);
       return c.json(exercise[0], 200);
     } catch (error) {
       console.error("Error fetching exercise:", error);

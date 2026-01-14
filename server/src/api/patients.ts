@@ -5,12 +5,32 @@ import { db } from "../db";
 import { exercisesTable } from "../db/schema/exercises";
 import { zValidator } from "@hono/zod-validator";
 import { server, topic } from "..";
-import { WSMessageKind } from "../lib/types";
+import {
+  ExerciseDifficulty,
+  PatientExerciseStatus,
+  WSMessageKind,
+} from "../lib/types";
 import { z } from "zod";
 import { patientExercisesTable } from "../db/schema/patient-exercises";
 
 const bulkDeleteSchema = z.object({
   ids: z.array(z.number()),
+});
+
+const assignExerciseSchema = z.object({
+  variation: z.enum([
+    ExerciseDifficulty.BEGINNER,
+    ExerciseDifficulty.INTERMEDIATE,
+    ExerciseDifficulty.ADVANCED,
+  ]),
+  patientIds: z.array(z.number()),
+  exerciseId: z.number(),
+  duration: z.string(),
+  frequency: z.string(),
+  dosage: z.object({
+    sets: z.number(),
+    reps: z.number(),
+  }),
 });
 
 export const patientsRouter = new Hono()
@@ -116,7 +136,41 @@ export const patientsRouter = new Hono()
       console.error("Error deleting patients:", error);
       return c.json({ error: "Error deleting patients" }, 500);
     }
-  });
+  })
+  .post(
+    "assign-exercise",
+    zValidator("json", assignExerciseSchema),
+    async (c) => {
+      try {
+        const {
+          variation,
+          duration,
+          patientIds,
+          exerciseId,
+          frequency,
+          dosage,
+        } = c.req.valid("json");
+        const { sets, reps } = dosage;
+        const newExerciseAssignments = patientIds.map((id) => ({
+          patientId: id,
+          exerciseId,
+          difficulty: variation,
+          duration,
+          sets,
+          reps,
+          frequency,
+          status: PatientExerciseStatus.ACTIVE,
+        }));
+
+        await db.insert(patientExercisesTable).values(newExerciseAssignments);
+
+        return c.json({ success: true }, 200);
+      } catch (error) {
+        console.error("Error assigning patient exercise:", error);
+        return c.json({ error: "Error assigning patient exercise" }, 500);
+      }
+    }
+  );
 
 // HELPERS
 /** Get patient by id */

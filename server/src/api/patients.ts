@@ -151,14 +151,6 @@ export const patientsRouter = new Hono()
           dosage,
         } = c.req.valid("json");
         const { sets, reps } = dosage;
-        console.log({
-          variation,
-          patientIds,
-          exerciseId,
-          frequency,
-          duration,
-          dosage,
-        });
         const newExerciseAssignments = patientIds.map((id) => ({
           patientId: id,
           exerciseId,
